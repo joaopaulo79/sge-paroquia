@@ -1,15 +1,12 @@
 package com.paroquiaTeam.sgeParoquia;
 
-import org.hibernate.Transaction;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
 
 public class Main extends Application {
-
+	
     @Override
     public void start(Stage primaryStage) throws Exception {
         System.out.println("JavaFX iniciou");
@@ -17,25 +14,16 @@ public class Main extends Application {
         // Teste
         try (var sf = new org.hibernate.cfg.Configuration()
                 .configure("hibernate.cfg.xml")
+                .addPackage("com.paroquiaTeam.sgeParoquia.model")
                 .buildSessionFactory();
              var session = sf.openSession()) {
             System.out.println("Hibernate conectou");
-            
-            Transaction t = session.beginTransaction();
-
-            Usuario user = new Usuario();
-            user.setNome("Teste");
-            user.setLogin("Teste");
-            user.setSenha("Teste");
-            user.setTipo("Teste");
-            
-            session.persist(user);
-            t.commit();
-            
+       
+            TestesDeEntidades.testaEntidades(session);
         } catch (Exception e) {
             System.out.println("Hibernate falhou: " + e.getMessage());
         }
-
+                
         try {
 			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root,400,400);
@@ -48,6 +36,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
+    	launch(args);
     }
 }

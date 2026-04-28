@@ -1,12 +1,22 @@
 package com.paroquiaTeam.sgeParoquia.model;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+import java.util.List;
+
+import com.paroquiaTeam.sgeParoquia.model.Caixa;
 
 @Entity
+@Table(name="USUARIO")
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +32,15 @@ public class Usuario {
 	@Column(name = "senha_usuario")
 	private String senha;
 	
-	@Column(name = "tipo_usuario")
-	private String tipo;
+	@Column(name = "status_usuario")
+	private boolean status;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo_usuario")
+	private TipoUsuario tipo;
+	
+	@OneToMany(mappedBy = "operador")
+	private List<Caixa> caixas;
 	
 	public Long getId() {
 		return id;
@@ -54,10 +70,17 @@ public class Usuario {
 		this.senha = senha;
 	}
 	
-	public String getTipo() {
+	public TipoUsuario getTipo() {
 		return tipo;
 	}
-	public void setTipo(String tipo) {
+	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
+	}
+	
+	public List<Caixa> getCaixas() {
+		return caixas;
+	}
+	public void setCaixas(List<Caixa> caixas) {
+		this.caixas = caixas;
 	}
 }

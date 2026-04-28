@@ -4,6 +4,7 @@
 
 <hibernate-configuration>
     <session-factory>
+    	<property name="hibernate.jdbc.time_zone">America/Sao_Paulo</property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sgeParoquia?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true</property>
         <property name="hibernate.connection.username">root</property>
@@ -13,5 +14,12 @@
         <property name="hibernate.show_sql">true</property>
         
         <mapping class="com.paroquiaTeam.sgeParoquia.model.Usuario"/>
+        <mapping class="com.paroquiaTeam.sgeParoquia.model.Caixa"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Veiculo"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Estadia"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.MovimentoCaixa"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Cliente"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Vaga"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Convenio"/>
     </session-factory>
 </hibernate-configuration>
