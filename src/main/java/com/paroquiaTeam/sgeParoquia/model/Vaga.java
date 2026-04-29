@@ -22,6 +22,9 @@ public class Vaga {
 	@Column(name = "status_ocupacao")
 	private boolean ocupada;
 	
+	@Column(name = "placa_ocupador", nullable = true)
+	private String placa;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_vaga")
 	private TipoVaga tipo;
@@ -30,7 +33,57 @@ public class Vaga {
 	@Column(name = "tipo_reserva")
 	private TipoReservaVaga reserva;
 	
-	@ManyToOne
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "id_convenio")
 	private Convenio convenio;
+
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
+	
+	public boolean isOcupada() {
+		return ocupada;
+	}
+
+	public void setOcupada(boolean ocupada) {
+		this.ocupada = ocupada;
+	}
+
+	
+	
+	public TipoVaga getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoVaga tipo) {
+		this.tipo = tipo;
+	}
+
+	
+	
+	public TipoReservaVaga getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(TipoReservaVaga reserva) {
+		this.reserva = reserva;
+	}
+
+	
+	
+	public Convenio getConvenio() {
+		return convenio;
+	}
+
+	public void setConvenio(Convenio convenio) {
+		this.convenio = convenio;
+	}
 }

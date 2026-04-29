@@ -8,13 +8,18 @@ import org.hibernate.Transaction;
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.Caixa;
 import com.paroquiaTeam.sgeParoquia.model.Cliente;
+import com.paroquiaTeam.sgeParoquia.model.Convenio;
 import com.paroquiaTeam.sgeParoquia.model.Estadia;
 import com.paroquiaTeam.sgeParoquia.model.MovimentoCaixa;
+import com.paroquiaTeam.sgeParoquia.model.TipoCliente;
 import com.paroquiaTeam.sgeParoquia.model.TipoMovimento;
 import com.paroquiaTeam.sgeParoquia.model.TipoPagamento;
+import com.paroquiaTeam.sgeParoquia.model.TipoReservaVaga;
 import com.paroquiaTeam.sgeParoquia.model.TipoUsuario;
+import com.paroquiaTeam.sgeParoquia.model.TipoVaga;
 import com.paroquiaTeam.sgeParoquia.model.TipoVeiculo;
 import com.paroquiaTeam.sgeParoquia.model.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.Vaga;
 import com.paroquiaTeam.sgeParoquia.model.Veiculo;
 
 public class TestesDeEntidades {
@@ -49,6 +54,7 @@ public class TestesDeEntidades {
 				cliente.setNome("Teste");
 				cliente.setCpf("Teste");
 				cliente.setTelefone("Teste");
+				cliente.setTipo(TipoCliente.AVULSO);
 				cliente.setStatus(true);
 				
 				System.out.println("Persistindo cliente");
@@ -91,7 +97,7 @@ public class TestesDeEntidades {
 				sessao.persist(movimento);
 			
 			
-				System.out.println("\nCriando movimento2");
+				System.out.println("\nCriando movimento com estadia");
 				MovimentoCaixa movimento2 = new MovimentoCaixa();
 				movimento2.setTipoMovimento(TipoMovimento.ENTRADA);
 				movimento2.setFormaPagamento(TipoPagamento.CREDITO);
@@ -99,9 +105,51 @@ public class TestesDeEntidades {
 				movimento2.setEstadia(estadia);
 				movimento2.setValor(15);
 			
-				System.out.println("Persistindo movimento2");
+				System.out.println("Persistindo movimento com estadia");
 				sessao.persist(movimento2);
-			
+				
+				System.out.println("\nCriando convenio");
+				Convenio convenio = new Convenio();
+				convenio.setNome("Teste");
+				convenio.setVagasContratadas(10);
+				convenio.setStatus(true);
+				convenio.setMensalidade(100);
+				convenio.setCobrancaIndividual(0);
+				
+				System.out.println("Persistindo convenio");
+				sessao.persist(convenio);
+				
+				System.out.println("\nCriando vaga comum");
+				Vaga vaga = new Vaga();
+				vaga.setTipo(TipoVaga.CARRO);
+				vaga.setReserva(TipoReservaVaga.COMUM);
+				vaga.setOcupada(false);
+				
+				System.out.println("Persistindo vaga comum");
+				sessao.persist(vaga);
+				
+				System.out.println("\nCriando vaga conveniada");
+				Vaga vaga2 = new Vaga();
+				vaga2.setTipo(TipoVaga.CARRO);
+				vaga2.setReserva(TipoReservaVaga.CONVENIO);
+				vaga2.setOcupada(true);
+				vaga2.setConvenio(convenio);
+				
+				System.out.println("Persistindo vaga conveniada");
+				sessao.persist(vaga2);
+				
+				System.out.println("\nCriando cliente conveniado");
+				Cliente cliente2 = new Cliente();
+				cliente2.setNome("Teste");
+				cliente2.setCpf("Teste");
+				cliente2.setTelefone("Teste");
+				cliente2.setTipo(TipoCliente.CONVENIADO);
+				cliente2.setConvenio(convenio);
+				cliente2.setStatus(true);
+				
+				System.out.println("Persistindo cliente conveniado");
+				sessao.persist(cliente2);
+				
 				t.commit();
 			} catch (Exception e) {
 				System.out.println("Persistência falhou: " + e.getMessage());
