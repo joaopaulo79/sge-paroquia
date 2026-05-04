@@ -34,6 +34,21 @@ public class Estadia {
 	@OneToMany(mappedBy = "estadia")
 	private List<MovimentoCaixa> movimentos;
 	
+	
+	
+	public Estadia() {}
+	
+	public Estadia(Long id, LocalDateTime dataHoraEntrada, LocalDateTime dataHoraSaida, 
+				   double valor, String placaVeiculo) {
+		this.id = id;
+		this.dataHoraEntrada = dataHoraEntrada;
+		this.dataHoraSaida = dataHoraSaida;
+		this.valor = valor;
+		this.placaVeiculo = placaVeiculo;
+	}
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -41,6 +56,8 @@ public class Estadia {
 		this.id = id;
 	}
 
+	
+	
 	public LocalDateTime getDataHoraEntrada() {
 		return dataHoraEntrada;
 	}
@@ -48,6 +65,8 @@ public class Estadia {
 		this.dataHoraEntrada = dataHoraEntrada;
 	}
 
+	
+	
 	public LocalDateTime getDataHoraSaida() {
 		return dataHoraSaida;
 	}
@@ -55,6 +74,8 @@ public class Estadia {
 		this.dataHoraSaida = dataHoraSaida;
 	}
 
+	
+	
 	public double getValor() {
 		return valor;
 	}
@@ -62,12 +83,16 @@ public class Estadia {
 		this.valor = valor;
 	}
 
+	
+	
 	public String getPlacaVeiculo() {
 		return placaVeiculo;
 	}
 	public void setPlacaVeiculo(String placaVeiculo) {
 		this.placaVeiculo = placaVeiculo;
 	}
+	
+	
 	
 	public List<MovimentoCaixa> getMovimentos() {
 		return movimentos;

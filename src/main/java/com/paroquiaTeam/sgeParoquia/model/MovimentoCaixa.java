@@ -38,10 +38,34 @@ public class MovimentoCaixa {
 	@JoinColumn(name = "id_estadia")
 	private Estadia estadia;
 
+	
+	
+	public MovimentoCaixa() {}
+	
+	public MovimentoCaixa(Long id, double valor, TipoPagamento formaPagamento, 
+			TipoMovimento tipoMovimento, Caixa caixa) {
+		this.id = id;
+		this.valor = valor;
+		this.formaPagamento = formaPagamento;
+		this.tipoMovimento = tipoMovimento;
+		this.caixa = caixa;
+	}
+	
+	public MovimentoCaixa(Long id, double valor, TipoPagamento formaPagamento, 
+			TipoMovimento tipoMovimento, Caixa caixa, Estadia estadia) {
+		this.id = id;
+		this.valor = valor;
+		this.formaPagamento = formaPagamento;
+		this.tipoMovimento = tipoMovimento;
+		this.caixa = caixa;
+		this.estadia = estadia;
+	}
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -51,7 +75,6 @@ public class MovimentoCaixa {
 	public double getValor() {
 		return valor;
 	}
-	
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
@@ -61,7 +84,6 @@ public class MovimentoCaixa {
 	public TipoPagamento getFormaPagamento() {
 		return formaPagamento;
 	}
-	
 	public void setFormaPagamento(TipoPagamento formaPagamento) {
 		this.formaPagamento = formaPagamento;
 	}
@@ -71,7 +93,6 @@ public class MovimentoCaixa {
 	public TipoMovimento getTipoMovimento() {
 		return tipoMovimento;
 	}
-	
 	public void setTipoMovimento(TipoMovimento tipoMovimento) {
 		this.tipoMovimento = tipoMovimento;
 	}
@@ -81,7 +102,6 @@ public class MovimentoCaixa {
 	public Caixa getCaixa() {
 		return caixa;
 	}
-	
 	public void setCaixa(Caixa caixa) {
 		this.caixa = caixa;
 	}
@@ -91,7 +111,6 @@ public class MovimentoCaixa {
 	public Estadia getEstadia() {
 		return estadia;
 	}
-	
 	public void setEstadia(Estadia estadia) {
 		this.estadia = estadia;
 	}

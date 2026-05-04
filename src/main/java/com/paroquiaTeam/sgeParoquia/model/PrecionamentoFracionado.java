@@ -32,5 +32,85 @@ public class PrecionamentoFracionado {
 	@Column(name = "valor_diaria_moto")
 	private double valorDiariaMoto;
 	
-	protected PrecionamentoFracionado() {}
+	public PrecionamentoFracionado() {}
+
+	public PrecionamentoFracionado(int tolerancia, double valorMeiaHora, double valorHora, double valorDiaria,
+			double valorMeiaHoraMoto, double valorHoraMoto, double valorDiariaMoto) {
+		this.tolerancia = tolerancia;
+		this.valorMeiaHora = valorMeiaHora;
+		this.valorHora = valorHora;
+		this.valorDiaria = valorDiaria;
+		this.valorMeiaHoraMoto = valorMeiaHoraMoto;
+		this.valorHoraMoto = valorHoraMoto;
+		this.valorDiariaMoto = valorDiariaMoto;
+	}
+
+
+	
+	public long getId() {
+		return id;
+	}
+	
+	
+	
+	public int getTolerancia() {
+		return tolerancia;
+	}
+	public void setTolerancia(int tolerancia) {
+		this.tolerancia = tolerancia;
+	}
+
+	
+	
+	public double getValorMeiaHora() {
+		return valorMeiaHora;
+	}
+	public void setValorMeiaHora(double valorMeiaHora) {
+		this.valorMeiaHora = valorMeiaHora;
+	}
+
+	
+	
+	public double getValorHora() {
+		return valorHora;
+	}
+	public void setValorHora(double valorHora) {
+		this.valorHora = valorHora;
+	}
+
+	
+	
+	public double getValorDiaria() {
+		return valorDiaria;
+	}
+	public void setValorDiaria(double valorDiaria) {
+		this.valorDiaria = valorDiaria;
+	}
+
+	
+	
+	public double getValorMeiaHoraMoto() {
+		return valorMeiaHoraMoto;
+	}
+	public void setValorMeiaHoraMoto(double valorMeiaHoraMoto) {
+		this.valorMeiaHoraMoto = valorMeiaHoraMoto;
+	}
+
+	
+	
+	public double getValorHoraMoto() {
+		return valorHoraMoto;
+	}
+	public void setValorHoraMoto(double valorHoraMoto) {
+		this.valorHoraMoto = valorHoraMoto;
+	}
+
+	
+	
+	public double getValorDiariaMoto() {
+		return valorDiariaMoto;
+	}
+	public void setValorDiariaMoto(double valorDiariaMoto) {
+		this.valorDiariaMoto = valorDiariaMoto;
+	}	
 }

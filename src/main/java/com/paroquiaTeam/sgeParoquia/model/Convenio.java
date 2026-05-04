@@ -40,10 +40,23 @@ public class Convenio {
 
 	
 	
+	public Convenio() {}
+
+	public Convenio(Long id, String nome, double mensalidade, int vagasContratadas, 
+					boolean status, double cobrancaIndividual) {
+		this.id = id;
+		this.nome = nome;
+		this.mensalidade = mensalidade;
+		this.vagasContratadas = vagasContratadas;
+		this.status = status;
+		this.cobrancaIndividual = cobrancaIndividual;
+	}
+
+	
+	
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -53,7 +66,6 @@ public class Convenio {
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
@@ -63,7 +75,6 @@ public class Convenio {
 	public double getMensalidade() {
 		return mensalidade;
 	}
-
 	public void setMensalidade(double mensalidade) {
 		this.mensalidade = mensalidade;
 	}
@@ -73,7 +84,6 @@ public class Convenio {
 	public int getVagasContratadas() {
 		return vagasContratadas;
 	}
-
 	public void setVagasContratadas(int vagasContratadas) {
 		this.vagasContratadas = vagasContratadas;
 	}
@@ -83,7 +93,6 @@ public class Convenio {
 	public boolean isStatus() {
 		return status;
 	}
-
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
@@ -93,7 +102,6 @@ public class Convenio {
 	public double getCobrancaIndividual() {
 		return cobrancaIndividual;
 	}
-
 	public void setCobrancaIndividual(double cobrancaIndividual) {
 		this.cobrancaIndividual = cobrancaIndividual;
 	}
@@ -103,7 +111,6 @@ public class Convenio {
 	public List<Cliente> getClientes() {
 		return clientes;
 	}
-
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
 	}

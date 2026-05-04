@@ -42,7 +42,24 @@ public class Veiculo {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	
+	
 
+	public Veiculo() {}
+
+	public Veiculo(Long id, String placa, String marca, String modelo, String cor, 
+			String observacoes, TipoVeiculo tipo, Cliente cliente) {
+		this.id = id;
+		this.placa = placa;
+		this.marca = marca;
+		this.modelo = modelo;
+		this.cor = cor;
+		this.observacoes = observacoes;
+		this.tipo = tipo;
+		this.cliente = cliente;
+	}
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -50,6 +67,8 @@ public class Veiculo {
 		this.id = id;
 	}
 
+	
+	
 	public String getPlaca() {
 		return placa;
 	}
@@ -57,6 +76,8 @@ public class Veiculo {
 		this.placa = placa;
 	}
 
+	
+	
 	public String getMarca() {
 		return marca;
 	}
@@ -64,6 +85,8 @@ public class Veiculo {
 		this.marca = marca;
 	}
 
+	
+	
 	public String getModelo() {
 		return modelo;
 	}
@@ -71,6 +94,8 @@ public class Veiculo {
 		this.modelo = modelo;
 	}
 
+	
+	
 	public String getCor() {
 		return cor;
 	}
@@ -78,6 +103,8 @@ public class Veiculo {
 		this.cor = cor;
 	}
 
+	
+	
 	public String getObservacoes() {
 		return observacoes;
 	}
@@ -85,12 +112,16 @@ public class Veiculo {
 		this.observacoes = observacoes;
 	}
 	
+	
+	
 	public TipoVeiculo getTipo() {
 		return tipo;
 	}
 	public void setTipo(TipoVeiculo tipo) {
 		this.tipo = tipo;
 	}
+	
+	
 	
 	public Cliente getCliente() {
 		return cliente;

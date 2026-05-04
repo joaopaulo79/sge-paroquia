@@ -37,6 +37,21 @@ public class Caixa {
 	@OneToMany(mappedBy = "caixa")
 	private List<MovimentoCaixa> movimentos;
 	
+	
+	
+	public Caixa() {}
+	
+	public Caixa(Long id, LocalDateTime dataHoraAbertura, LocalDateTime dataHoraFechamento, 
+			double valorInicial, Usuario operador) {
+		this.id = id;
+		this.dataHoraAbertura = dataHoraAbertura;
+		this.dataHoraFechamento = dataHoraFechamento;
+		this.valorInicial = valorInicial;
+		this.operador = operador;
+	}
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -44,12 +59,16 @@ public class Caixa {
 		this.id = id;
 	}
 
+	
+	
 	public LocalDateTime getDataHoraAbertura() {
 		return dataHoraAbertura;
 	}
 	public void setDataHoraAbertura(LocalDateTime dataHoraAbertura) {
 		this.dataHoraAbertura = dataHoraAbertura;
 	}
+	
+	
 	
 	public LocalDateTime getDataHoraFechamento() {
 		return dataHoraFechamento;
@@ -58,6 +77,8 @@ public class Caixa {
 		this.dataHoraFechamento = dataHoraFechamento;
 	}
 	
+	
+	
 	public double getValorInicial() {
 		return valorInicial;
 	}
@@ -65,12 +86,16 @@ public class Caixa {
 		this.valorInicial = valorInicial;
 	}
 	
+	
+	
 	public Usuario getOperador() {
 		return operador;
 	}
 	public void setOperador(Usuario operador) {
 		this.operador = operador;
 	}
+	
+	
 	
 	public List<MovimentoCaixa> getMovimentos() {
 		return movimentos;

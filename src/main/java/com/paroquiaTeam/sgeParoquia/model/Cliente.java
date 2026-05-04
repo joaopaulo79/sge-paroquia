@@ -47,10 +47,34 @@ public class Cliente {
 
 	
 	
+	public Cliente() {}
+	
+	public Cliente(Long id, String nome, String cpf, String telefone, TipoCliente tipo, 
+			boolean status) {
+		this.id = id;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.telefone = telefone;
+		this.tipo = tipo;
+		this.status = status;
+	}
+	
+	public Cliente(Long id, String nome, String cpf, String telefone, TipoCliente tipo, 
+			boolean status, Convenio convenio) {
+		this.id = id;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.telefone = telefone;
+		this.tipo = tipo;
+		this.status = status;
+		this.convenio = convenio;
+	}
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -60,7 +84,6 @@ public class Cliente {
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
@@ -70,7 +93,6 @@ public class Cliente {
 	public String getCpf() {
 		return cpf;
 	}
-
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
@@ -80,7 +102,6 @@ public class Cliente {
 	public String getTelefone() {
 		return telefone;
 	}
-
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
@@ -90,7 +111,6 @@ public class Cliente {
 	public TipoCliente getTipo() {
 		return tipo;
 	}
-
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo;
 	}
@@ -100,7 +120,6 @@ public class Cliente {
 	public boolean getStatus() {
 		return status;
 	}
-
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
@@ -110,7 +129,6 @@ public class Cliente {
 	public List<Veiculo> getVeiculos() {
 		return veiculos;
 	}
-
 	public void setVeiculos(List<Veiculo> veiculos) {
 		this.veiculos = veiculos;
 	}
@@ -120,7 +138,6 @@ public class Cliente {
 	public Convenio getConvenio() {
 		return convenio;
 	}
-	
 	public void setConvenio(Convenio convenio) {
 		this.convenio = convenio;
 	}
