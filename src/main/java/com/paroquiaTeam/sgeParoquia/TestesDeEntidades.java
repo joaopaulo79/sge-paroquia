@@ -1,10 +1,14 @@
 package com.paroquiaTeam.sgeParoquia;
 
 import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.paroquiaTeam.sgeParoquia.dao.UsuarioDAO;
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.Caixa;
 import com.paroquiaTeam.sgeParoquia.model.Cliente;
@@ -28,15 +32,10 @@ public class TestesDeEntidades {
 			Transaction t = sessao.beginTransaction();
 			try {
 				System.out.println("\nCriando usuario");
-				Usuario user = new Usuario();
-				user.setNome("Teste");
-				user.setLogin("Teste");
-				user.setSenha("Teste");
-				user.setTipo(TipoUsuario.ADMINISTRADOR);
-				
+				Usuario user = new Usuario("Teste", "Teste", "Teste", true, TipoUsuario.ADMINISTRADOR);
 				System.out.println("Persistindo usuario");
-				sessao.persist(user);
-				
+				UsuarioDAO userDao = new UsuarioDAO();
+				userDao.save(user);
 				
 				System.out.println("\nCriando caixa");
 				Caixa caixa = new Caixa();
@@ -151,6 +150,29 @@ public class TestesDeEntidades {
 				sessao.persist(cliente2);
 				
 				t.commit();
+				
+				System.out.println("Buscando usuário de id 1");
+				Optional<Usuario> userOpt = userDao.getById(user.getId());
+				userOpt.ifPresent(user2 -> {
+					System.out.println(user2.toString());
+				});
+				
+				System.out.println("Buscando TODOS os usuários");
+				List<Usuario> users = userDao.getAll();
+				for (Usuario u : users) {
+					System.out.println(u.toString());
+				}
+				
+				System.out.println("Alterando Usuário");
+				Optional<Usuario> userAnt = userDao.getById(user.getId());
+				userAnt.ifPresent(u -> {
+					u.setNome("alterou!");
+					userDao.update(u);
+				});
+				
+				System.out.println("Removendo Usuário (NÃO PODE ENQUANTO TIVER CAIXAS)");
+				userDao.delete(user.getId());
+				
 			} catch (Exception e) {
 				System.out.println("Persistência falhou: " + e.getMessage());
 				t.rollback();

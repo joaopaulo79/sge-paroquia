@@ -46,10 +46,8 @@ public class Usuario {
 	
 	public Usuario() {}
 	
-	public Usuario(Long id, String nome, String login, String senha, 
+	public Usuario(String nome, String login, String senha, 
 					boolean status, TipoUsuario tipo) {
-		super();
-		this.id = id;
 		this.nome = nome;
 		this.login = login;
 		this.senha = senha;
@@ -109,5 +107,11 @@ public class Usuario {
 	}
 	public void setCaixas(List<Caixa> caixas) {
 		this.caixas = caixas;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", login=" + login + ", senha=" + senha + ", status=" + status
+				+ ", tipo=" + tipo + ", caixas=" + caixas + "]";
 	}
 }
