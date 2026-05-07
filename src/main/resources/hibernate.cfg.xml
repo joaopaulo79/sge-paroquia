@@ -13,13 +13,16 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
         
-        <mapping class="com.paroquiaTeam.sgeParoquia.model.Usuario"/>
         <mapping class="com.paroquiaTeam.sgeParoquia.model.Caixa"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.Veiculo"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Cliente"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Convenio"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Estacionamento"/>
 		<mapping class="com.paroquiaTeam.sgeParoquia.model.Estadia"/>
 		<mapping class="com.paroquiaTeam.sgeParoquia.model.MovimentoCaixa"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.Cliente"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.PrecionamentoFracionado"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.PrecionamentoPorHora"/>
+        <mapping class="com.paroquiaTeam.sgeParoquia.model.Usuario"/>
 		<mapping class="com.paroquiaTeam.sgeParoquia.model.Vaga"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.Convenio"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Veiculo"/>
     </session-factory>
 </hibernate-configuration>

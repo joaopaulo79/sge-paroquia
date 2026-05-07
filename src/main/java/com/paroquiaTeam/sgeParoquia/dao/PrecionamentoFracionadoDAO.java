@@ -12,8 +12,8 @@ public class PrecionamentoFracionadoDAO {
 	
 	public boolean exists() { 
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "COUNT(p) FROM PrecionamentoFracionado p WHERE u.id = 1";
-			Long quantidade = sessao.createSelectionQuery(query, Long.class).uniqueResult();			
+			String query = "SELECT COUNT(p) FROM PrecionamentoFracionado p WHERE p.id = 1";
+			Long quantidade = sessao.createQuery(query, Long.class).uniqueResult();			
 			return quantidade != null && quantidade > 0;
 		}
 		
@@ -21,7 +21,7 @@ public class PrecionamentoFracionadoDAO {
 	
 	public Optional<PrecionamentoFracionado> get() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "FROM PrecionamentoFracionado WHERE u.id = 1";
+			String query = "FROM PrecionamentoFracionado p WHERE p.id = 1";
 			return sessao.createSelectionQuery(query, PrecionamentoFracionado.class)
 						.uniqueResultOptional();
 					

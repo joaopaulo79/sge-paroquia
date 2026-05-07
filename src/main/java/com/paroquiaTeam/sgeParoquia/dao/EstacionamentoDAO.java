@@ -13,16 +13,15 @@ public class EstacionamentoDAO {
 	
 	public boolean exists() { 
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "COUNT(e) FROM Estacionamento e WHERE u.id = 1";
-			Long quantidade = sessao.createSelectionQuery(query, Long.class).uniqueResult();			
+			String query = "SELECT COUNT(e) FROM Estacionamento e WHERE e.id = 1";
+			Long quantidade = sessao.createQuery(query, Long.class).uniqueResult();			
 			return quantidade != null && quantidade > 0;
 		}
-		
 	}
 	
 	public Optional<Estacionamento> get() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "FROM Estacionamento WHERE u.id = 1";
+			String query = "FROM Estacionamento e WHERE e.id = 1";
 			return sessao.createSelectionQuery(query, Estacionamento.class).uniqueResultOptional();
 					
 		}

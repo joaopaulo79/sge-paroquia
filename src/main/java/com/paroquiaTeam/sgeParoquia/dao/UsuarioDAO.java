@@ -11,6 +11,16 @@ import com.paroquiaTeam.sgeParoquia.model.Usuario;
 
 public class UsuarioDAO {
 	
+	public boolean exists(long id) { 
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT COUNT(u) FROM Usuario u WHERE u.id = ?1";
+			Long quantidade = sessao.createQuery(query, Long.class)
+					.setParameter(1, id)
+					.uniqueResult();			
+			return quantidade != null && quantidade > 0;
+		}
+	}
+	
 	public Optional<Usuario> getById(Long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "FROM Usuario u JOIN FETCH u.caixas WHERE u.id = ?1";
@@ -50,7 +60,7 @@ public class UsuarioDAO {
 				sessao.merge(user);
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Persistência falhou: " + e.getMessage());
+				System.out.println("Atualização falhou: " + e.getMessage());
 				t.rollback();
 			}
 		}
@@ -66,7 +76,7 @@ public class UsuarioDAO {
 				}
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Persistência falhou: " + e.getMessage());
+				System.out.println("Remoção falhou: " + e.getMessage());
 				t.rollback();
 			}
 		}

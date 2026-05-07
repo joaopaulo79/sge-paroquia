@@ -13,8 +13,6 @@ import jakarta.persistence.Table;
 
 import java.util.List;
 
-import com.paroquiaTeam.sgeParoquia.model.Caixa;
-
 @Entity
 @Table(name="USUARIO")
 public class Usuario {
