@@ -3,7 +3,7 @@ package com.paroquiaTeam.sgeParoquia;
 import com.paroquiaTeam.sgeParoquia.dao.EstacionamentoDAO;
 import com.paroquiaTeam.sgeParoquia.dao.UsuarioDAO;
 import com.paroquiaTeam.sgeParoquia.model.Estacionamento;
-import com.paroquiaTeam.sgeParoquia.model.TipoPrecionamento;
+import com.paroquiaTeam.sgeParoquia.model.TipoPrecificacao;
 import com.paroquiaTeam.sgeParoquia.model.TipoUsuario;
 import com.paroquiaTeam.sgeParoquia.model.Usuario;
 
@@ -40,7 +40,7 @@ public class Main extends Application {
     	
     	EstacionamentoDAO estacionamentoDao = new EstacionamentoDAO();    	
     	if (!estacionamentoDao.exists()) {
-    		Estacionamento estacionamento = new Estacionamento(0, TipoPrecionamento.FRACIONADO);
+    		Estacionamento estacionamento = new Estacionamento(0, TipoPrecificacao.FRACIONADA);
     		estacionamentoDao.save(estacionamento);
     	}
     	

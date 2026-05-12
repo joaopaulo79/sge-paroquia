@@ -6,8 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "PRECIONAMENTO_POR_HORA")
-public class PrecionamentoPorHora {
+@Table(name = "PRECIFICACAO_POR_HORA")
+public class PrecificacaoPorHora {
 	@Id
 	private long id = 1;
 	
@@ -34,9 +34,9 @@ public class PrecionamentoPorHora {
 	
 	
 	
-	public PrecionamentoPorHora() {}
+	public PrecificacaoPorHora() {}
 
-	public PrecionamentoPorHora(int tolerancia, double valorEntrada, 
+	public PrecificacaoPorHora(int tolerancia, double valorEntrada, 
 			double valorHora, double valorDiaria, double valorEntradaMoto, 
 			double valorHoraMoto, double valorDiariaMoto) {
 		this.tolerancia = tolerancia;

@@ -6,33 +6,33 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.PrecionamentoFracionado;
+import com.paroquiaTeam.sgeParoquia.model.PrecificacaoPorHora;
 
-public class PrecionamentoFracionadoDAO {
+public class PrecificacaoPorHoraDAO {
 	
 	public boolean exists() { 
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "SELECT COUNT(p) FROM PrecionamentoFracionado p WHERE p.id = 1";
+			String query = "SELECT COUNT(p) FROM PrecificacaoPorHora p WHERE p.id = 1";
 			Long quantidade = sessao.createQuery(query, Long.class).uniqueResult();			
 			return quantidade != null && quantidade > 0;
 		}
 		
 	}
 	
-	public Optional<PrecionamentoFracionado> get() {
+	public Optional<PrecificacaoPorHora> get() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "FROM PrecionamentoFracionado p WHERE p.id = 1";
-			return sessao.createSelectionQuery(query, PrecionamentoFracionado.class)
+			String query = "FROM PrecificacaoPorHora WHERE p.id = 1";
+			return sessao.createSelectionQuery(query, PrecificacaoPorHora.class)
 						.uniqueResultOptional();
 					
 		}
 	}
 	
-	public void save(PrecionamentoFracionado precionamento) {
+	public void save(PrecificacaoPorHora precificacao) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
-				sessao.persist(precionamento);
+				sessao.persist(precificacao);
 				t.commit();
 			} catch (Exception e) {
 				System.out.println("Persistência falhou: " + e.getMessage());
@@ -41,11 +41,11 @@ public class PrecionamentoFracionadoDAO {
 		}
 	}
 	
-	public void update(PrecionamentoFracionado precionamento) {
+	public void update(PrecificacaoPorHora precificacao) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
-				sessao.merge(precionamento);
+				sessao.merge(precificacao);
 				t.commit();
 			} catch (Exception e) {
 				System.out.println("Atualização falhou: " + e.getMessage());

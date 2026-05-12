@@ -17,14 +17,14 @@ public class Estacionamento {
 	private int numeroDeVagas;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "precionamento_ativo")
-	private TipoPrecionamento precionamento;
+	@Column(name = "precificacao_ativa")
+	private TipoPrecificacao precificacao;
 	
 	public Estacionamento() {}
 
-	public Estacionamento(int numeroDeVagas, TipoPrecionamento precionamento) {
+	public Estacionamento(int numeroDeVagas, TipoPrecificacao precificacao) {
 		this.numeroDeVagas = numeroDeVagas;
-		this.precionamento = precionamento;
+		this.precificacao = precificacao;
 	}
 
 
@@ -44,10 +44,10 @@ public class Estacionamento {
 
 	
 	
-	public TipoPrecionamento getPrecionamento() {
-		return precionamento;
+	public TipoPrecificacao getPrecificacao() {
+		return precificacao;
 	}
-	public void setPrecionamento(TipoPrecionamento precionamento) {
-		this.precionamento = precionamento;
+	public void setPrecificacao(TipoPrecificacao precificacao) {
+		this.precificacao = precificacao;
 	}
 }

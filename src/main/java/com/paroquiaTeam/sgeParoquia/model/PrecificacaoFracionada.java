@@ -6,8 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "PRECIONAMENTO_FRACIONADO")
-public class PrecionamentoFracionado {
+@Table(name = "PRECIFICACAO_FRACIONADA")
+public class PrecificacaoFracionada {
 	@Id
 	private long id = 1;
 	
@@ -32,9 +32,9 @@ public class PrecionamentoFracionado {
 	@Column(name = "valor_diaria_moto")
 	private double valorDiariaMoto;
 	
-	public PrecionamentoFracionado() {}
+	public PrecificacaoFracionada() {}
 
-	public PrecionamentoFracionado(int tolerancia, double valorMeiaHora, double valorHora, double valorDiaria,
+	public PrecificacaoFracionada(int tolerancia, double valorMeiaHora, double valorHora, double valorDiaria,
 			double valorMeiaHoraMoto, double valorHoraMoto, double valorDiariaMoto) {
 		this.tolerancia = tolerancia;
 		this.valorMeiaHora = valorMeiaHora;

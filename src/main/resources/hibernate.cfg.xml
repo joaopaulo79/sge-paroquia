@@ -19,8 +19,8 @@
 		<mapping class="com.paroquiaTeam.sgeParoquia.model.Estacionamento"/>
 		<mapping class="com.paroquiaTeam.sgeParoquia.model.Estadia"/>
 		<mapping class="com.paroquiaTeam.sgeParoquia.model.MovimentoCaixa"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.PrecionamentoFracionado"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.PrecionamentoPorHora"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.PrecificacaoFracionada"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.PrecificacaoPorHora"/>
         <mapping class="com.paroquiaTeam.sgeParoquia.model.Usuario"/>
 		<mapping class="com.paroquiaTeam.sgeParoquia.model.Vaga"/>
 		<mapping class="com.paroquiaTeam.sgeParoquia.model.Veiculo"/>

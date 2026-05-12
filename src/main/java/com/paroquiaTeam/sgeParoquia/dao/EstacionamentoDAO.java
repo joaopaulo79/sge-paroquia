@@ -7,7 +7,7 @@ import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.Estacionamento;
-import com.paroquiaTeam.sgeParoquia.model.TipoPrecionamento;
+import com.paroquiaTeam.sgeParoquia.model.TipoPrecificacao;
 
 public class EstacionamentoDAO {
 	
@@ -53,12 +53,12 @@ public class EstacionamentoDAO {
 		}
 	}
 	
-	public void updatePrecionamento(TipoPrecionamento precionamento) {
+	public void updatePrecificacao(TipoPrecificacao precificacao) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				Estacionamento estacionamento = sessao.get(Estacionamento.class, (long) 1);
-				estacionamento.setPrecionamento(precionamento);
+				estacionamento.setPrecificacao(precificacao);
 				sessao.merge(estacionamento);
 				t.commit();
 			} catch (Exception e) {
