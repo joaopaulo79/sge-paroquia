@@ -1,14 +1,8 @@
 package com.paroquiaTeam.sgeParoquia;
 
-import java.util.Optional;
-
 import com.paroquiaTeam.sgeParoquia.dao.EstacionamentoDAO;
-import com.paroquiaTeam.sgeParoquia.dao.PrecionamentoFracionadoDAO;
-import com.paroquiaTeam.sgeParoquia.dao.PrecionamentoPorHoraDAO;
 import com.paroquiaTeam.sgeParoquia.dao.UsuarioDAO;
 import com.paroquiaTeam.sgeParoquia.model.Estacionamento;
-import com.paroquiaTeam.sgeParoquia.model.PrecionamentoFracionado;
-import com.paroquiaTeam.sgeParoquia.model.PrecionamentoPorHora;
 import com.paroquiaTeam.sgeParoquia.model.TipoPrecionamento;
 import com.paroquiaTeam.sgeParoquia.model.TipoUsuario;
 import com.paroquiaTeam.sgeParoquia.model.Usuario;
