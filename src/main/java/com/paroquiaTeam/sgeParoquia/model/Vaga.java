@@ -41,20 +41,12 @@ public class Vaga {
 	
 	public Vaga() {}
 
-	public Vaga(Long id, boolean ocupada, String placa, TipoVaga tipo, 
-			TipoReservaVaga reserva) {
-		this.id = id;
-		this.ocupada = ocupada;
-		this.placa = placa;
+	public Vaga(TipoVaga tipo, TipoReservaVaga reserva) {
 		this.tipo = tipo;
 		this.reserva = reserva;
 	}
 	
-	public Vaga(Long id, boolean ocupada, String placa, TipoVaga tipo, 
-				TipoReservaVaga reserva, Convenio convenio) {
-		this.id = id;
-		this.ocupada = ocupada;
-		this.placa = placa;
+	public Vaga(TipoVaga tipo, TipoReservaVaga reserva, Convenio convenio) {
 		this.tipo = tipo;
 		this.reserva = reserva;
 		this.convenio = convenio;
