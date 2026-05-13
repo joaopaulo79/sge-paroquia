@@ -23,9 +23,9 @@ public class UsuarioDAO {
 	
 	public Optional<Usuario> getById(Long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "FROM Usuario u JOIN FETCH u.caixas WHERE u.id = ?1";
-			return sessao.createSelectionQuery(query, Usuario.class)
-						.setParameter(1, id)
+			String query = "SELECT DISTINCT u FROM Usuario u LEFT JOIN FETCH u.caixas WHERE u.id = :id";
+			return sessao.createQuery(query, Usuario.class)
+						.setParameter("id", id)
 						.uniqueResultOptional();
 					
 		}
@@ -33,8 +33,8 @@ public class UsuarioDAO {
 	
 	public List<Usuario> getAll() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "FROM Usuario u JOIN FETCH u.caixas";
-			return sessao.createSelectionQuery(query, Usuario.class)
+			String query = "SELECT u FROM Usuario u LEFT JOIN FETCH u.caixas";
+			return sessao.createQuery(query, Usuario.class)
 						.getResultList();
 					
 		}
