@@ -21,20 +21,20 @@ public class Usuario {
 	@Column(name = "id_usuario")
 	private Long id;
 	
-	@Column(name = "nome_usuario")
+	@Column(name = "nome_usuario", nullable = false)
 	private String nome;
 	
-	@Column(name = "login_usuario")
+	@Column(name = "login_usuario", unique = true, nullable = false)
 	private String login;
 	
-	@Column(name = "senha_usuario")
+	@Column(name = "senha_usuario", nullable = false)
 	private String senha;
 	
-	@Column(name = "status_usuario")
+	@Column(name = "status_usuario", nullable = false)
 	private boolean status;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo_usuario")
+	@Column(name = "tipo_usuario", nullable = false)
 	private TipoUsuario tipo;
 	
 	@OneToMany(mappedBy = "operador")
@@ -96,6 +96,15 @@ public class Usuario {
 	}
 	public void setTipo(TipoUsuario tipo) {
 		this.tipo = tipo;
+	}
+
+	
+	
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 	
