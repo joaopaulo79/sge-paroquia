@@ -1,0 +1,28 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+    	<property name="hibernate.jdbc.time_zone">America/Sao_Paulo</property>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sgeParoquia_test?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+        
+        <mapping class="com.paroquiaTeam.sgeParoquia.model.Caixa"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Cliente"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Convenio"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Estacionamento"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Estadia"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.MovimentoCaixa"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.PrecificacaoFracionada"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.PrecificacaoPorHora"/>
+        <mapping class="com.paroquiaTeam.sgeParoquia.model.Usuario"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Vaga"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.Veiculo"/>
+    </session-factory>
+</hibernate-configuration>
