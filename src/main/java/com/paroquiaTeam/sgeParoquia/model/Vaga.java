@@ -19,18 +19,18 @@ public class Vaga {
 	@Column(name = "id_vaga")
 	private Long id;
 	
-	@Column(name = "status_ocupacao")
+	@Column(name = "status_ocupacao", nullable = false)
 	private boolean ocupada;
 	
 	@Column(name = "placa_ocupador", nullable = true)
 	private String placa;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo_vaga")
+	@Column(name = "tipo_vaga", nullable = false)
 	private TipoVaga tipo;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo_reserva")
+	@Column(name = "tipo_reserva", nullable = false)
 	private TipoReservaVaga reserva;
 	
 	@ManyToOne(optional = true)
@@ -100,5 +100,11 @@ public class Vaga {
 
 	public void setConvenio(Convenio convenio) {
 		this.convenio = convenio;
+	}
+
+	@Override
+	public String toString() {
+		return "Vaga [id=" + id + ", ocupada=" + ocupada + ", placa=" + placa + ", tipo=" + tipo + ", reserva="
+				+ reserva + ", convenio=" + convenio + "]";
 	}
 }
