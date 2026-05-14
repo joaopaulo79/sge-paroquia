@@ -47,8 +47,8 @@ public class UsuarioDAO {
 				sessao.persist(user);
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Persistência falhou: " + e.getMessage());
 				t.rollback();
+				throw e;
 			}
 		}
 	}
@@ -60,8 +60,8 @@ public class UsuarioDAO {
 				sessao.merge(user);
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Atualização falhou: " + e.getMessage());
 				t.rollback();
+				throw e;
 			}
 		}
 	}
@@ -71,13 +71,14 @@ public class UsuarioDAO {
 			Transaction t = sessao.beginTransaction();
 			try {
 				Usuario usuario = sessao.get(Usuario.class, id);
-				if (usuario != null) {					
-					sessao.remove(usuario);
+				if (usuario == null) {					
+					throw new IllegalArgumentException("Usuário com id especificado não encontrado");
 				}
+				sessao.remove(usuario);
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Remoção falhou: " + e.getMessage());
 				t.rollback();
+				throw e;
 			}
 		}
 	}
