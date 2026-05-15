@@ -34,8 +34,8 @@ public class EstacionamentoDAO {
 				sessao.persist(estacionamento);
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Persistência falhou: " + e.getMessage());
 				t.rollback();
+				throw e;
 			}
 		}
 	}
@@ -47,23 +47,8 @@ public class EstacionamentoDAO {
 				sessao.merge(estacionamento);
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Atualização falhou: " + e.getMessage());
 				t.rollback();
-			}
-		}
-	}
-	
-	public void updatePrecificacao(TipoPrecificacao precificacao) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			Transaction t = sessao.beginTransaction();
-			try {
-				Estacionamento estacionamento = sessao.get(Estacionamento.class, (long) 1);
-				estacionamento.setPrecificacao(precificacao);
-				sessao.merge(estacionamento);
-				t.commit();
-			} catch (Exception e) {
-				System.out.println("Atualização falhou: " + e.getMessage());
-				t.rollback();
+				throw e;
 			}
 		}
 	}

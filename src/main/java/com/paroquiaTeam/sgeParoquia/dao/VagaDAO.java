@@ -46,8 +46,8 @@ public class VagaDAO {
 				sessao.persist(vaga);
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Persistência falhou: " + e.getMessage());
 				t.rollback();
+				throw e;
 			}
 		}
 	}
@@ -59,8 +59,8 @@ public class VagaDAO {
 				sessao.merge(vaga);
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Atualização falhou: " + e.getMessage());
 				t.rollback();
+				throw e;
 			}
 		}
 	}
@@ -70,13 +70,14 @@ public class VagaDAO {
 			Transaction t = sessao.beginTransaction();
 			try {
 				Vaga vaga = sessao.get(Vaga.class, id);
-				if (vaga != null) {					
-					sessao.remove(vaga);
+				if (vaga == null) {					
+					throw new IllegalArgumentException("Vaga com id especificado não encontrada");
 				}
+				sessao.remove(vaga);
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Remoção falhou: " + e.getMessage());
 				t.rollback();
+				throw e;			
 			}
 		}
 	}

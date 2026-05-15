@@ -35,8 +35,8 @@ public class PrecificacaoFracionadaDAO {
 				sessao.persist(precificacao);
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Persistência falhou: " + e.getMessage());
 				t.rollback();
+				throw e;
 			}
 		}
 	}
@@ -48,8 +48,8 @@ public class PrecificacaoFracionadaDAO {
 				sessao.merge(precificacao);
 				t.commit();
 			} catch (Exception e) {
-				System.out.println("Atualização falhou: " + e.getMessage());
 				t.rollback();
+				throw e;
 			}
 		}
 	}
