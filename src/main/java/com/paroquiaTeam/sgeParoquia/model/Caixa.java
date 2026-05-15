@@ -21,13 +21,13 @@ public class Caixa {
 	@Column(name = "id_caixa")
 	private Long id;
 	
-	@Column(name = "data_hora_abertura")
+	@Column(name = "data_hora_abertura", nullable = false)
 	private LocalDateTime dataHoraAbertura;
 
-	@Column(name = "data_hora_fechamento")
+	@Column(name = "data_hora_fechamento", nullable = true)
 	private LocalDateTime dataHoraFechamento;
 	
-	@Column(name = "valor_inicial")
+	@Column(name = "valor_inicial", nullable = false)
 	private double valorInicial;
 	
 	@ManyToOne(optional = false)
@@ -102,5 +102,12 @@ public class Caixa {
 	}
 	public void setMovimentos(List<MovimentoCaixa> movimentos) {
 		this.movimentos = movimentos;
+	}
+
+	@Override
+	public String toString() {
+		return "Caixa [id=" + id + ", dataHoraAbertura=" + dataHoraAbertura + ", dataHoraFechamento="
+				+ dataHoraFechamento + ", valorInicial=" + valorInicial + ", operador=" + operador + ", movimentos="
+				+ movimentos + "]";
 	}
 }

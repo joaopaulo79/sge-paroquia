@@ -11,25 +11,25 @@ public class PrecificacaoPorHora {
 	@Id
 	private long id = 1;
 	
-	@Column
+	@Column(nullable = false)
 	private int tolerancia;
 	
-	@Column(name = "valor_entrada")
+	@Column(name = "valor_entrada", nullable = false)
 	private double valorEntrada;
 	
-	@Column(name = "valor_hora")
+	@Column(name = "valor_hora", nullable = false)
 	private double valorHora;
 	
-	@Column(name = "valor_diaria")
+	@Column(name = "valor_diaria", nullable = false)
 	private double valorDiaria;
 	
-	@Column(name = "valor_entrada_moto")
+	@Column(name = "valor_entrada_moto", nullable = false)
 	private double valorEntradaMoto;
 	
-	@Column(name = "valor_hora_moto")
+	@Column(name = "valor_hora_moto", nullable = false)
 	private double valorHoraMoto;
 	
-	@Column(name = "valor_diaria_moto")
+	@Column(name = "valor_diaria_moto", nullable = false)
 	private double valorDiariaMoto;
 	
 	
@@ -115,5 +115,12 @@ public class PrecificacaoPorHora {
 	}
 	public void setValorDiariaMoto(double valorDiariaMoto) {
 		this.valorDiariaMoto = valorDiariaMoto;
+	}
+
+	@Override
+	public String toString() {
+		return "PrecificacaoPorHora [id=" + id + ", tolerancia=" + tolerancia + ", valorEntrada=" + valorEntrada
+				+ ", valorHora=" + valorHora + ", valorDiaria=" + valorDiaria + ", valorEntradaMoto=" + valorEntradaMoto
+				+ ", valorHoraMoto=" + valorHoraMoto + ", valorDiariaMoto=" + valorDiariaMoto + "]";
 	}
 }

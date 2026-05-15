@@ -19,23 +19,23 @@ public class Veiculo {
 	@Column(name = "id_veiculo")
 	private Long id;
 	
-	@Column(name="placa_veiculo")
+	@Column(name="placa_veiculo", nullable = false)
 	private String placa;
 	
-	@Column(name="marca_veiculo")
+	@Column(name="marca_veiculo", nullable = false)
 	private String marca;
 	
-	@Column(name="modelo_veiculo")
+	@Column(name="modelo_veiculo", nullable = false)
 	private String modelo;
 	
-	@Column(name="cor_veiculo")
+	@Column(name="cor_veiculo", nullable = false)
 	private String cor;
 	
-	@Column(name="observacoes_veiculo")
+	@Column(name="observacoes_veiculo", nullable = true)
 	private String observacoes;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="tipo_veiculo")
+	@Column(name="tipo_veiculo", nullable = false)
 	private TipoVeiculo tipo;
 	
 	@ManyToOne(optional = false)
@@ -129,6 +129,10 @@ public class Veiculo {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Veiculo [id=" + id + ", placa=" + placa + ", marca=" + marca + ", modelo=" + modelo + ", cor=" + cor
+				+ ", observacoes=" + observacoes + ", tipo=" + tipo + ", cliente=" + cliente + "]";
+	}
 }

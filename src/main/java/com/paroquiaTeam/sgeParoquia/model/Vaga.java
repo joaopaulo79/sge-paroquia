@@ -71,9 +71,20 @@ public class Vaga {
 	public void setOcupada(boolean ocupada) {
 		this.ocupada = ocupada;
 	}
+	
+	
+	
 
 	
 	
+	public String getPlaca() {
+		return placa;
+	}
+
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+
 	public TipoVaga getTipo() {
 		return tipo;
 	}

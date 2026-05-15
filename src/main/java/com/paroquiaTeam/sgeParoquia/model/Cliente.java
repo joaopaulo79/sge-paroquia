@@ -22,20 +22,20 @@ public class Cliente {
 	@Column(name = "id_cliente")
 	private Long id;
 	
-	@Column(name = "nome_cliente")
+	@Column(name = "nome_cliente", nullable = false)
 	private String nome;
 	
-	@Column(name = "cpf_cliente")
+	@Column(name = "cpf_cliente", nullable = false)
 	private String cpf;
 	
-	@Column(name = "telefone_cliente")
+	@Column(name = "telefone_cliente", nullable = false)
 	private String telefone;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo_cliente")
+	@Column(name = "tipo_cliente", nullable = false)
 	private TipoCliente tipo;
 	
-	@Column(name = "status_cliente")
+	@Column(name = "status_cliente", nullable = false)
 	private boolean status;
 	
 	@OneToMany(mappedBy = "cliente")
@@ -140,5 +140,11 @@ public class Cliente {
 	}
 	public void setConvenio(Convenio convenio) {
 		this.convenio = convenio;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", telefone=" + telefone + ", tipo=" + tipo
+				+ ", status=" + status + ", veiculos=" + veiculos + ", convenio=" + convenio + "]";
 	}
 }

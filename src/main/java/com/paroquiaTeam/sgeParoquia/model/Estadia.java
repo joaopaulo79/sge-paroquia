@@ -19,16 +19,16 @@ public class Estadia {
 	@Column(name = "id_estadia")
 	private Long id;
 	
-	@Column(name = "data_hora_entrada")
+	@Column(name = "data_hora_entrada", nullable = false)
 	private LocalDateTime dataHoraEntrada;
 
-	@Column(name = "data_hora_saida")
+	@Column(name = "data_hora_saida", nullable = true)
 	private LocalDateTime dataHoraSaida;
 	
-	@Column(name = "valor_estadia")
+	@Column(name = "valor_estadia", nullable = true)
 	private double valor;
 	
-	@Column(name = "placa_veiculo")
+	@Column(name = "placa_veiculo", nullable = false)
 	private String placaVeiculo;
 
 	@OneToMany(mappedBy = "estadia")
@@ -99,5 +99,11 @@ public class Estadia {
 	}
 	public void setMovimentos(List<MovimentoCaixa> movimentos) {
 		this.movimentos = movimentos;
+	}
+
+	@Override
+	public String toString() {
+		return "Estadia [id=" + id + ", dataHoraEntrada=" + dataHoraEntrada + ", dataHoraSaida=" + dataHoraSaida
+				+ ", valor=" + valor + ", placaVeiculo=" + placaVeiculo + ", movimentos=" + movimentos + "]";
 	}
 }

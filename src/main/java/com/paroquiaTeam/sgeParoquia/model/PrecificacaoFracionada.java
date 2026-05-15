@@ -11,25 +11,25 @@ public class PrecificacaoFracionada {
 	@Id
 	private long id = 1;
 	
-	@Column
+	@Column(nullable = false)
 	private int tolerancia;
 	
-	@Column(name = "valor_meia_hora")
+	@Column(name = "valor_meia_hora", nullable = false)
 	private double valorMeiaHora;
 	
-	@Column(name = "valor_hora")
+	@Column(name = "valor_hora", nullable = false)
 	private double valorHora;
 	
-	@Column(name = "valor_diaria")
+	@Column(name = "valor_diaria", nullable = false)
 	private double valorDiaria;
 	
-	@Column(name = "valor_meia_hora_moto")
+	@Column(name = "valor_meia_hora_moto", nullable = false)
 	private double valorMeiaHoraMoto;
 	
-	@Column(name = "valor_hora_moto")
+	@Column(name = "valor_hora_moto", nullable = false)
 	private double valorHoraMoto;
 	
-	@Column(name = "valor_diaria_moto")
+	@Column(name = "valor_diaria_moto", nullable = false)
 	private double valorDiariaMoto;
 	
 	public PrecificacaoFracionada() {}
@@ -112,5 +112,12 @@ public class PrecificacaoFracionada {
 	}
 	public void setValorDiariaMoto(double valorDiariaMoto) {
 		this.valorDiariaMoto = valorDiariaMoto;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "PrecificacaoFracionada [id=" + id + ", tolerancia=" + tolerancia + ", valorMeiaHora=" + valorMeiaHora
+				+ ", valorHora=" + valorHora + ", valorDiaria=" + valorDiaria + ", valorMeiaHoraMoto="
+				+ valorMeiaHoraMoto + ", valorHoraMoto=" + valorHoraMoto + ", valorDiariaMoto=" + valorDiariaMoto + "]";
+	}
 }

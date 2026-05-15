@@ -19,15 +19,15 @@ public class MovimentoCaixa {
 	@Column(name = "id_movimento")
 	private Long id;
 	
-	@Column(name = "valor_movimento")
+	@Column(name = "valor_movimento", nullable = false)
 	private double valor;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "forma_pagamento")
+	@Column(name = "forma_pagamento", nullable = false)
 	private TipoPagamento formaPagamento;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo_movimento")
+	@Column(name = "tipo_movimento", nullable = false)
 	private TipoMovimento tipoMovimento;
 	
 	@ManyToOne(optional = false)
@@ -113,5 +113,11 @@ public class MovimentoCaixa {
 	}
 	public void setEstadia(Estadia estadia) {
 		this.estadia = estadia;
+	}
+
+	@Override
+	public String toString() {
+		return "MovimentoCaixa [id=" + id + ", valor=" + valor + ", formaPagamento=" + formaPagamento
+				+ ", tipoMovimento=" + tipoMovimento + ", caixa=" + caixa + ", estadia=" + estadia + "]";
 	}
 }

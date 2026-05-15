@@ -13,11 +13,12 @@ public class Estacionamento {
 	@Id
 	private long id = 1;
 	
-	@Column(name = "numero_vagas")
+	
+	@Column(name = "numero_vagas", nullable = false)
 	private int numeroDeVagas;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "precificacao_ativa")
+	@Column(name = "precificacao_ativa", nullable = false)
 	private TipoPrecificacao precificacao;
 	
 	public Estacionamento() {}
