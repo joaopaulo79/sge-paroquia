@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FF00FF;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="/sge-paroquia/src/main/java/com/paroquiaTeam/sgeParoquia/controller/BaseController.java">
+   <top>
+      <HBox id="topBar" maxHeight="75.0" minHeight="75.0" prefHeight="75.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <VBox id="sideBar" minWidth="50.0" prefWidth="50.0" style="-fx-background-color: #888888;" BorderPane.alignment="CENTER" />
+   </left>
+   <center>
+      <AnchorPane id="contentArea" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
