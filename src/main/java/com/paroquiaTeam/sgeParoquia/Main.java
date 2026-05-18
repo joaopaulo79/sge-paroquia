@@ -37,6 +37,7 @@ public class Main extends Application {
 			controller.mostrarTela("login", "/screens/login/login.fxml");
 			
 			primaryStage.setTitle("SGE Paróquia");
+			primaryStage.setMaximized(true);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

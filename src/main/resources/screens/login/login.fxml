@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane id="loginRoot" fx:id="loginRoot" prefHeight="200.0" prefWidth="338.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.paroquiaTeam.sgeParoquia.controller.LoginController">
-   <children>
-      <TextField fx:id="campoLogin" layoutX="88.0" layoutY="53.0" />
-      <TextField fx:id="campoSenha" layoutX="88.0" layoutY="87.0" />
-      <Button fx:id="botaoLogin" layoutX="139.0" layoutY="126.0" mnemonicParsing="false" onAction="#onBotaoLoginAction" text="Button" />
-      <Text fx:id="textoStatus" fill="RED" layoutX="76.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Erro:login ou senha inválido!" textAlignment="CENTER" visible="false">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Text>
-   </children>
-</AnchorPane>
+<ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.paroquiaTeam.sgeParoquia.controller.LoginController">
+   <content>
+      <VBox alignment="CENTER" fillWidth="false" spacing="1">
+         <children>
+            <TextField fx:id="campoLogin" maxWidth="200.0" />
+            <TextField fx:id="campoSenha" maxWidth="200.0" />
+            <Button fx:id="botaoLogin" mnemonicParsing="false" onAction="#onBotaoLoginAction" text="Login" />
+            <Label fx:id="textoStatus" text="Erro: login ou senha inválido!" textAlignment="CENTER" textFill="RED" visible="false" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

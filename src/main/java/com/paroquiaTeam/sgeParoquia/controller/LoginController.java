@@ -4,14 +4,14 @@ import com.paroquiaTeam.sgeParoquia.dao.UsuarioDAO;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 
 public class LoginController {
 	@FXML TextField campoLogin;
 	@FXML TextField campoSenha;
 	@FXML Button botaoLogin;
-	@FXML Text textoStatus;
+	@FXML Label textoStatus;
 	
 	@FXML
 	public void onBotaoLoginAction() {
