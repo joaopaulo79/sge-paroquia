@@ -20,7 +20,7 @@ public class LoginController {
 		} else {			
 			BaseController controller = BaseController.getInstance();
 			controller.habilitarSideBar();
-			controller.mostrarTela("testes", "/fxml/TesteView.fxml");
+			controller.mostrarTela("configuracaoSistema", "/screens/configuracaoSistema/configuracaoSistema.fxml");
 		}
 	}
 }
