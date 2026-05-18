@@ -48,12 +48,34 @@ class UsuarioDAOTest extends BaseDAOTest{
 	}
 	
 	@Test
+	public void getById_retornaNadaComIdInvalido() {
+		Optional<Usuario> talvezUsuario = dao.getById((long) 1);
+		assertTrue(talvezUsuario.isEmpty());
+	}
+	
+	@Test
 	public void getById_retornaAlgoComIdValido() {
 		String senha = SenhaUtil.hash("123");
 		Usuario user = new Usuario("Teste", "valido", senha, true, TipoUsuario.OPERADOR);
 		dao.save(user);
 		
 		Optional<Usuario> talvezUsuario = dao.getById(user.getId());
+		assertTrue(talvezUsuario.isPresent());
+	}
+	
+	@Test
+	public void getByLogin_retornaNadaComLoginInvalido() {
+		Optional<Usuario> talvezUsuario = dao.getByLogin("login");
+		assertTrue(talvezUsuario.isEmpty());
+	}
+	
+	@Test
+	public void getByLogin_retornaAlgoComLoginValido() {
+		String senha = SenhaUtil.hash("123");
+		Usuario user = new Usuario("Teste", "valido", senha, true, TipoUsuario.OPERADOR);
+		dao.save(user);
+		
+		Optional<Usuario> talvezUsuario = dao.getByLogin(user.getLogin());
 		assertTrue(talvezUsuario.isPresent());
 	}
 	
@@ -205,5 +227,32 @@ class UsuarioDAOTest extends BaseDAOTest{
 	@Test
 	public void delete_idInvalidoThrows() {
 		assertThrows(IllegalArgumentException.class, () -> dao.delete((long) 1));
+	}
+	
+	@Test
+	public void autenticar_autenticaLoginESenhaCorretos() {
+		String senha = SenhaUtil.hash("123");
+		Usuario user = new Usuario("Teste", "valido", senha, true, TipoUsuario.OPERADOR);
+		dao.save(user);
+		
+		assertTrue(dao.autenticar("valido", "123"));
+	}
+	
+	@Test
+	public void autenticar_retornaFalsoComLoginInvalido() {
+		String senha = SenhaUtil.hash("123");
+		Usuario user = new Usuario("Teste", "valido", senha, true, TipoUsuario.OPERADOR);
+		dao.save(user);
+		
+		assertFalse(dao.autenticar("logintotalmentecorretoconfia", senha));
+	}
+	
+	@Test
+	public void autenticar_retornaFalsoComSenhaInvalida() {
+		String senha = SenhaUtil.hash("123");
+		Usuario user = new Usuario("Teste", "valido", senha, true, TipoUsuario.OPERADOR);
+		dao.save(user);
+		
+		assertFalse(dao.autenticar(user.getLogin(), "senhatotalmentecorretaconfia"));
 	}
 }
