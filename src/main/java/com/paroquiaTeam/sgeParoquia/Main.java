@@ -7,6 +7,7 @@ import com.paroquiaTeam.sgeParoquia.model.Estacionamento;
 import com.paroquiaTeam.sgeParoquia.model.TipoPrecificacao;
 import com.paroquiaTeam.sgeParoquia.model.TipoUsuario;
 import com.paroquiaTeam.sgeParoquia.model.Usuario;
+import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -44,8 +45,6 @@ public class Main extends Application {
     
     
     private void initialize() {
-    	
-    	
     	EstacionamentoDAO estacionamentoDao = new EstacionamentoDAO();    	
     	if (!estacionamentoDao.exists()) {
     		Estacionamento estacionamento = new Estacionamento(0, TipoPrecificacao.FRACIONADA);
@@ -54,8 +53,9 @@ public class Main extends Application {
     	
     	UsuarioDAO usuarioDao = new UsuarioDAO();
     	if (!usuarioDao.exists(1)) {
+    		String senha = SenhaUtil.hash("root4paroquia");
     		Usuario usuario = new Usuario(
-    				"root", "root", "root4paroquia", true,  TipoUsuario.ADMINISTRADOR);
+    				"root", "root", senha, true,  TipoUsuario.ADMINISTRADOR);
     		usuarioDao.save(usuario);
     	}
     	
