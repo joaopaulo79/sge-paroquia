@@ -10,7 +10,7 @@
    <content>
       <AnchorPane prefHeight="314.0" prefWidth="304.0">
          <children>
-            <ChoiceBox fx:id="escolhaTipoPrecionamento" layoutX="14.0" layoutY="14.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="escolhaTipoPrecificacao" layoutX="14.0" layoutY="14.0" prefWidth="150.0" />
             <VBox fx:id="containerCamposPrecificacao" layoutX="14.0" layoutY="40.0" prefHeight="257.0" prefWidth="150.0" style="-fx-border-width: 1; -fx-border-color: #000000;" />
          </children>
       </AnchorPane>
