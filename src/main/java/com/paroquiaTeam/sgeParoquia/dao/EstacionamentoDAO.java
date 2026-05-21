@@ -52,4 +52,11 @@ public class EstacionamentoDAO {
 			}
 		}
 	}
+	
+	public void updatePrecificacao(TipoPrecificacao p) {
+		Optional<Estacionamento> talvezEstacionamento = get();
+		Estacionamento estacionamento = talvezEstacionamento.get();
+		estacionamento.setPrecificacao(p);
+		update(estacionamento);
+	}
 }
