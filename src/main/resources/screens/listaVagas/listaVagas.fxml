@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane style="-fx-background-color: #FFFFFF" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" 
-	fx:controller="com.paroquiaTeam.sgeParoquia.controller.ListaVagasController">
+<AnchorPane style="-fx-background-color: #FFFFFF" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.paroquiaTeam.sgeParoquia.controller.ListaVagasController">
    <children>
       <VBox AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
          <padding>
@@ -42,7 +41,26 @@
                               </VBox>
                               <VBox>
                                  <children>
-                                    <Button minWidth="100.0" mnemonicParsing="false" text="Configurar vagas" textAlignment="CENTER" wrapText="true" />
+                                    <Label text="Configurar vagas" wrapText="true" />
+                                    <Label text="Comuns" />
+                                    <Label text="Carro" />
+                                    <TextField fx:id="vagasCarroComum" />
+                                    <Label text="Moto" />
+                                    <TextField fx:id="vagasMotoComum" />
+                                    
+<!--                                     <Label managed="false" text="PCD" visible="false" /> -->
+<!--                                     <Label managed="false" text="Carro" visible="false" /> -->
+<!--                                     <TextField managed="false" visible="false" /> -->
+<!--                                     <Label managed="false" text="Moto" visible="false" /> -->
+<!--                                     <TextField managed="false" visible="false" /> -->
+                                    
+<!--                                     <Label managed="false" text="Idoso" visible="false" /> -->
+<!--                                     <Label managed="false" text="Carro" visible="false" /> -->
+<!--                                     <TextField managed="false" visible="false" /> -->
+<!--                                     <Label managed="false" text="Moto" visible="false" /> -->
+<!--                                     <TextField managed="false" visible="false" /> -->
+                                    
+                                    <Button fx:id="btnSalvar" mnemonicParsing="false" text="Salvar" />
                                  </children>
                               </VBox>
                            </children>
