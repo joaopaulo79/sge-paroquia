@@ -21,7 +21,7 @@ public class PrecificacaoPorHoraDAO {
 	
 	public Optional<PrecificacaoPorHora> get() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "FROM PrecificacaoPorHora WHERE p.id = 1";
+			String query = "FROM PrecificacaoPorHora p WHERE p.id = 1";
 			return sessao.createSelectionQuery(query, PrecificacaoPorHora.class)
 						.uniqueResultOptional();
 					
