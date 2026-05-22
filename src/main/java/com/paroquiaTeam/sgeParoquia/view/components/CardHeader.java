@@ -14,7 +14,8 @@ public class CardHeader extends HBox {
     private final HBox containerExtras;
 
     public CardHeader(Long id) {
-        this.containerExtras = new HBox();
+        this.getStyleClass().add("card-header");
+    	this.containerExtras = new HBox();
 
         HBox.setHgrow(containerExtras, Priority.ALWAYS);
         containerExtras.setAlignment(Pos.CENTER_RIGHT);
