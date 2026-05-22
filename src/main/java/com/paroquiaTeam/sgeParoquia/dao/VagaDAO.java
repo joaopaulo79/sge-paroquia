@@ -12,6 +12,8 @@ import com.paroquiaTeam.sgeParoquia.model.TipoVaga;
 import com.paroquiaTeam.sgeParoquia.model.Vaga;
 
 public class VagaDAO {
+    public record AjusteVaga(TipoVaga tipo, TipoReservaVaga reserva, long novaQuantidade) {}
+	
 	public boolean exists(long id) { 
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.id = ?1";
@@ -129,14 +131,35 @@ public class VagaDAO {
 		}
 	}
 	
-	public void ajustarQuantidade(TipoVaga tipo, TipoReservaVaga reserva, int novaQuantidade) {
-	    long atual = count(tipo, reserva);
-	    long diferenca = novaQuantidade - atual;
+	public void ajustarVagas(List<AjusteVaga> ajustes) {
+		ajustes.forEach(a -> validarAjuste(a));
+		
+		ajustes.forEach(a -> realizarAjuste(a));
+	}
+	
+	private void realizarAjuste(AjusteVaga ajuste) {
+	    long atual = count(ajuste.tipo, ajuste.reserva);
+	    long diferenca = ajuste.novaQuantidade - atual;
 
 	    if (diferenca > 0) {
-	        criarVagas(tipo, reserva, diferenca);
+	        criarVagas(ajuste.tipo, ajuste.reserva, diferenca);
 	    } else if (diferenca < 0) {
-	        excluirVagasLivres(tipo, reserva, Math.abs(diferenca));
+	        excluirVagasLivres(ajuste.tipo, ajuste.reserva, Math.abs(diferenca));
+	    }
+	}
+	
+	private void validarAjuste(AjusteVaga ajuste) {
+		long atual = count(ajuste.tipo, ajuste.reserva);
+	    long diferenca = atual - ajuste.novaQuantidade;
+
+	    if (diferenca > 0) {
+	        long livres = countComStatus(ajuste.tipo, ajuste.reserva, false);
+	        if (livres < diferenca) {
+	            throw new IllegalStateException(
+	                "Vagas de " + ajuste.tipo + " insuficientes para redução. " +
+	                "Livres: " + livres + ", necessário liberar: " + diferenca
+	            );
+	        }
 	    }
 	}
 
