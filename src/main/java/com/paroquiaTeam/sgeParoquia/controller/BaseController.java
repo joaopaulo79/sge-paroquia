@@ -55,11 +55,22 @@ public class BaseController {
 	public void mostrarTela(String id, String caminho) {
 		Parent tela = cacheScreens.computeIfAbsent(caminho, k -> {
 			try {
-				return FXMLLoader.load(getClass().getResource(caminho));
+				FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho));
+				Parent root = loader.load();
+				
+				root.setUserData(loader.getController());
+				
+				return root;
 			} catch (IOException e) {
 				throw new UncheckedIOException(e);
 			}
 		});
+		
+		Object controller = tela.getUserData();
+		if (controller instanceof ListaVagasController) {
+			((ListaVagasController) controller).atualizarCards();
+		}
+		
 		contentArea.getChildren().setAll(tela);
 		
 		AnchorPane.setTopAnchor(tela, 0.0);    
