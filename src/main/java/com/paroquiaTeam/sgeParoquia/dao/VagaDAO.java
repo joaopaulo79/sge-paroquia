@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.model.TipoReservaVaga;
+import com.paroquiaTeam.sgeParoquia.model.TipoVaga;
 import com.paroquiaTeam.sgeParoquia.model.Vaga;
 
 public class VagaDAO {
@@ -36,6 +38,16 @@ public class VagaDAO {
 			return sessao.createSelectionQuery(query, Vaga.class)
 						.getResultList();
 					
+		}
+	}
+	
+	public Vaga getFirstLivre(TipoVaga tipo, TipoReservaVaga reserva) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2";
+			return sessao.createSelectionQuery(query, Vaga.class)
+						.setParameter(1, tipo)
+						.setParameter(2, reserva)
+						.getSingleResultOrNull();			
 		}
 	}
 	
@@ -79,6 +91,37 @@ public class VagaDAO {
 				t.rollback();
 				throw e;			
 			}
+		}
+	}
+	
+	public long countAll() {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT COUNT(v) FROM Vaga v";
+			Long quantidade = sessao.createQuery(query, Long.class)
+					.uniqueResult();			
+			return quantidade;
+		}
+	}
+	
+	public long count(TipoVaga tipoVaga, TipoReservaVaga tipoReserva) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2";
+			Long quantidade = sessao.createQuery(query, Long.class)
+					.setParameter(1, tipoVaga)
+					.setParameter(2, tipoReserva)
+					.uniqueResult();			
+			return quantidade;
+		}
+	}
+	
+	public long countComStatus(TipoVaga tipoVaga, TipoReservaVaga tipoReserva, boolean ocupacao) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2";
+			Long quantidade = sessao.createQuery(query, Long.class)
+					.setParameter(1, tipoVaga)
+					.setParameter(2, tipoReserva)
+					.uniqueResult();			
+			return quantidade;
 		}
 	}
 }
