@@ -85,6 +85,9 @@ public class VagaDAO {
 				if (vaga == null) {					
 					throw new IllegalArgumentException("Vaga com id especificado não encontrada");
 				}
+				if (vaga.isOcupada()) {
+	                throw new IllegalStateException("Não é possível deletar uma vaga ocupada");
+	            }
 				sessao.remove(vaga);
 				t.commit();
 			} catch (Exception e) {
@@ -116,12 +119,67 @@ public class VagaDAO {
 	
 	public long countComStatus(TipoVaga tipoVaga, TipoReservaVaga tipoReserva, boolean ocupacao) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2";
+			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2 AND v.ocupada = ?3";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, tipoVaga)
 					.setParameter(2, tipoReserva)
+					.setParameter(3, ocupacao)
 					.uniqueResult();			
 			return quantidade;
 		}
+	}
+	
+	public void ajustarQuantidade(TipoVaga tipo, TipoReservaVaga reserva, int novaQuantidade) {
+	    long atual = count(tipo, reserva);
+	    long diferenca = novaQuantidade - atual;
+
+	    if (diferenca > 0) {
+	        criarVagas(tipo, reserva, diferenca);
+	    } else if (diferenca < 0) {
+	        excluirVagasLivres(tipo, reserva, Math.abs(diferenca));
+	    }
+	}
+
+	private void criarVagas(TipoVaga tipo, TipoReservaVaga reserva, long quantidade) {
+	    try (Session sessao = HibernateUtil.getSessionFactory().openSession()) {
+	        Transaction t = sessao.beginTransaction();
+	        try {
+	            for (int i = 0; i < quantidade; i++) {
+	                Vaga vaga = new Vaga();
+	                vaga.setTipo(tipo);
+	                vaga.setReserva(reserva);
+	                vaga.setOcupada(false);
+	                sessao.persist(vaga);
+	            }
+	            t.commit();
+	        } catch (Exception e) {
+	            t.rollback();
+	            throw e;
+	        }
+	    }
+	}
+
+	private void excluirVagasLivres(TipoVaga tipo, TipoReservaVaga reserva, long quantidade) {
+	    try (Session sessao = HibernateUtil.getSessionFactory().openSession()) {
+	        Transaction t = sessao.beginTransaction();
+	        try {
+	            String query = "FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2 AND v.ocupada = false";
+	            List<Vaga> livres = sessao.createSelectionQuery(query, Vaga.class)
+	                    .setParameter(1, tipo)
+	                    .setParameter(2, reserva)
+	                    .setMaxResults((int) quantidade)
+	                    .getResultList();
+
+	            if (livres.size() < quantidade) {
+	                throw new IllegalStateException("Vagas ocupadas seriam removidas. Operação cancelada.");
+	            }
+
+	            livres.forEach(sessao::remove);
+	            t.commit();
+	        } catch (Exception e) {
+	            t.rollback();
+	            throw e;
+	        }
+	    }
 	}
 }
