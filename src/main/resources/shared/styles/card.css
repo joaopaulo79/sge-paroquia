@@ -1,0 +1,20 @@
+.card-header-primario {
+	-fx-background-color: #0000ff;
+}
+
+.card-header-atencao {
+	-fx-background-color: #ff8c00;
+}
+
+.card {
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+} 
+
+.card-header {
+	-fx-min-height: 20px;
+    -fx-background-radius: 4px 4px 0px 0px;
+}
