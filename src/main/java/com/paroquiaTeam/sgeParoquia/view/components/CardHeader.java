@@ -13,15 +13,20 @@ public class CardHeader extends HBox {
     private final Label labelId;
     private final HBox containerExtras;
 
-    
-    public CardHeader(long id) {
-        this.labelId = new Label("#"+id);
+    public CardHeader(Long id) {
         this.containerExtras = new HBox();
 
         HBox.setHgrow(containerExtras, Priority.ALWAYS);
         containerExtras.setAlignment(Pos.CENTER_RIGHT);
-
-        getChildren().addAll(containerExtras, labelId);
+        
+        if (id == null) {
+        	this.labelId = null;
+        	getChildren().addAll(containerExtras);
+        } else {
+            this.labelId = new Label("#"+id);
+            getChildren().addAll(containerExtras, labelId);
+        }
+        
         getStyleClass().add("card-header");
     }
 
