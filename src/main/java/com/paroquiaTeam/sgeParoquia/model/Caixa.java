@@ -41,9 +41,8 @@ public class Caixa {
 	
 	public Caixa() {}
 	
-	public Caixa(Long id, LocalDateTime dataHoraAbertura, LocalDateTime dataHoraFechamento, 
+	public Caixa(LocalDateTime dataHoraAbertura, LocalDateTime dataHoraFechamento, 
 			double valorInicial, Usuario operador) {
-		this.id = id;
 		this.dataHoraAbertura = dataHoraAbertura;
 		this.dataHoraFechamento = dataHoraFechamento;
 		this.valorInicial = valorInicial;
