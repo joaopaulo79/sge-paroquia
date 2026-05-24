@@ -1,6 +1,8 @@
 package com.paroquiaTeam.sgeParoquia.controller;
 
 import com.paroquiaTeam.sgeParoquia.dao.UsuarioDAO;
+import com.paroquiaTeam.sgeParoquia.model.Usuario;
+import com.paroquiaTeam.sgeParoquia.utils.SessaoSistema;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,12 +17,16 @@ public class LoginController {
 	
 	@FXML
 	public void onBotaoLoginAction() {
-		if (!new UsuarioDAO().autenticar(campoLogin.getText(), campoSenha.getText())) {
+		UsuarioDAO dao = new UsuarioDAO();
+		if (!dao.autenticar(campoLogin.getText(), campoSenha.getText())) {
 			textoStatus.setVisible(true);
-		} else {			
+		} else {	
+			Usuario usuario = dao.getByLogin(campoLogin.getText()).get();
+			SessaoSistema.getInstancia().setUserLogado(usuario);
+			
 			BaseController controller = BaseController.getInstance();
 			controller.habilitarSideBar();
-			controller.mostrarTela("configuracaoSistema", "/screens/configuracaoSistema/configuracaoSistema.fxml");
-		}
+			controller.mostrarTela("configuracaoSistema", "/screens/dashboard/dashboard.fxml");
+		}		
 	}
 }
