@@ -54,7 +54,7 @@ public class Main extends Application {
     	
     	UsuarioDAO usuarioDao = new UsuarioDAO();
     	if (!usuarioDao.exists(1)) {
-    		String senha = SenhaUtil.hash("root4paroquia");
+    		String senha = SenhaUtil.hash("root");
     		Usuario usuario = new Usuario(
     				"root", "root", senha, true,  TipoUsuario.ADMINISTRADOR);
     		usuarioDao.save(usuario);
