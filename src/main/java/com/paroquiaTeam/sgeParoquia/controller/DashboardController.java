@@ -1,26 +1,28 @@
 package com.paroquiaTeam.sgeParoquia.controller;
 
+import com.paroquiaTeam.sgeParoquia.utils.SessaoSistema;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 
 public class DashboardController {
 	@FXML StackPane containerAcaoCaixa;
 	
+	
 	private CaixaController controllerCaixa = new CaixaController();
-	
-	boolean caixaAberto = false;
-	
+		
 	@FXML
 	private void initialize() {
 		controllerCaixa.setDashboardController(this);
-		carregarPainel();
+		
+		boolean caixaAberto = SessaoSistema.getInstancia().isCaixaAberto();
+		
+		carregarPainel(caixaAberto);
 	}
 	
-	public void carregarPainel() {
+	public void carregarPainel(boolean caixaAberto) {
 		try {
 	        containerAcaoCaixa.getChildren().clear();
 	        String fxmlPath = caixaAberto ? 
