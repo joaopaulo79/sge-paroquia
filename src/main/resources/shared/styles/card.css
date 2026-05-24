@@ -6,6 +6,11 @@
 	-fx-background-color: #ff8c00;
 }
 
+.card-header-secundario {
+	-fx-background-color: #acacac;
+}
+
+
 .card {
     -fx-background-color: #f4f4f4;
     -fx-border-color: #cccccc;
