@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class VagaDAOTest {
+class VagaDAOTest extends BaseDAOTest {
 
     private static VagaDAO dao = new VagaDAO();
 

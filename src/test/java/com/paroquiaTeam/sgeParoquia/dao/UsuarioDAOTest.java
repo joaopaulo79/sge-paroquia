@@ -16,6 +16,7 @@ import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.TipoUsuario;
 import com.paroquiaTeam.sgeParoquia.model.Usuario;
 import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
+import com.paroquiaTeam.sgeParoquia.utils.SessaoSistema;
 
 class UsuarioDAOTest extends BaseDAOTest{
 	private static UsuarioDAO dao = new UsuarioDAO();
@@ -25,7 +26,9 @@ class UsuarioDAOTest extends BaseDAOTest{
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 	        Transaction tx = session.beginTransaction();
 	        try {
-	            session.createMutationQuery("DELETE FROM Usuario").executeUpdate();
+	            session.createMutationQuery("DELETE FROM Usuario u WHERE u.id != :id")
+	            .setParameter("id", SessaoSistema.getInstancia().getUserLogado().getId())
+	            .executeUpdate();
 	            tx.commit();
 	        } catch (Exception e) {
 	            tx.rollback();
@@ -94,9 +97,11 @@ class UsuarioDAOTest extends BaseDAOTest{
 	}
 	
 	@Test
-	public void getAll_retornaListaVaziaQuandoBancoVazio() {
+	public void getAll_retornaApenasUsuarioDaSessaoQuandoNaoHouveInserts() {
 		List<Usuario> usuarios = dao.getAll();
-		assertTrue(usuarios.isEmpty());
+		
+		assertEquals(1, usuarios.size());
+	    assertEquals(SessaoSistema.getInstancia().getUserLogado().getId(), usuarios.get(0).getId());
 	}
 	
 	@Test
