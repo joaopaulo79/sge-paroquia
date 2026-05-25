@@ -35,7 +35,13 @@ public class CaixaController {
     }
 	
 	public void abrirCaixa() {
-		double valorInicial = Double.parseDouble(campoFundoInicial.getText());
+		String valorInserido = campoFundoInicial.getText();
+		double valorInicial;
+		if (valorInserido.isBlank()) {
+			valorInicial = 0;
+		} else {
+			valorInicial = Double.parseDouble(valorInserido);
+		}
 		Usuario user = SessaoSistema.getInstancia().getUserLogado();
 		Caixa caixa = new Caixa(LocalDateTime.now(), null, valorInicial, user);
 		caixaDao.save(caixa);
