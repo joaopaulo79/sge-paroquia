@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import com.paroquiaTeam.sgeParoquia.dao.EstadiaDAO;
 import com.paroquiaTeam.sgeParoquia.model.Estadia;
+import com.paroquiaTeam.sgeParoquia.service.PrecificacaoService;
+import com.paroquiaTeam.sgeParoquia.utils.TempoUtils;
 import com.paroquiaTeam.sgeParoquia.view.factory.EstadiaCardFactory;
 
 import javafx.fxml.FXML;
@@ -29,6 +31,7 @@ public class EstadiaController {
     private EstadiaDAO dao = new EstadiaDAO();
     
     @FXML VBox containerCards;
+    @FXML Button btnConfirmar;
     @FXML Button btnCancelar;
 
     public boolean configurarEValidar(TipoOperacao operacao, String placa) {
@@ -46,6 +49,14 @@ public class EstadiaController {
         
     	criarCards();
     	btnCancelar.setOnAction(e -> ((Stage) btnCancelar.getScene().getWindow()).close());
+    	btnConfirmar.setOnAction(e -> {
+    		if (this.operacao == TipoOperacao.ENTRADA) { 
+    			this.dao.save(estadia);
+    		} else if (this.operacao == TipoOperacao.SAIDA) {
+    			this.dao.update(estadia);
+    		}
+    		((Stage) btnConfirmar.getScene().getWindow()).close();
+    	});
     	return true;
     }
     
@@ -62,6 +73,14 @@ public class EstadiaController {
         Optional<Estadia> busca = dao.getLastByPlaca(placa);
         if (busca.isPresent() && busca.get().getDataHoraSaida() == null) {
             this.estadia = busca.get();
+            this.estadia.setDataHoraSaida(LocalDateTime.now());
+            PrecificacaoService precificacaoService = new PrecificacaoService();
+            this.estadia.setValor(precificacaoService.calcular(
+            		TempoUtils.calcularDiferencaMinutos(
+            				estadia.getDataHoraEntrada(), 
+            				estadia.getDataHoraSaida()),
+            		false));
+            
             return true;
         } else {
         	return false;
