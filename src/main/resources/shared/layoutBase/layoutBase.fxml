@@ -13,8 +13,9 @@
    <left>
       <VBox id="sideBar" fx:id="sideBar" managed="false" minWidth="64.0" prefWidth="64.0" style="-fx-background-color: #888888;" visible="false" BorderPane.alignment="CENTER">
          <children>
+           <ToggleButton fx:id="btnNavDashboard" minWidth="48.0" mnemonicParsing="false" text="Dashboard" userData="" wrapText="true" />
+            <ToggleButton fx:id="btnNavVagas" minWidth="48.0" mnemonicParsing="false" text="Vagas" />
             <ToggleButton fx:id="btnNavConfig" minWidth="48.0" mnemonicParsing="false" text="Config" userData="" wrapText="true" />
-            <ToggleButton fx:id="btnNavVagas" mnemonicParsing="false" text="Vagas" />
          </children></VBox>
    </left>
    <center>

@@ -19,6 +19,7 @@ public class BaseController {
 	@FXML private VBox sideBar;
 	
 	// nav buttons
+	@FXML private ToggleButton btnNavDashboard;
 	@FXML private ToggleButton btnNavConfig;
 	@FXML private ToggleButton btnNavVagas;
 	
@@ -29,9 +30,11 @@ public class BaseController {
 	@FXML
 	private void initialize() {
 		ToggleGroup grupoNav = new ToggleGroup();
+		btnNavDashboard.setToggleGroup(grupoNav);
 		btnNavConfig.setToggleGroup(grupoNav);
 		btnNavVagas.setToggleGroup(grupoNav);
-				
+		
+		btnNavDashboard.setOnAction(event -> navegar(event, "dashboard", "/screens/dashboard/dashboard.fxml"));
 		btnNavConfig.setOnAction(event -> navegar(event, "configuracaoSistema", "/screens/configuracaoSistema/configuracaoSistema.fxml"));
 		btnNavVagas.setOnAction(event -> navegar(event, "listaVagas", "/screens/listaVagas/listaVagas.fxml"));
 
@@ -44,11 +47,13 @@ public class BaseController {
 	
 	private void navegar(ActionEvent e, String id, String caminho) {
 		ToggleButton btn = (ToggleButton) e.getSource();
+
 		if (!btn.isSelected()) {
 			e.consume();
 			btn.setSelected(true);
 			return;
 		}
+		
 		mostrarTela(id, caminho);
 	}
 	
@@ -65,7 +70,7 @@ public class BaseController {
 				throw new UncheckedIOException(e);
 			}
 		});
-		
+				
 		Object controller = tela.getUserData();
 		if (controller instanceof ListaVagasController) {
 			((ListaVagasController) controller).atualizarCards();
