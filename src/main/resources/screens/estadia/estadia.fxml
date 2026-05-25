@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="/shared/styles/card.css" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.paroquiaTeam.sgeParoquia.controller.EstadiaController">
    <content>
       <VBox prefHeight="200.0" prefWidth="598.0">
          <children>
@@ -18,7 +18,7 @@
             </HBox>
             <HBox fillHeight="false" prefWidth="200.0" VBox.vgrow="NEVER">
                <children>
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" text="Button" />
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" text="Cancelar" />
                   <Button fx:id="btnConfirmar" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Button" />
                </children>
             </HBox>
