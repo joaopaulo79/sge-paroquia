@@ -1,5 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.model;
 
+import com.paroquiaTeam.sgeParoquia.service.Calculavel;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "PRECIFICACAO_POR_HORA")
-public class PrecificacaoPorHora {
+public class PrecificacaoPorHora implements Calculavel {
 	@Id
 	private long id = 1;
 	
@@ -117,6 +119,10 @@ public class PrecificacaoPorHora {
 		this.valorDiariaMoto = valorDiariaMoto;
 	}
 
+	public double calcular(long tempoEmMinutos, boolean ehMoto) {
+		return 1;
+	}
+	
 	@Override
 	public String toString() {
 		return "PrecificacaoPorHora [id=" + id + ", tolerancia=" + tolerancia + ", valorEntrada=" + valorEntrada

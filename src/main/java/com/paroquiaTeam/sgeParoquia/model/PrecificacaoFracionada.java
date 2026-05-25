@@ -1,5 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.model;
 
+import com.paroquiaTeam.sgeParoquia.service.Calculavel;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -7,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "PRECIFICACAO_FRACIONADA")
-public class PrecificacaoFracionada {
+public class PrecificacaoFracionada implements Calculavel {
 	@Id
 	private long id = 1;
 	
@@ -112,6 +114,18 @@ public class PrecificacaoFracionada {
 	}
 	public void setValorDiariaMoto(double valorDiariaMoto) {
 		this.valorDiariaMoto = valorDiariaMoto;
+	}
+	
+	public double calcular(long tempoEmMinutos, boolean ehMoto) {
+		if (tempoEmMinutos <= tolerancia) {
+			return 0.0;
+		} else if (tempoEmMinutos <= 30) {
+			return (ehMoto) ? valorMeiaHoraMoto : valorMeiaHora;
+		} else if (tempoEmMinutos <= 60) {
+			return (ehMoto) ? valorHoraMoto : valorHora;
+		} else {
+			return (ehMoto) ? valorDiariaMoto : valorDiaria;
+		}
 	}
 
 	@Override
