@@ -1,0 +1,124 @@
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #ECECEC;
+}
+
+/* =========================
+   CARD PRINCIPAL
+========================= */
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: #DDDDDD;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(0,0,0,0.08),
+            12,
+            0,
+            0,
+            3
+        );
+}
+
+/* =========================
+   TITULOS
+========================= */
+
+.page-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #202020;
+}
+
+.section-title {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E1E1E;
+    -fx-padding: 10 0 5 0;
+}
+
+/* =========================
+   LABELS
+========================= */
+
+.form-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #555555;
+    -fx-font-weight: 600;
+    
+    -fx-font-family: "Segoe UI";
+}
+
+/* =========================
+   TEXTFIELDS
+========================= */
+
+.text-field {
+    -fx-background-color: #F8F8F8;
+    -fx-background-radius: 8;
+
+    -fx-border-radius: 8;
+    -fx-border-color: #D9D9D9;
+
+    -fx-padding: 10 12;
+
+    -fx-font-size: 14px;
+}
+
+.text-field:focused {
+    -fx-border-color: #16213E;
+    -fx-background-color: white;
+}
+
+/* =========================
+   CHOICEBOX
+========================= */
+
+.choice-box {
+    -fx-background-color: #F8F8F8;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #D9D9D9;
+
+    -fx-font-size: 14px;
+    -fx-padding: 5 10;
+}
+
+/* =========================
+   BOTÃO
+========================= */
+
+.button {
+    -fx-background-color: #16213E;
+    -fx-text-fill: white;
+
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+
+    -fx-padding: 10 22;
+
+    -fx-background-radius: 8;
+
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #1F2C52;
+}
+
+/* =========================
+   SCROLL
+========================= */
+
+.scroll-pane {
+    -fx-background: #ECECEC;
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
