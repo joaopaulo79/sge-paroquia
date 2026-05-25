@@ -1,13 +1,21 @@
 package com.paroquiaTeam.sgeParoquia.controller;
 
+import java.io.IOException;
+
 import com.paroquiaTeam.sgeParoquia.utils.SessaoSistema;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class DashboardController {
 	@FXML StackPane containerAcaoCaixa;
@@ -37,7 +45,31 @@ public class DashboardController {
 	
 	private void handleEstadia(EstadiaController.TipoOperacao operacao) {
 		String placa = campoPlaca.getText();
-		new EstadiaController().inicializar(operacao, placa);
+		
+		try {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/estadia/estadia.fxml"));
+			Parent root = loader.load();
+			
+			EstadiaController estadiaController = loader.getController();
+			
+			if (estadiaController.configurarEValidar(operacao, placa)) {
+				Stage modal = new Stage();
+		        modal.initModality(Modality.APPLICATION_MODAL);
+		        modal.setScene(new Scene(root));
+		        modal.setTitle("Registro de Veículo");
+		        modal.showAndWait();
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+		    	alert.setTitle("Erro");
+		    	alert.setHeaderText("Placa informada não possuí entrada!");
+		    	alert.showAndWait();
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+    	
 	}
 	
 	public void carregarPainel(boolean caixaAberto) {

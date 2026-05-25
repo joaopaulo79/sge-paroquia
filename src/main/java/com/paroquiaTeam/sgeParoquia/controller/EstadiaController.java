@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.paroquiaTeam.sgeParoquia.dao.EstadiaDAO;
 import com.paroquiaTeam.sgeParoquia.model.Estadia;
+import com.paroquiaTeam.sgeParoquia.view.factory.EstadiaCardFactory;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -24,46 +27,44 @@ public class EstadiaController {
     private TipoOperacao operacao;
     private Estadia estadia;
     private EstadiaDAO dao = new EstadiaDAO();
+    
+    @FXML VBox containerCards;
+    @FXML Button btnCancelar;
 
-    public void inicializar(TipoOperacao operacao, String placa) {
+    public boolean configurarEValidar(TipoOperacao operacao, String placa) {
         this.operacao = operacao;
+        
+        if (operacao == TipoOperacao.SAIDA && !validarEstadiaAtiva(placa)) {
+        	return false;
+        }
         
         if (operacao == TipoOperacao.ENTRADA) {
             this.estadia = new Estadia();
             this.estadia.setPlacaVeiculo(placa);
             this.estadia.setDataHoraEntrada(LocalDateTime.now());
-            carregarTela();
-        } else {
-            buscarEstadiaAtiva(placa);
-        }
+        } 
+        
+    	criarCards();
+    	btnCancelar.setOnAction(e -> ((Stage) btnCancelar.getScene().getWindow()).close());
+    	return true;
     }
     
-    private void carregarTela() {
-    	try {
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/estadia/estadia.fxml"));
-			Parent root = loader.load();
-			
-			Stage modal = new Stage();
-	        modal.initModality(Modality.APPLICATION_MODAL);
-	        modal.setScene(new Scene(root));
-	        modal.setTitle("Registro de Veículo");
-	        modal.showAndWait();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    private void criarCards() {
+    	containerCards.getChildren().add(
+	    	switch (operacao) {
+	    		case ENTRADA -> new EstadiaCardFactory().criarCardEntrada(estadia);
+	    		case SAIDA -> new EstadiaCardFactory().criarCardSaida(estadia);
+	    	}
+    	);
     }
 
-    private void buscarEstadiaAtiva(String placa) {
+    private boolean validarEstadiaAtiva(String placa) {
         Optional<Estadia> busca = dao.getLastByPlaca(placa);
         if (busca.isPresent() && busca.get().getDataHoraSaida() == null) {
             this.estadia = busca.get();
-            carregarTela();
+            return true;
         } else {
-        	Alert alert = new Alert(AlertType.ERROR);
-        	alert.setTitle("Erro");
-        	alert.setHeaderText("Placa informada não possuí entrada!");
-        	alert.showAndWait();
+        	return false;
         }
     }
 }
