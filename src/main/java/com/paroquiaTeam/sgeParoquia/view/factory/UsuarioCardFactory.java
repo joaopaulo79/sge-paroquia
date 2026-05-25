@@ -43,6 +43,10 @@ public class UsuarioCardFactory {
 		linhaPrincipal.getChildren().add(new Label(usuario.getTipo().toString()));
 		linhaPrincipal.getChildren().addAll(btnEditar, btnDesativar);
 		
-		return new CardGenerico(header, linhaPrincipal);
+		CardGenerico card = new CardGenerico.Builder(header)
+				.comConteudo(linhaPrincipal)
+				.build();
+		
+		return card;
 	}
 }

@@ -24,7 +24,9 @@ public class VagaCardFactory {
 			header.getStyleClass().add("card-header-primario");
 		}
 		
-		CardGenerico card = new CardGenerico(header, conteudo);
+		CardGenerico card = new CardGenerico.Builder(header)
+				.comConteudo(conteudo)
+				.build();
 		double largura = 150;
 		double altura = 80;
 		card.setMinWidth(largura);
