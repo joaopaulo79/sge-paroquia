@@ -5,11 +5,16 @@ import com.paroquiaTeam.sgeParoquia.utils.SessaoSistema;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 
 public class DashboardController {
 	@FXML StackPane containerAcaoCaixa;
 	
+	@FXML TextField campoPlaca;
+	@FXML Button btnEntradaVeiculo;
+	@FXML Button btnSaidaVeiculo;
 	
 	private CaixaController controllerCaixa = new CaixaController();
 		
@@ -19,7 +24,20 @@ public class DashboardController {
 		
 		boolean caixaAberto = SessaoSistema.getInstancia().isCaixaAberto();
 		
+		btnEntradaVeiculo.setOnAction(e -> {
+			handleEstadia(EstadiaController.TipoOperacao.ENTRADA);
+		});
+		
+		btnSaidaVeiculo.setOnAction(e -> {
+			handleEstadia(EstadiaController.TipoOperacao.SAIDA);
+		});
+		
 		carregarPainel(caixaAberto);
+	}
+	
+	private void handleEstadia(EstadiaController.TipoOperacao operacao) {
+		String placa = campoPlaca.getText();
+		new EstadiaController().inicializar(operacao, placa);
 	}
 	
 	public void carregarPainel(boolean caixaAberto) {
@@ -36,6 +54,9 @@ public class DashboardController {
 	        Node painel = loader.load();	        
 	        containerAcaoCaixa.getChildren().add(painel);
 
+	        campoPlaca.setDisable(!caixaAberto);
+	        btnEntradaVeiculo.setDisable(!caixaAberto);
+	        btnSaidaVeiculo.setDisable(!caixaAberto);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
