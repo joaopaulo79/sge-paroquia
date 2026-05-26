@@ -1,0 +1,30 @@
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #ECECEC;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: #DDDDDD;
+
+    -fx-effect:
+        dropshadow(
+            gaussian,
+            rgba(0,0,0,0.08),
+            12,
+            0,
+            0,
+            3
+        );
+}
+
+.scroll-pane {
+    -fx-background: #ECECEC;
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

@@ -96,7 +96,7 @@
     -fx-background-color: #16213E;
     -fx-text-fill: white;
 
-    -fx-font-size: 14px;
+    -fx-font-size: 12px;
     -fx-font-weight: bold;
 
     -fx-padding: 10 22;
@@ -121,4 +121,16 @@
 
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
+}
+
+/* =========================
+   HEADER DOS CARDS
+========================= */
+
+.card-header-primario {
+    -fx-background-color: #1F3FAF;
+}
+
+.card-header-atencao {
+    -fx-background-color: #D64545;
 }
