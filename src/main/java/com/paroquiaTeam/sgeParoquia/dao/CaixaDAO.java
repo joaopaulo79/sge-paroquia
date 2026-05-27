@@ -8,7 +8,6 @@ import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.Caixa;
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
 
 public class CaixaDAO {
 	public boolean exists(long id) { 

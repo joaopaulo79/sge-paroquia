@@ -1,6 +1,5 @@
 package com.paroquiaTeam.sgeParoquia.controller;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -11,14 +10,8 @@ import com.paroquiaTeam.sgeParoquia.utils.TempoUtils;
 import com.paroquiaTeam.sgeParoquia.view.factory.EstadiaCardFactory;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class EstadiaController {

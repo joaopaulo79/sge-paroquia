@@ -7,11 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.Estadia;
 import com.paroquiaTeam.sgeParoquia.model.MovimentoCaixa;
 import com.paroquiaTeam.sgeParoquia.model.TipoPagamento;
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
-import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
+
 
 public class MovimentoCaixaDAO {
 	

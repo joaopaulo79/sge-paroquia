@@ -3,7 +3,6 @@ package com.paroquiaTeam.sgeParoquia.view.components;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class CardGenerico extends VBox {
