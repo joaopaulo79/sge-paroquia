@@ -124,7 +124,7 @@ public class PrecificacaoPorHora implements Calculavel {
 		if (tempoEmMinutos <= tolerancia) return 0.0;
 		
 		double valor = (ehMoto) ? valorEntradaMoto : valorEntrada;
-		long horas = tempoEmMinutos/60;
+		long horas = Math.floorDiv(tempoEmMinutos, 60);
 		valor += horas * ((ehMoto) ? valorHoraMoto : valorHora);
 		
 		return valor;
