@@ -1,6 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.model;
 
 import com.paroquiaTeam.sgeParoquia.service.Calculavel;
+import com.paroquiaTeam.sgeParoquia.utils.TempoUtils;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -120,7 +121,13 @@ public class PrecificacaoPorHora implements Calculavel {
 	}
 
 	public double calcular(long tempoEmMinutos, boolean ehMoto) {
-		return 1;
+		if (tempoEmMinutos <= tolerancia) return 0.0;
+		
+		double valor = (ehMoto) ? valorEntradaMoto : valorEntrada;
+		long horas = tempoEmMinutos/60;
+		valor += horas * ((ehMoto) ? valorHoraMoto : valorHora);
+		
+		return valor;
 	}
 	
 	@Override
