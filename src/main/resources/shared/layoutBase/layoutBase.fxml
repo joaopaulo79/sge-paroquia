@@ -19,6 +19,6 @@
          </children></VBox>
    </left>
    <center>
-      <AnchorPane id="contentArea" fx:id="contentArea" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #0000FF;" BorderPane.alignment="CENTER" />
+      <AnchorPane id="contentArea" fx:id="contentArea" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
