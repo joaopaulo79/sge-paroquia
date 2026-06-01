@@ -1,14 +1,11 @@
 package com.paroquiaTeam.sgeParoquia.controller;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.HashMap;
-import java.util.Map;
+import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
+import com.paroquiaTeam.sgeParoquia.core.Tela;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
@@ -22,21 +19,32 @@ public class BaseController {
 	@FXML private ToggleButton btnNavDashboard;
 	@FXML private ToggleButton btnNavConfig;
 	@FXML private ToggleButton btnNavVagas;
-	
-	private final Map<String, Parent> cacheScreens = new HashMap<String, Parent>();
-	
+		
 	private static BaseController instance;
+	
+	private Tela telaAtual;
 	
 	@FXML
 	private void initialize() {
+		NavegacaoManager.getInstancia().setContainerPrincipal(this.contentArea);
+		
+		LoginController loginController = NavegacaoManager.getInstancia().navegarPara(Tela.LOGIN);
+		
+		loginController.setOnSucessoLogin(() -> {
+			sideBar.setVisible(true);
+			sideBar.setManaged(true);
+			
+			NavegacaoManager.getInstancia().navegarPara(Tela.DASHBOARD);
+		});
+		
 		ToggleGroup grupoNav = new ToggleGroup();
 		btnNavDashboard.setToggleGroup(grupoNav);
 		btnNavConfig.setToggleGroup(grupoNav);
 		btnNavVagas.setToggleGroup(grupoNav);
 		
-		btnNavDashboard.setOnAction(event -> navegar(event, "dashboard", "/screens/dashboard/dashboard.fxml"));
-		btnNavConfig.setOnAction(event -> navegar(event, "configuracaoSistema", "/screens/configuracaoSistema/configuracaoSistema.fxml"));
-		btnNavVagas.setOnAction(event -> navegar(event, "listaVagas", "/screens/listaVagas/listaVagas.fxml"));
+		btnNavDashboard.setOnAction(event -> navegar(event, Tela.DASHBOARD));
+		btnNavConfig.setOnAction(event -> navegar(event, Tela.CONFIGURACAO));
+		btnNavVagas.setOnAction(event -> navegar(event, Tela.VAGAS));
 
 		instance = this;
 	}
@@ -45,43 +53,16 @@ public class BaseController {
 		return instance;
 	}
 	
-	private void navegar(ActionEvent e, String id, String caminho) {
+	private void navegar(ActionEvent e, Tela tela) {
 		ToggleButton btn = (ToggleButton) e.getSource();
 
-		if (!btn.isSelected()) {
+		if (this.telaAtual == tela) {
 			e.consume();
 			btn.setSelected(true);
 			return;
 		}
 		
-		mostrarTela(id, caminho);
-	}
-	
-	public void mostrarTela(String id, String caminho) {
-		Parent tela = cacheScreens.computeIfAbsent(caminho, k -> {
-			try {
-				FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho));
-				Parent root = loader.load();
-				
-				root.setUserData(loader.getController());
-				
-				return root;
-			} catch (IOException e) {
-				throw new UncheckedIOException(e);
-			}
-		});
-				
-		Object controller = tela.getUserData();
-		if (controller instanceof ListaVagasController) {
-			((ListaVagasController) controller).atualizarCards();
-		}
-		
-		contentArea.getChildren().setAll(tela);
-		
-		AnchorPane.setTopAnchor(tela, 0.0);    
-		AnchorPane.setBottomAnchor(tela, 0.0);    
-		AnchorPane.setLeftAnchor(tela, 0.0);    
-		AnchorPane.setRightAnchor(tela, 0.0);
+		NavegacaoManager.getInstancia().navegarPara(tela);
 	}
 	
 	public void habilitarSideBar() {

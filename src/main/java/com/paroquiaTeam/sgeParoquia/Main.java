@@ -1,6 +1,8 @@
 package com.paroquiaTeam.sgeParoquia;
 
 import com.paroquiaTeam.sgeParoquia.controller.BaseController;
+import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
+import com.paroquiaTeam.sgeParoquia.core.Tela;
 import com.paroquiaTeam.sgeParoquia.dao.EstacionamentoDAO;
 import com.paroquiaTeam.sgeParoquia.dao.UsuarioDAO;
 import com.paroquiaTeam.sgeParoquia.model.Estacionamento;
@@ -28,13 +30,9 @@ public class Main extends Application {
         try {
         	FXMLLoader loader = new FXMLLoader(getClass().getResource("/shared/layoutBase/layoutBase.fxml"));
 			Parent root = loader.load();
-			
-			BaseController controller = loader.getController();
-			
+						
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
-
-			controller.mostrarTela("login", "/screens/login/login.fxml");
 			
 			primaryStage.setTitle("SGE Paróquia");
 			primaryStage.setMaximized(true);

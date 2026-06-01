@@ -10,6 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class LoginController {
+	private Runnable onSucessoLogin;
+	
+	public void setOnSucessoLogin(Runnable onSucessoLogin) {
+		this.onSucessoLogin = onSucessoLogin;
+	}
+
 	@FXML TextField campoLogin;
 	@FXML TextField campoSenha;
 	@FXML Button botaoLogin;
@@ -24,9 +30,9 @@ public class LoginController {
 			Usuario usuario = dao.getByLogin(campoLogin.getText()).get();
 			SessaoSistema.getInstancia().setUserLogado(usuario);
 			
-			BaseController controller = BaseController.getInstance();
-			controller.habilitarSideBar();
-			controller.mostrarTela("configuracaoSistema", "/screens/dashboard/dashboard.fxml");
+			if (onSucessoLogin != null) {
+				onSucessoLogin.run();
+			}
 		}		
 	}
 }
