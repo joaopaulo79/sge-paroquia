@@ -19,8 +19,9 @@ public class Vaga {
 	@Column(name = "id_vaga")
 	private Long id;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status_ocupacao", nullable = false)
-	private boolean ocupada;
+	private StatusVaga status;
 	
 	@Column(name = "placa_ocupador", nullable = true)
 	private String placa;
@@ -62,18 +63,15 @@ public class Vaga {
 		this.id = id;
 	}
 
+
 	
-	
-	public boolean isOcupada() {
-		return ocupada;
+	public StatusVaga getStatus() {
+		return status;
 	}
 
-	public void setOcupada(boolean ocupada) {
-		this.ocupada = ocupada;
+	public void setStatus(StatusVaga status) {
+		this.status = status;
 	}
-	
-	
-	
 
 	
 	
@@ -85,6 +83,8 @@ public class Vaga {
 		this.placa = placa;
 	}
 
+	
+	
 	public TipoVaga getTipo() {
 		return tipo;
 	}
@@ -115,7 +115,7 @@ public class Vaga {
 
 	@Override
 	public String toString() {
-		return "Vaga [id=" + id + ", ocupada=" + ocupada + ", placa=" + placa + ", tipo=" + tipo + ", reserva="
+		return "Vaga [id=" + id + ", status=" + status + ", placa=" + placa + ", tipo=" + tipo + ", reserva="
 				+ reserva + ", convenio=" + convenio + "]";
 	}
 }

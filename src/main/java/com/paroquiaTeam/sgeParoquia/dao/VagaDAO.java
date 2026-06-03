@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.model.StatusVaga;
 import com.paroquiaTeam.sgeParoquia.model.TipoReservaVaga;
 import com.paroquiaTeam.sgeParoquia.model.TipoVaga;
 import com.paroquiaTeam.sgeParoquia.model.Vaga;
@@ -87,7 +88,7 @@ public class VagaDAO {
 				if (vaga == null) {					
 					throw new IllegalArgumentException("Vaga com id especificado não encontrada");
 				}
-				if (vaga.isOcupada()) {
+				if (vaga.getStatus().equals(StatusVaga.OCUPADA)) {
 	                throw new IllegalStateException("Não é possível deletar uma vaga ocupada");
 	            }
 				sessao.remove(vaga);
@@ -171,7 +172,7 @@ public class VagaDAO {
 	                Vaga vaga = new Vaga();
 	                vaga.setTipo(tipo);
 	                vaga.setReserva(reserva);
-	                vaga.setOcupada(false);
+	                vaga.setStatus(StatusVaga.LIVRE);
 	                sessao.persist(vaga);
 	            }
 	            t.commit();

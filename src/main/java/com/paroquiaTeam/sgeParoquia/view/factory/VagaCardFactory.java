@@ -1,5 +1,6 @@
 package com.paroquiaTeam.sgeParoquia.view.factory;
 
+import com.paroquiaTeam.sgeParoquia.model.StatusVaga;
 import com.paroquiaTeam.sgeParoquia.model.Vaga;
 import com.paroquiaTeam.sgeParoquia.view.components.CardGenerico;
 import com.paroquiaTeam.sgeParoquia.view.components.CardHeader;
@@ -26,7 +27,7 @@ public class VagaCardFactory {
 
         VBox.setVgrow(conteudo, Priority.ALWAYS);
 
-        if (vaga.isOcupada()) {
+        if (vaga.getStatus().equals(StatusVaga.OCUPADA)) {
 
             header.getStyleClass().add("card-header-atencao");
 

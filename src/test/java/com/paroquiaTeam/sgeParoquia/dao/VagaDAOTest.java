@@ -1,5 +1,6 @@
 package com.paroquiaTeam.sgeParoquia.dao;
 
+import com.paroquiaTeam.sgeParoquia.model.StatusVaga;
 import com.paroquiaTeam.sgeParoquia.model.TipoReservaVaga;
 import com.paroquiaTeam.sgeParoquia.model.TipoVaga;
 import com.paroquiaTeam.sgeParoquia.model.Vaga;
@@ -128,7 +129,7 @@ class VagaDAOTest extends BaseDAOTest {
         Vaga vaga = new Vaga(TipoVaga.CARRO, TipoReservaVaga.COMUM);
         dao.save(vaga);
 
-        vaga.setOcupada(true);
+        vaga.setStatus(StatusVaga.OCUPADA);
         vaga.setPlaca("ABC1234");
         assertDoesNotThrow(() -> dao.update(vaga));
     }
