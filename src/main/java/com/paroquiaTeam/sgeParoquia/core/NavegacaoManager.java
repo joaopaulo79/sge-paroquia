@@ -5,12 +5,14 @@ import java.io.IOException;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class NavegacaoManager {
     private static NavegacaoManager instancia;
-    private AnchorPane containerPrincipal; // O container (ex: centro do seu BorderPane) onde as telas mudam
+    private AnchorPane containerPrincipal;
 
     private NavegacaoManager() {}
 
@@ -49,6 +51,33 @@ public class NavegacaoManager {
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Falha ao carregar a tela: " + tela, e);
+        }
+    }
+    
+    public <T> T abrirModal(Popup popup) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(popup.getPathFxml()));
+            Parent root = loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle(popup.getTitulo());
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            
+            if (containerPrincipal != null && containerPrincipal.getScene() != null) {
+                Stage owner = (Stage) containerPrincipal.getScene().getWindow();
+                dialogStage.initOwner(owner);
+            }
+            
+            Scene scene = new Scene(root);
+            dialogStage.setScene(scene);
+
+            root.setUserData(dialogStage);
+
+            dialogStage.showAndWait(); 
+
+            return loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao abrir modal: " + popup, e);
         }
     }
 }
