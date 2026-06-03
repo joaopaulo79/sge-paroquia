@@ -1,7 +1,6 @@
 package com.paroquiaTeam.sgeParoquia.model;
 
 import com.paroquiaTeam.sgeParoquia.service.Calculavel;
-import com.paroquiaTeam.sgeParoquia.utils.TempoUtils;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
