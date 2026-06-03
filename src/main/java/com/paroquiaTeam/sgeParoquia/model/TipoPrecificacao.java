@@ -4,14 +4,14 @@ public enum TipoPrecificacao {
 	FRACIONADA("Fracionada"),
 	POR_HORA("Por Hora");
 	
-	private final String descricao;
+	private final String nome;
 
-    TipoPrecificacao(String descricao) {
-        this.descricao = descricao;
+    TipoPrecificacao(String nome) {
+        this.nome = nome;
     }
 
     @Override
     public String toString() {
-        return descricao;
+        return nome;
     }
 }
