@@ -1,8 +1,5 @@
 package com.paroquiaTeam.sgeParoquia;
 
-import com.paroquiaTeam.sgeParoquia.controller.BaseController;
-import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
-import com.paroquiaTeam.sgeParoquia.core.Tela;
 import com.paroquiaTeam.sgeParoquia.dao.EstacionamentoDAO;
 import com.paroquiaTeam.sgeParoquia.dao.UsuarioDAO;
 import com.paroquiaTeam.sgeParoquia.model.Estacionamento;
