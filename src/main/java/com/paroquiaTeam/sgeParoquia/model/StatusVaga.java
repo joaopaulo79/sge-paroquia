@@ -4,7 +4,7 @@ public enum StatusVaga {
 	LIVRE("Livre"),
 	OCUPADA("Ocupada"),
 	RESERVADAEVENTO("Reservada para Evento"),
-	INDISPONIVEL("Indísponivel");
+	BLOQUEADA("Bloqueada");
 	
 	private String nome;
 	
