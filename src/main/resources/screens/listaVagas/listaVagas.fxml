@@ -157,7 +157,36 @@
                                             prefHeight="42"
                                             maxWidth="Infinity"
                                             text="Salvar"/>
-
+									
+									<Button fx:id="btnTesteAdicionar"
+                                            mnemonicParsing="false"
+                                            prefHeight="42"
+                                            maxWidth="Infinity"
+                                            text="Teste adicionar"/>
+                                            
+                                    <Button fx:id="btnTesteReservar"
+                                            mnemonicParsing="false"
+                                            prefHeight="42"
+                                            maxWidth="Infinity"
+                                            text="Teste reservar"/>
+                                            
+                                    <Button fx:id="btnTesteLiberarReserva"
+                                            mnemonicParsing="false"
+                                            prefHeight="42"
+                                            maxWidth="Infinity"
+                                            text="Teste liberar reserva"/>
+                                            
+                                   	<Button fx:id="btnTesteBloquear"
+                                            mnemonicParsing="false"
+                                            prefHeight="42"
+                                            maxWidth="Infinity"
+                                            text="Teste bloquear"/>
+                                            
+									<Button fx:id="btnTesteLiberarBloqueio"
+                                            mnemonicParsing="false"
+                                            prefHeight="42"
+                                            maxWidth="Infinity"
+                                            text="Teste liberar bloqueio"/>
                                  </children>
 
                               </VBox>
