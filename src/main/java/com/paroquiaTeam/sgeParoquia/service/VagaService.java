@@ -1,13 +1,11 @@
 package com.paroquiaTeam.sgeParoquia.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.paroquiaTeam.sgeParoquia.dao.VagaDAO;
 import com.paroquiaTeam.sgeParoquia.model.StatusVaga;
 import com.paroquiaTeam.sgeParoquia.model.TipoReservaVaga;
 import com.paroquiaTeam.sgeParoquia.model.TipoVaga;
-import com.paroquiaTeam.sgeParoquia.model.Vaga;
 
 public class VagaService {
     public record AjusteVaga(TipoVaga tipo, TipoReservaVaga reserva, long quantidade) {}
