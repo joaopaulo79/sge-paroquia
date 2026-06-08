@@ -157,6 +157,12 @@
                                             prefHeight="42"
                                             maxWidth="Infinity"
                                             text="Salvar"/>
+                                            
+                                    <Button fx:id="btnAlterarVagas"
+                                            mnemonicParsing="false"
+                                            prefHeight="42"
+                                            maxWidth="Infinity"
+                                            text="Alterar Vagas"/>
 									
 									<Button fx:id="btnTesteAdicionar"
                                             mnemonicParsing="false"

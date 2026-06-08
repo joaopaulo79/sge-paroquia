@@ -2,6 +2,8 @@ package com.paroquiaTeam.sgeParoquia.controller;
 
 import java.util.List;
 
+import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
+import com.paroquiaTeam.sgeParoquia.core.Popup;
 import com.paroquiaTeam.sgeParoquia.dao.VagaDAO;
 import com.paroquiaTeam.sgeParoquia.model.StatusVaga;
 import com.paroquiaTeam.sgeParoquia.model.TipoReservaVaga;
@@ -24,6 +26,8 @@ public class ListaVagasController {
 	@FXML FlowPane paneVagas;
 	@FXML AnchorPane root;
 	
+	@FXML Button btnAlterarVagas;
+	
 	//Teste
 	@FXML Button btnTesteAdicionar;
 	@FXML Button btnTesteReservar;
@@ -45,6 +49,10 @@ public class ListaVagasController {
 					new VagaDAO.AjusteVaga(TipoVaga.MOTO, TipoReservaVaga.COMUM, motoComum)
 			));
 			atualizarCards();
+		});
+		
+		btnAlterarVagas.setOnAction(e -> {
+			NavegacaoManager.getInstancia().abrirModal(Popup.ALTERARVAGAS);
 		});
 		
 		btnTesteAdicionar.setOnAction(e -> {
