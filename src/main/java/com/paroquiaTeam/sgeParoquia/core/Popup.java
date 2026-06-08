@@ -1,7 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.core;
 
 public enum Popup {
-	ALTERARVAGAS("","Alterar Vagas");
+	ALTERARVAGAS("/popups/alterarVagas/alterarVagas.fxml","Alterar Vagas");
 	
 	private final String pathFxml;
     private final String titulo;
