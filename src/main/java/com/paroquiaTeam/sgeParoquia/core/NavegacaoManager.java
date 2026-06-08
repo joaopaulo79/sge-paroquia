@@ -72,7 +72,8 @@ public class NavegacaoManager {
             dialogStage.setScene(scene);
 
             root.setUserData(dialogStage);
-
+            dialogStage.setResizable(false);
+            
             dialogStage.showAndWait(); 
 
             return loader.getController();
