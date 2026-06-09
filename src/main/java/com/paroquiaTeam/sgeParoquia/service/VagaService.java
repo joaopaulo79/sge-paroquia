@@ -23,6 +23,10 @@ public class VagaService {
     	return dao.batchUpdateStatus(ids, StatusVaga.LIVRE);
     }
     
+    public long liberarTodasAsVagas(StatusVaga statusAntigo) {
+    	return dao.batchLiberar(statusAntigo);
+    }
+    
     public long reduzirVagas(AjusteVaga ajuste, StatusVaga novoStatus) {
     	validarReducao(ajuste);
     	List<Long> ids = dao.getIdsByStatus(ajuste.tipo, ajuste.reserva, StatusVaga.LIVRE, ajuste.quantidade);

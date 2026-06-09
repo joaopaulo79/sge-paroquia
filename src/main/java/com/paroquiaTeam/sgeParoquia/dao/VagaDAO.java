@@ -129,6 +129,26 @@ public class VagaDAO {
 		}
 	}
 	
+	public int batchLiberar(StatusVaga statusAntigo) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			Transaction t = sessao.beginTransaction();
+			try {
+				String hql = "UPDATE Vaga v SET v.status = :statusLivre WHERE v.status = :statusAntigo";
+	            
+	            int linhas = sessao.createMutationQuery(hql)
+	                    .setParameter("statusLivre", StatusVaga.LIVRE)
+	                    .setParameter("statusAntigo", statusAntigo)
+	                    .executeUpdate();
+				t.commit();
+				
+				return linhas;
+			} catch (Exception e) {
+				t.rollback();
+				throw e;
+			}
+		}
+	}
+	
 	public int batchUpdateStatus(List<Long> ids, StatusVaga novoStatus) {
 		if (ids == null || ids.isEmpty()) {
 			throw new IllegalArgumentException("Nenhum id fornecido");
