@@ -23,8 +23,8 @@ public class VagaService {
     	return dao.batchUpdateStatus(ids, StatusVaga.LIVRE);
     }
     
-    public long reservarOuBloquearVagas(AjusteVaga ajuste, StatusVaga novoStatus) {
-    	validarReservaOuBloqueio(ajuste);
+    public long reduzirVagas(AjusteVaga ajuste, StatusVaga novoStatus) {
+    	validarReducao(ajuste);
     	List<Long> ids = dao.getIdsByStatus(ajuste.tipo, ajuste.reserva, StatusVaga.LIVRE, ajuste.quantidade);
     	
     	return dao.batchUpdateStatus(ids, novoStatus);
@@ -41,7 +41,7 @@ public class VagaService {
         }
     }
     
-	private void validarReservaOuBloqueio(AjusteVaga ajuste) {
+	private void validarReducao(AjusteVaga ajuste) {
         long livres = dao.countComStatus(ajuste.tipo, ajuste.reserva, StatusVaga.LIVRE);
         if (livres < ajuste.quantidade) {
             throw new IllegalStateException(

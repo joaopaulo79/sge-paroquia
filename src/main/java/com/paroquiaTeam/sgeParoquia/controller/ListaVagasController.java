@@ -67,7 +67,7 @@ public class ListaVagasController {
 			VagaService service = new VagaService();
 			
 			AjusteVaga ajuste = new AjusteVaga(TipoVaga.CARRO, TipoReservaVaga.COMUM, 10);
-			service.reservarOuBloquearVagas(ajuste, StatusVaga.RESERVADAEVENTO);
+			service.reduzirVagas(ajuste, StatusVaga.RESERVADAEVENTO);
 			atualizarCards();
 		});
 		
@@ -83,7 +83,7 @@ public class ListaVagasController {
 			VagaService service = new VagaService();
 			
 			AjusteVaga ajuste = new AjusteVaga(TipoVaga.CARRO, TipoReservaVaga.COMUM, 10);
-			service.reservarOuBloquearVagas(ajuste, StatusVaga.BLOQUEADA);
+			service.reduzirVagas(ajuste, StatusVaga.BLOQUEADA);
 			atualizarCards();
 		});
 		
