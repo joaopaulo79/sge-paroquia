@@ -103,7 +103,9 @@ public class NavegacaoManager {
     	alert.setContentText(mensagem);
     	
     	// AQUI APLICA ESTILO
-    	// Para aplicar: descomente e coloque o caminho
+    	// Para aplicar arquivo css: descomente e coloque o caminho
+    	// Para adicionar classe: pane.getStyleClass().add("classe");
+    	
 //    	String css = getClass().getResource("").toExternalForm();
 //    	DialogPane pane = alert.getDialogPane();
 //    	pane.getStylesheets().add(css);
