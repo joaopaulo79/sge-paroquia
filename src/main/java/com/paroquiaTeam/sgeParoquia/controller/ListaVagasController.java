@@ -53,6 +53,8 @@ public class ListaVagasController {
 		
 		btnAlterarVagas.setOnAction(e -> {
 			NavegacaoManager.getInstancia().abrirModal(Popup.ALTERARVAGAS);
+			
+			atualizarCards();
 		});
 		
 		btnTesteAdicionar.setOnAction(e -> {
