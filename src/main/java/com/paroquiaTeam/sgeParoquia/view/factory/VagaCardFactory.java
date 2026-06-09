@@ -43,7 +43,7 @@ public class VagaCardFactory {
 
             header.getStyleClass().add("card-header-primario");
 
-            label.setText("Livre");
+            label.setText(vaga.getStatus().toString());
 
             label.setStyle("""
                     -fx-font-size: 13px;
