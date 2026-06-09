@@ -1,11 +1,16 @@
 package com.paroquiaTeam.sgeParoquia.core;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -80,5 +85,43 @@ public class NavegacaoManager {
         } catch (IOException e) {
             throw new RuntimeException("Erro ao abrir modal: " + popup, e);
         }
+    }
+    
+    public boolean abrirAlerta(String titulo, String mensagem, AlertType tipo) {
+    	if (mensagem == null || mensagem.isBlank()) {
+    		mensagem = "Erro: mensagem de alerta nula!";
+    		tipo = AlertType.ERROR;
+    	}
+    	
+    	if (titulo == null || titulo.isBlank()) {
+    		titulo = "Alerta";
+    	}
+    	
+    	Alert alert = new Alert(tipo);
+    	alert.setTitle(titulo);
+    	alert.setHeaderText(null);
+    	alert.setContentText(mensagem);
+    	
+    	// AQUI APLICA ESTILO
+    	// Para aplicar: descomente e coloque o caminho
+//    	String css = getClass().getResource("").toExternalForm();
+//    	DialogPane pane = alert.getDialogPane();
+//    	pane.getStylesheets().add(css);
+    	
+    	Optional<ButtonType> resultado = alert.showAndWait();
+    	
+    	if (tipo == AlertType.CONFIRMATION) {
+            return resultado.isPresent() && resultado.get() == ButtonType.OK;
+        }
+    	
+    	return true;
+    }
+    
+    public void abrirAlertaErro(String mensagem) {
+    	abrirAlerta("Erro", mensagem, AlertType.ERROR);
+    }
+    
+    public void abrirAlertaSucesso(String mensagem) {
+    	abrirAlerta("Sucesso", mensagem, AlertType.INFORMATION);
     }
 }
