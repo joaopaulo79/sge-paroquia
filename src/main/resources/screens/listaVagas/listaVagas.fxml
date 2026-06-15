@@ -125,7 +125,7 @@
 
                                     <Separator />
 
-                                    <Label text="Comuns"
+                                    <!-- <Label text="Comuns"
                                            styleClass="form-label"/>
 
                                     <Label text="Carro"
@@ -140,59 +140,18 @@
                                     <TextField fx:id="vagasMotoComum"
                                                prefHeight="40"/>
 
-                        <!--                                     <Label managed="false" text="PCD" visible="false" /> -->
-      <!--                                     <Label managed="false" text="Carro" visible="false" /> -->
-      <!--                                     <TextField managed="false" visible="false" /> -->
-      <!--                                     <Label managed="false" text="Moto" visible="false" /> -->
-      <!--                                     <TextField managed="false" visible="false" /> -->
-
-                        <!--                                     <Label managed="false" text="Idoso" visible="false" /> -->
-      <!--                                     <Label managed="false" text="Carro" visible="false" /> -->
-      <!--                                     <TextField managed="false" visible="false" /> -->
-      <!--                                     <Label managed="false" text="Moto" visible="false" /> -->
-      <!--                                     <TextField managed="false" visible="false" /> -->
 
                                     <Button fx:id="btnSalvar"
                                             mnemonicParsing="false"
                                             prefHeight="42"
                                             maxWidth="Infinity"
-                                            text="Salvar"/>
+                                            text="Salvar"/> -->
                                             
                                     <Button fx:id="btnAlterarVagas"
                                             mnemonicParsing="false"
                                             prefHeight="42"
                                             maxWidth="Infinity"
                                             text="Alterar Vagas"/>
-									
-									<Button fx:id="btnTesteAdicionar"
-                                            mnemonicParsing="false"
-                                            prefHeight="42"
-                                            maxWidth="Infinity"
-                                            text="Teste adicionar"/>
-                                            
-                                    <Button fx:id="btnTesteReservar"
-                                            mnemonicParsing="false"
-                                            prefHeight="42"
-                                            maxWidth="Infinity"
-                                            text="Teste reservar"/>
-                                            
-                                    <Button fx:id="btnTesteLiberarReserva"
-                                            mnemonicParsing="false"
-                                            prefHeight="42"
-                                            maxWidth="Infinity"
-                                            text="Teste liberar reserva"/>
-                                            
-                                   	<Button fx:id="btnTesteBloquear"
-                                            mnemonicParsing="false"
-                                            prefHeight="42"
-                                            maxWidth="Infinity"
-                                            text="Teste bloquear"/>
-                                            
-									<Button fx:id="btnTesteLiberarBloqueio"
-                                            mnemonicParsing="false"
-                                            prefHeight="42"
-                                            maxWidth="Infinity"
-                                            text="Teste liberar bloqueio"/>
                                  </children>
 
                               </VBox>
