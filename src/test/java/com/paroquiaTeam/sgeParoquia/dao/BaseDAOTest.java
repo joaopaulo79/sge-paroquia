@@ -10,12 +10,12 @@ import org.hibernate.Transaction;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
+import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.Caixa;
 import com.paroquiaTeam.sgeParoquia.model.TipoUsuario;
 import com.paroquiaTeam.sgeParoquia.model.Usuario;
 import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
-import com.paroquiaTeam.sgeParoquia.utils.SessaoSistema;
 
 class BaseDAOTest {
 	protected static SessionFactory testSessionFactory;

@@ -1,4 +1,4 @@
-package com.paroquiaTeam.sgeParoquia.utils;
+package com.paroquiaTeam.sgeParoquia.core;
 
 import com.paroquiaTeam.sgeParoquia.model.Caixa;
 import com.paroquiaTeam.sgeParoquia.model.Usuario;

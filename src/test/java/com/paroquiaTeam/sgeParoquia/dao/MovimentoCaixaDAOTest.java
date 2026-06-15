@@ -11,12 +11,12 @@ import org.hibernate.Transaction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.Caixa;
 import com.paroquiaTeam.sgeParoquia.model.MovimentoCaixa;
 import com.paroquiaTeam.sgeParoquia.model.TipoMovimento;
 import com.paroquiaTeam.sgeParoquia.model.TipoPagamento;
-import com.paroquiaTeam.sgeParoquia.utils.SessaoSistema;
 
 class MovimentoCaixaDAOTest extends BaseDAOTest {
 

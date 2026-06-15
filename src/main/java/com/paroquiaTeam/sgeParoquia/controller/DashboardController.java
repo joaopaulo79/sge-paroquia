@@ -2,7 +2,7 @@ package com.paroquiaTeam.sgeParoquia.controller;
 
 import java.io.IOException;
 
-import com.paroquiaTeam.sgeParoquia.utils.SessaoSistema;
+import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
