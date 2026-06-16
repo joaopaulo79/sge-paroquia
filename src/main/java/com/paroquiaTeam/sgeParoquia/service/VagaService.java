@@ -6,11 +6,16 @@ import com.paroquiaTeam.sgeParoquia.dao.VagaDAO;
 import com.paroquiaTeam.sgeParoquia.model.StatusVaga;
 import com.paroquiaTeam.sgeParoquia.model.TipoReservaVaga;
 import com.paroquiaTeam.sgeParoquia.model.TipoVaga;
+import com.paroquiaTeam.sgeParoquia.model.Vaga;
 
 public class VagaService {
     public record AjusteVaga(TipoVaga tipo, TipoReservaVaga reserva, long quantidade) {}
     
     private VagaDAO dao = new VagaDAO();
+    
+    public List<Vaga> buscarVagas() {
+    	return dao.getAll();
+    }
     
     public long adicionarVagas(AjusteVaga ajuste) {
     	return dao.batchSave(ajuste.tipo, ajuste.reserva, ajuste.quantidade);
