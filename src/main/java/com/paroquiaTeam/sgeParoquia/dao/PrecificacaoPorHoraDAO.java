@@ -28,6 +28,24 @@ public class PrecificacaoPorHoraDAO {
 		}
 	}
 	
+	public void saveOrUpdate(PrecificacaoPorHora precificacao) {
+		boolean existe = exists();
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			Transaction t = sessao.beginTransaction();
+			try {
+				if (existe) {
+					sessao.merge(precificacao);
+				} else {
+					sessao.persist(precificacao);					
+				}
+				t.commit();
+			} catch (Exception e) {
+				t.rollback();
+				throw e;
+			}
+		}
+	}
+	
 	public void save(PrecificacaoPorHora precificacao) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();

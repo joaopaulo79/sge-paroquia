@@ -27,6 +27,25 @@ public class EstacionamentoDAO {
 		}
 	}
 	
+	public void saveOrUpdate(Estacionamento estacionamento) {
+		boolean existe = exists();
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			Transaction t = sessao.beginTransaction();
+			try {
+				if (existe) {
+					sessao.merge(estacionamento);
+				} else {					
+					sessao.persist(estacionamento);
+				}
+				t.commit();
+			} catch (Exception e) {
+				t.rollback();
+				throw e;
+			}
+		}
+	}
+	
+	
 	public void save(Estacionamento estacionamento) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
