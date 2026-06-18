@@ -2,50 +2,50 @@ package com.paroquiaTeam.sgeParoquia.controller;
 
 import java.util.Optional;
 
-import com.paroquiaTeam.sgeParoquia.dao.EstacionamentoDAO;
-import com.paroquiaTeam.sgeParoquia.dao.PrecificacaoFracionadaDAO;
-import com.paroquiaTeam.sgeParoquia.dao.PrecificacaoPorHoraDAO;
+import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
 import com.paroquiaTeam.sgeParoquia.model.PrecificacaoFracionada;
 import com.paroquiaTeam.sgeParoquia.model.PrecificacaoPorHora;
-import com.paroquiaTeam.sgeParoquia.model.TipoPrecificacao;
+import com.paroquiaTeam.sgeParoquia.service.PrecificacaoService;
+import com.paroquiaTeam.sgeParoquia.service.PrecificacaoService.DadosPrecificacaoFracionada;
+import com.paroquiaTeam.sgeParoquia.service.PrecificacaoService.DadosPrecificacaoPorHora;
 
 public class PrecificacaoController {
+	PrecificacaoService service = new PrecificacaoService();
 	
 	public Optional<PrecificacaoFracionada> buscarFracionada () {
-		return new PrecificacaoFracionadaDAO().get();
+		return service.buscarPrecificacaoFracionada();
 	}
 	
 	public Optional<PrecificacaoPorHora> buscarPorHora () {
-		return new PrecificacaoPorHoraDAO().get();
+		return service.buscarPrecificacaoPorHora();
 	}
 	
 	public void salvarPrecificacaoFracionada(int tolerancia,
 			double meiaHora, double hora, double diaria,
 			double meiaHoraMoto, double horaMoto, double diariaMoto) {
-		
-		PrecificacaoFracionada precificacao = new PrecificacaoFracionada(tolerancia,
-				meiaHora, hora, diaria, meiaHoraMoto, horaMoto, diariaMoto);
-		PrecificacaoFracionadaDAO dao = new PrecificacaoFracionadaDAO();
-		if (dao.exists()) {
-			dao.update(precificacao);
-		} else {
-			dao.save(precificacao);
+		try {			
+			DadosPrecificacaoFracionada dados = new DadosPrecificacaoFracionada(
+					tolerancia, meiaHora, hora, diaria, 
+					meiaHoraMoto, horaMoto, diariaMoto);
+			service.salvarFracionada(dados);			
+			NavegacaoManager.getInstancia().abrirAlertaSucesso("Preços salvos com sucesso.");
+		} catch (Exception e) {
+			NavegacaoManager.getInstancia().abrirAlertaErro(e.getLocalizedMessage());
 		}
-		new EstacionamentoDAO().updatePrecificacao(TipoPrecificacao.FRACIONADA);
 	}
 	
 	public void salvarPrecificacaoPorHora(int tolerancia,
 			double entrada, double hora, double diaria,
 			double entradaMoto, double horaMoto, double diariaMoto) {
 		
-		PrecificacaoPorHora precificacao = new PrecificacaoPorHora(tolerancia,
-				entrada, hora, diaria, entradaMoto, horaMoto, diariaMoto);
-		PrecificacaoPorHoraDAO dao = new PrecificacaoPorHoraDAO();
-		if (dao.exists()) {
-			dao.update(precificacao);
-		} else {
-			dao.save(precificacao);
+		try {			
+			DadosPrecificacaoPorHora dados = new DadosPrecificacaoPorHora(
+					tolerancia, entrada, hora, diaria, 
+					entradaMoto, horaMoto, diariaMoto);
+			service.salvarPorHora(dados);			
+			NavegacaoManager.getInstancia().abrirAlertaSucesso("Preços salvos com sucesso.");
+		} catch (Exception e) {
+			NavegacaoManager.getInstancia().abrirAlertaErro(e.getLocalizedMessage());
 		}
-		new EstacionamentoDAO().updatePrecificacao(TipoPrecificacao.POR_HORA);
 	}
 }
