@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.StackPane;
@@ -20,7 +21,9 @@ import javafx.stage.Stage;
 public class DashboardController {
 	@FXML StackPane containerAcaoCaixa;
 	
+	@FXML Label labelPlaca;
 	@FXML TextField campoPlaca;
+	@FXML Button btnMovimentoVeiculo;
 	@FXML Button btnEntradaVeiculo;
 	@FXML Button btnSaidaVeiculo;
 	
@@ -38,6 +41,12 @@ public class DashboardController {
 		
 		btnSaidaVeiculo.setOnAction(e -> {
 			handleEstadia(EstadiaController.TipoOperacao.SAIDA);
+		});
+		
+		
+		
+		btnMovimentoVeiculo.setOnAction(e -> {
+			System.out.println("APERTOUUUUUUUUUUUUUU");
 		});
 		
 		carregarPainel(caixaAberto);
@@ -86,7 +95,9 @@ public class DashboardController {
 	        Node painel = loader.load();	        
 	        containerAcaoCaixa.getChildren().add(painel);
 
+	        labelPlaca.setDisable(!caixaAberto);
 	        campoPlaca.setDisable(!caixaAberto);
+	        btnMovimentoVeiculo.setDisable(!caixaAberto);
 	        btnEntradaVeiculo.setDisable(!caixaAberto);
 	        btnSaidaVeiculo.setDisable(!caixaAberto);
 	    } catch (Exception e) {

@@ -19,6 +19,7 @@
                <children>
                   <Label fx:id="labelPlaca" disable="true" text="Placa" />
                   <TextField fx:id="campoPlaca" disable="true" maxHeight="50.0" maxWidth="300.0" minHeight="35.0" minWidth="150.0" VBox.vgrow="NEVER" />
+                  <Button fx:id="btnMovimentoVeiculo" disable="true" mnemonicParsing="false" text="Registrar movimento" />
                   <HBox prefWidth="200.0" VBox.vgrow="NEVER">
                      <children>
                         <Button fx:id="btnEntradaVeiculo" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Registrar entrada" textAlignment="CENTER" wrapText="true" HBox.hgrow="NEVER" />
