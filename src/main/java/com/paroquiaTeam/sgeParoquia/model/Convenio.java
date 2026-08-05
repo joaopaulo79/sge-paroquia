@@ -1,9 +1,12 @@
 package com.paroquiaTeam.sgeParoquia.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,20 +21,27 @@ public class Convenio {
 	@Column(name = "id_convenio")
 	private Long id;
 	
-	@Column(name = "nome_convenio")
+	@Column(name = "cnpj_convenio", nullable = false, unique = true)
+	private String cnpj;
+	
+	@Column(name = "nome_convenio", nullable = false)
 	private String nome;
 	
-	@Column(name = "mensalidade_convenio")
+	@Column(name = "mensalidade_convenio", nullable = false)
 	private double mensalidade;
 	
-	@Column(name = "vagas_convenio")
+	@Column(name = "vagas_convenio", nullable = false)
 	private int vagasContratadas;
 	
-	@Column(name = "status_convenio")
-	private boolean status;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status_convenio", nullable = false)
+	private StatusConvenio status;
 	
-	@Column(name = "cobranca_individual_convenio")
+	@Column(name = "cobranca_individual_convenio", nullable = false)
 	private double cobrancaIndividual;
+	
+	@Column(name = "data_vencimento_convenio", nullable = false)
+	private LocalDate dataVencimento;
 	
 	@OneToMany(mappedBy = "convenio")
 	private List<Cliente> clientes;
@@ -40,14 +50,15 @@ public class Convenio {
 	
 	public Convenio() {}
 
-	public Convenio(Long id, String nome, double mensalidade, int vagasContratadas, 
-					boolean status, double cobrancaIndividual) {
-		this.id = id;
+	public Convenio(String cnpj, String nome, double mensalidade, int vagasContratadas, 
+					StatusConvenio status, double cobrancaIndividual, LocalDate dataVencimento) {
+		this.cnpj = cnpj;
 		this.nome = nome;
 		this.mensalidade = mensalidade;
 		this.vagasContratadas = vagasContratadas;
 		this.status = status;
 		this.cobrancaIndividual = cobrancaIndividual;
+		this.dataVencimento = dataVencimento;
 	}
 
 	
@@ -57,6 +68,15 @@ public class Convenio {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	
+	
+	public String getCnpj() {
+		return cnpj;
+	}
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
 	
@@ -88,10 +108,10 @@ public class Convenio {
 
 	
 	
-	public boolean isStatus() {
+	public StatusConvenio getStatus() {
 		return status;
 	}
-	public void setStatus(boolean status) {
+	public void setStatus(StatusConvenio status) {
 		this.status = status;
 	}
 
@@ -106,6 +126,15 @@ public class Convenio {
 	
 	
 
+	public LocalDate getDataVencimento() {
+		return dataVencimento;
+	}
+	public void setDataVencimento(LocalDate dataVencimento) {
+		this.dataVencimento = dataVencimento;
+	}
+
+	
+	
 	public List<Cliente> getClientes() {
 		return clientes;
 	}
