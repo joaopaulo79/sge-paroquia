@@ -8,16 +8,24 @@ import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.Convenio;
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
-import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
 
 public class ConvenioDAO {
 	
-	public boolean exists(long id) { 
+	public boolean existsById(long id) { 
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(c) FROM Convenio c WHERE c.id = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, id)
+					.uniqueResult();			
+			return quantidade != null && quantidade > 0;
+		}
+	}
+	
+	public boolean existsByCnpj(String cnpj) { 
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT COUNT(c) FROM Convenio c WHERE c.cnpj = ?1";
+			Long quantidade = sessao.createQuery(query, Long.class)
+					.setParameter(1, cnpj)
 					.uniqueResult();			
 			return quantidade != null && quantidade > 0;
 		}
@@ -33,11 +41,11 @@ public class ConvenioDAO {
 		}
 	}
 	
-	public Optional<Convenio> getByCnpj(Long id) {
+	public Optional<Convenio> getByCnpj(String cnpj) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "SELECT DISTINCT c FROM Convenio c WHERE c.id = :id";
+			String query = "SELECT DISTINCT c FROM Convenio c WHERE c.cnpj = :cnpj";
 			return sessao.createQuery(query, Convenio.class)
-						.setParameter("id", id)
+						.setParameter("cnpj", cnpj)
 						.uniqueResultOptional();
 					
 		}
