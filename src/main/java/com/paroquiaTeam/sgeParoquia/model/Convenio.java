@@ -30,8 +30,11 @@ public class Convenio {
 	@Column(name = "mensalidade_convenio", nullable = false)
 	private double mensalidade;
 	
-	@Column(name = "vagas_convenio", nullable = false)
-	private int vagasContratadas;
+	@Column(name = "vagas_carro_convenio", nullable = false)
+	private int vagasCarro;
+	
+	@Column(name = "vagas_moto_convenio", nullable = false)
+	private int vagasMoto;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_convenio", nullable = false)
@@ -50,12 +53,13 @@ public class Convenio {
 	
 	public Convenio() {}
 
-	public Convenio(String cnpj, String nome, double mensalidade, int vagasContratadas, 
+	public Convenio(String cnpj, String nome, double mensalidade, int vagasCarro, int vagasMoto,
 					StatusConvenio status, double cobrancaIndividual, LocalDate dataVencimento) {
 		this.cnpj = cnpj;
 		this.nome = nome;
 		this.mensalidade = mensalidade;
-		this.vagasContratadas = vagasContratadas;
+		this.vagasCarro = vagasCarro;
+		this.vagasMoto = vagasMoto;
 		this.status = status;
 		this.cobrancaIndividual = cobrancaIndividual;
 		this.dataVencimento = dataVencimento;
@@ -99,11 +103,20 @@ public class Convenio {
 
 	
 	
-	public int getVagasContratadas() {
-		return vagasContratadas;
+	public int getVagasCarro() {
+		return vagasCarro;
 	}
-	public void setVagasContratadas(int vagasContratadas) {
-		this.vagasContratadas = vagasContratadas;
+	public void setVagasCarro(int vagasCarro) {
+		this.vagasCarro = vagasCarro;
+	}
+
+
+	
+	public int getVagasMoto() {
+		return vagasMoto;
+	}
+	public void setVagasMoto(int vagasMoto) {
+		this.vagasMoto = vagasMoto;
 	}
 
 	
