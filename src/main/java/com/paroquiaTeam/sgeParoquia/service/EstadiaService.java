@@ -1,20 +1,12 @@
 package com.paroquiaTeam.sgeParoquia.service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.paroquiaTeam.sgeParoquia.dao.EstadiaDAO;
-import com.paroquiaTeam.sgeParoquia.model.Estadia;
+import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
 import com.paroquiaTeam.sgeParoquia.utils.TempoUtils;
 
 public class EstadiaService {
-	public record DadosEstadia(
-			Long id,
-			LocalDateTime dataHoraEntrada,
-			LocalDateTime dataHoraSaida,
-			double valor,
-			String placaVeiculo) {}
-	
 	private EstadiaDAO dao = new EstadiaDAO();
 
 	public boolean estadiaTeveSaida(String placa) {
