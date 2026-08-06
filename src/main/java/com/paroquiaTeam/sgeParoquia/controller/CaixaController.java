@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.dao.CaixaDAO;
-import com.paroquiaTeam.sgeParoquia.model.Caixa;
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
+import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

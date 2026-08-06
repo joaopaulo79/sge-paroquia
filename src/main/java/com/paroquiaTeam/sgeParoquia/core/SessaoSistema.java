@@ -1,7 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.core;
 
-import com.paroquiaTeam.sgeParoquia.model.Caixa;
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
+import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 
 public class SessaoSistema {
 	private static SessaoSistema instancia;

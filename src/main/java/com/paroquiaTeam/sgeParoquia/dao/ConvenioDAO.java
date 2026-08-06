@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.Convenio;
+import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
 
 public class ConvenioDAO {
 	

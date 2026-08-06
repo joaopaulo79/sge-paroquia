@@ -1,9 +1,9 @@
 package com.paroquiaTeam.sgeParoquia.controller.popup;
 
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
-import com.paroquiaTeam.sgeParoquia.model.StatusVaga;
-import com.paroquiaTeam.sgeParoquia.model.TipoReservaVaga;
-import com.paroquiaTeam.sgeParoquia.model.TipoVaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.StatusVaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoReservaVaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoVaga;
 import com.paroquiaTeam.sgeParoquia.service.VagaService;
 import com.paroquiaTeam.sgeParoquia.service.VagaService.AjusteVaga;
 

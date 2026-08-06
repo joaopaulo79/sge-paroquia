@@ -2,7 +2,7 @@ package com.paroquiaTeam.sgeParoquia.view.factory;
 
 import java.time.LocalDateTime;
 
-import com.paroquiaTeam.sgeParoquia.model.Estadia;
+import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
 import com.paroquiaTeam.sgeParoquia.view.components.CardGenerico;
 import com.paroquiaTeam.sgeParoquia.view.components.CardHeader;
 

@@ -3,8 +3,8 @@ package com.paroquiaTeam.sgeParoquia.controller;
 import java.util.Optional;
 
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
-import com.paroquiaTeam.sgeParoquia.model.PrecificacaoFracionada;
-import com.paroquiaTeam.sgeParoquia.model.PrecificacaoPorHora;
+import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoFracionada;
+import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoPorHora;
 import com.paroquiaTeam.sgeParoquia.service.PrecificacaoService;
 import com.paroquiaTeam.sgeParoquia.service.PrecificacaoService.DadosPrecificacaoFracionada;
 import com.paroquiaTeam.sgeParoquia.service.PrecificacaoService.DadosPrecificacaoPorHora;

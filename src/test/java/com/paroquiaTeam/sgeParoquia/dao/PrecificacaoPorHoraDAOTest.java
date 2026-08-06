@@ -1,7 +1,8 @@
 package com.paroquiaTeam.sgeParoquia.dao;
 
-import com.paroquiaTeam.sgeParoquia.model.PrecificacaoPorHora;
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoPorHora;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.PropertyValueException;

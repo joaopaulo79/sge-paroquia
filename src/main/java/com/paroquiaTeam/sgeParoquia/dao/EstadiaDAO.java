@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.Estadia;
+import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
 
 
 public class EstadiaDAO {

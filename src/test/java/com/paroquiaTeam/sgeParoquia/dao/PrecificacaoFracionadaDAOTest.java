@@ -1,7 +1,8 @@
 package com.paroquiaTeam.sgeParoquia.dao;
 
-import com.paroquiaTeam.sgeParoquia.model.PrecificacaoFracionada;
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoFracionada;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.jupiter.api.*;

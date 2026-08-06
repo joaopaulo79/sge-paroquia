@@ -14,8 +14,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.Convenio;
-import com.paroquiaTeam.sgeParoquia.model.StatusConvenio;
+import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
+import com.paroquiaTeam.sgeParoquia.model.enums.StatusConvenio;
 
 class ConvenioDAOTest extends BaseDAOTest{
 	private static ConvenioDAO dao = new ConvenioDAO();

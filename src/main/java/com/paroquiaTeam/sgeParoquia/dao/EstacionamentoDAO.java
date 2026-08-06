@@ -6,8 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.Estacionamento;
-import com.paroquiaTeam.sgeParoquia.model.TipoPrecificacao;
+import com.paroquiaTeam.sgeParoquia.model.entity.Estacionamento;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoPrecificacao;
 
 public class EstacionamentoDAO {
 	

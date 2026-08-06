@@ -1,7 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.view.factory;
 
-import com.paroquiaTeam.sgeParoquia.model.StatusVaga;
-import com.paroquiaTeam.sgeParoquia.model.Vaga;
+import com.paroquiaTeam.sgeParoquia.model.entity.Vaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.StatusVaga;
 import com.paroquiaTeam.sgeParoquia.view.components.CardGenerico;
 import com.paroquiaTeam.sgeParoquia.view.components.CardHeader;
 

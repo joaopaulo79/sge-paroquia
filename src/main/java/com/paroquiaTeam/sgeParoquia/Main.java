@@ -2,10 +2,10 @@ package com.paroquiaTeam.sgeParoquia;
 
 import com.paroquiaTeam.sgeParoquia.dao.EstacionamentoDAO;
 import com.paroquiaTeam.sgeParoquia.dao.UsuarioDAO;
-import com.paroquiaTeam.sgeParoquia.model.Estacionamento;
-import com.paroquiaTeam.sgeParoquia.model.TipoPrecificacao;
-import com.paroquiaTeam.sgeParoquia.model.TipoUsuario;
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.entity.Estacionamento;
+import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoPrecificacao;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoUsuario;
 import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
 
 import javafx.application.Application;

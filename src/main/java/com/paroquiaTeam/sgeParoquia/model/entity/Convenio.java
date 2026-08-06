@@ -1,7 +1,9 @@
-package com.paroquiaTeam.sgeParoquia.model;
+package com.paroquiaTeam.sgeParoquia.model.entity;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import com.paroquiaTeam.sgeParoquia.model.enums.StatusConvenio;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

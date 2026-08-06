@@ -1,6 +1,8 @@
-package com.paroquiaTeam.sgeParoquia.model;
+package com.paroquiaTeam.sgeParoquia.model.entity;
 
 import java.util.List;
+
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoCliente;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,6 +1,6 @@
 package com.paroquiaTeam.sgeParoquia.controller;
 
-import com.paroquiaTeam.sgeParoquia.model.TipoPrecificacao;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoPrecificacao;
 import com.paroquiaTeam.sgeParoquia.view.PainelPrecificacao;
 import com.paroquiaTeam.sgeParoquia.view.factory.PainelPrecificacaoFracionadaFactory;
 import com.paroquiaTeam.sgeParoquia.view.factory.PainelPrecificacaoPorHoraFactory;

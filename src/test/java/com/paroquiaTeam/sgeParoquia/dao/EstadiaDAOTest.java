@@ -13,7 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.Estadia;
+import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
 
 class EstadiaDAOTest extends BaseDAOTest {
 	

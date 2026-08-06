@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.PrecificacaoFracionada;
+import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoFracionada;
 
 public class PrecificacaoFracionadaDAO {
 	

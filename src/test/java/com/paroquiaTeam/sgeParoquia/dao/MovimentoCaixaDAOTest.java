@@ -13,10 +13,10 @@ import org.junit.jupiter.api.Test;
 
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.Caixa;
-import com.paroquiaTeam.sgeParoquia.model.MovimentoCaixa;
-import com.paroquiaTeam.sgeParoquia.model.TipoMovimento;
-import com.paroquiaTeam.sgeParoquia.model.TipoPagamento;
+import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
+import com.paroquiaTeam.sgeParoquia.model.entity.MovimentoCaixa;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoMovimento;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoPagamento;
 
 class MovimentoCaixaDAOTest extends BaseDAOTest {
 

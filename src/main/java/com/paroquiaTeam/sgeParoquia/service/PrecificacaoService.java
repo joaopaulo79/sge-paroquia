@@ -5,9 +5,9 @@ import java.util.Optional;
 import com.paroquiaTeam.sgeParoquia.dao.EstacionamentoDAO;
 import com.paroquiaTeam.sgeParoquia.dao.PrecificacaoFracionadaDAO;
 import com.paroquiaTeam.sgeParoquia.dao.PrecificacaoPorHoraDAO;
-import com.paroquiaTeam.sgeParoquia.model.PrecificacaoFracionada;
-import com.paroquiaTeam.sgeParoquia.model.PrecificacaoPorHora;
-import com.paroquiaTeam.sgeParoquia.model.TipoPrecificacao;
+import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoFracionada;
+import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoPorHora;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoPrecificacao;
 
 public class PrecificacaoService {
 	public record DadosPrecificacaoFracionada(

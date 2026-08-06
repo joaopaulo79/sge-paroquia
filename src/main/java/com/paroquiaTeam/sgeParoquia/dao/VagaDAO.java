@@ -7,10 +7,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.StatusVaga;
-import com.paroquiaTeam.sgeParoquia.model.TipoReservaVaga;
-import com.paroquiaTeam.sgeParoquia.model.TipoVaga;
-import com.paroquiaTeam.sgeParoquia.model.Vaga;
+import com.paroquiaTeam.sgeParoquia.model.entity.Vaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.StatusVaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoReservaVaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoVaga;
 
 public class VagaDAO {
     public record AjusteVaga(TipoVaga tipo, TipoReservaVaga reserva, long novaQuantidade) {}

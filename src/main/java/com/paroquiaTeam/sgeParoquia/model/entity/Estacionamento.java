@@ -1,4 +1,6 @@
-package com.paroquiaTeam.sgeParoquia.model;
+package com.paroquiaTeam.sgeParoquia.model.entity;
+
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoPrecificacao;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

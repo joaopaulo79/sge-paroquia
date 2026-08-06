@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import com.paroquiaTeam.sgeParoquia.dao.EstadiaDAO;
-import com.paroquiaTeam.sgeParoquia.model.Estadia;
+import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
 import com.paroquiaTeam.sgeParoquia.service.PrecificacaoService;
 import com.paroquiaTeam.sgeParoquia.utils.TempoUtils;
 import com.paroquiaTeam.sgeParoquia.view.factory.EstadiaCardFactory;

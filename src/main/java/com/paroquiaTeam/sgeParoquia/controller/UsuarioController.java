@@ -1,6 +1,6 @@
 package com.paroquiaTeam.sgeParoquia.controller;
 
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 
 public class UsuarioController {
 	public void editar(Usuario usuario) {

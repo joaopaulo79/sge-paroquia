@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
 
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.TipoUsuario;
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoUsuario;
 import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
 
 class UsuarioDAOTest extends BaseDAOTest{

@@ -1,4 +1,8 @@
-package com.paroquiaTeam.sgeParoquia.model;
+package com.paroquiaTeam.sgeParoquia.model.entity;
+
+import com.paroquiaTeam.sgeParoquia.model.enums.StatusVaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoReservaVaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoVaga;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.paroquiaTeam.sgeParoquia.model;
+package com.paroquiaTeam.sgeParoquia.model.entity;
 
 import com.paroquiaTeam.sgeParoquia.service.Calculavel;
 

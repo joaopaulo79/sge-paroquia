@@ -1,7 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.view.factory;
 
 import com.paroquiaTeam.sgeParoquia.controller.UsuarioController;
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 import com.paroquiaTeam.sgeParoquia.view.components.CardGenerico;
 import com.paroquiaTeam.sgeParoquia.view.components.CardHeader;
 

@@ -1,4 +1,4 @@
-package com.paroquiaTeam.sgeParoquia.model;
+package com.paroquiaTeam.sgeParoquia.model.enums;
 
 public enum StatusVaga {
 	LIVRE("Livre"),

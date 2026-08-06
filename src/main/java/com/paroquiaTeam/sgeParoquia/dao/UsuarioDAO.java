@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
 
 public class UsuarioDAO {

@@ -2,7 +2,7 @@ package com.paroquiaTeam.sgeParoquia.controller;
 
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.dao.UsuarioDAO;
-import com.paroquiaTeam.sgeParoquia.model.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

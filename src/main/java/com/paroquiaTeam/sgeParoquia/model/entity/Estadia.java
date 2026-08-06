@@ -1,4 +1,4 @@
-package com.paroquiaTeam.sgeParoquia.model;
+package com.paroquiaTeam.sgeParoquia.model.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;

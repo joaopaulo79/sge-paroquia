@@ -1,4 +1,4 @@
-package com.paroquiaTeam.sgeParoquia.model;
+package com.paroquiaTeam.sgeParoquia.model.entity;
 
 
 import jakarta.persistence.Column;
@@ -12,6 +12,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.util.List;
+
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoUsuario;
 
 @Entity
 @Table(name="USUARIO")
