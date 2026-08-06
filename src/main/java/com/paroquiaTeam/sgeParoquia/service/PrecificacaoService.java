@@ -5,29 +5,13 @@ import java.util.Optional;
 import com.paroquiaTeam.sgeParoquia.dao.EstacionamentoDAO;
 import com.paroquiaTeam.sgeParoquia.dao.PrecificacaoFracionadaDAO;
 import com.paroquiaTeam.sgeParoquia.dao.PrecificacaoPorHoraDAO;
+import com.paroquiaTeam.sgeParoquia.model.dto.DadosPrecificacaoFracionada;
+import com.paroquiaTeam.sgeParoquia.model.dto.DadosPrecificacaoPorHora;
 import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoFracionada;
 import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoPorHora;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoPrecificacao;
 
 public class PrecificacaoService {
-	public record DadosPrecificacaoFracionada(
-			int tolerancia,
-			double meiaHora, 
-			double hora, 
-			double diaria,
-			double meiaHoraMoto, 
-			double horaMoto, 
-			double diariaMoto) {}
-	
-	public record DadosPrecificacaoPorHora(
-			int tolerancia,
-			double entrada, 
-			double hora, 
-			double diaria,
-			double entradaMoto, 
-			double horaMoto, 
-			double diariaMoto) {}
-	
 	private final PrecificacaoFracionadaDAO daoFrac = new PrecificacaoFracionadaDAO();
 	private final PrecificacaoPorHoraDAO daoHora = new PrecificacaoPorHoraDAO();
 	private final EstacionamentoDAO daoEst = new EstacionamentoDAO();
@@ -60,22 +44,22 @@ public class PrecificacaoService {
 	
 	public void salvarFracionada(DadosPrecificacaoFracionada dados) {
 		validarPrecificacao(
-				dados.tolerancia, 
-				dados.meiaHora, 
-				dados.hora,
-				dados.diaria, 
-				dados.meiaHoraMoto,
-				dados.horaMoto,
-				dados.diariaMoto);
+				dados.tolerancia(), 
+				dados.meiaHora(), 
+				dados.hora(),
+				dados.diaria(), 
+				dados.meiaHoraMoto(),
+				dados.horaMoto(),
+				dados.diariaMoto());
 		
 		PrecificacaoFracionada prec = new PrecificacaoFracionada(
-				dados.tolerancia, 
-				dados.meiaHora, 
-				dados.hora,
-				dados.diaria, 
-				dados.meiaHoraMoto,
-				dados.horaMoto,
-				dados.diariaMoto);
+				dados.tolerancia(), 
+				dados.meiaHora(), 
+				dados.hora(),
+				dados.diaria(), 
+				dados.meiaHoraMoto(),
+				dados.horaMoto(),
+				dados.diariaMoto());
 		
 		daoFrac.saveOrUpdate(prec);
 		
@@ -84,22 +68,22 @@ public class PrecificacaoService {
 	
 	public void salvarPorHora(DadosPrecificacaoPorHora dados) {
 		validarPrecificacao(
-				dados.tolerancia, 
-				dados.entrada, 
-				dados.hora,
-				dados.diaria, 
-				dados.entradaMoto,
-				dados.horaMoto,
-				dados.diariaMoto);
+				dados.tolerancia(), 
+				dados.entrada(), 
+				dados.hora(),
+				dados.diaria(), 
+				dados.entradaMoto(),
+				dados.horaMoto(),
+				dados.diariaMoto());
 		
 		PrecificacaoPorHora prec = new PrecificacaoPorHora(
-				dados.tolerancia, 
-				dados.entrada, 
-				dados.hora,
-				dados.diaria, 
-				dados.entradaMoto,
-				dados.horaMoto,
-				dados.diariaMoto);
+				dados.tolerancia(), 
+				dados.entrada(), 
+				dados.hora(),
+				dados.diaria(), 
+				dados.entradaMoto(),
+				dados.horaMoto(),
+				dados.diariaMoto());
 		
 		daoHora.saveOrUpdate(prec);
 		
