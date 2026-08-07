@@ -13,16 +13,16 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
         
-        <mapping class="com.paroquiaTeam.sgeParoquia.model.Caixa"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.Cliente"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.Convenio"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.Estacionamento"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.Estadia"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.MovimentoCaixa"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.PrecificacaoFracionada"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.PrecificacaoPorHora"/>
-        <mapping class="com.paroquiaTeam.sgeParoquia.model.Usuario"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.Vaga"/>
-		<mapping class="com.paroquiaTeam.sgeParoquia.model.Veiculo"/>
+        <mapping class="com.paroquiaTeam.sgeParoquia.model.entity.Caixa"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.entity.Cliente"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.entity.Convenio"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.entity.Estacionamento"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.entity.Estadia"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.entity.MovimentoCaixa"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoFracionada"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoPorHora"/>
+        <mapping class="com.paroquiaTeam.sgeParoquia.model.entity.Usuario"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.entity.Vaga"/>
+		<mapping class="com.paroquiaTeam.sgeParoquia.model.entity.Veiculo"/>
     </session-factory>
 </hibernate-configuration>
