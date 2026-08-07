@@ -126,8 +126,31 @@ public class Convenio {
 	public StatusConvenio getStatus() {
 		return status;
 	}
-	public void setStatus(StatusConvenio status) {
+	private void setStatus(StatusConvenio status) {
 		this.status = status;
+	} //Não usar pelo amor de santo cristo
+	public boolean isAtivo() {
+		return status.equals(StatusConvenio.ATIVO);
+	}
+	
+	public void ativar() {
+		if (!dataVencimento.isAfter(LocalDate.now())) {
+			throw new IllegalStateException("Convenio com atraso. Não foi possível ativar");
+		}
+
+		setStatus(StatusConvenio.ATIVO);
+	}
+	
+	public void marcarAtraso() {
+		if (dataVencimento.isAfter(LocalDate.now())) {
+			throw new IllegalStateException("Data de vencimento é posterior à data atual. Não foi possível marcar atraso");
+		}
+		
+		setStatus(StatusConvenio.ATRASO);
+	}
+	
+	public void desativar() {
+		setStatus(StatusConvenio.DESATIVADO);
 	}
 
 	

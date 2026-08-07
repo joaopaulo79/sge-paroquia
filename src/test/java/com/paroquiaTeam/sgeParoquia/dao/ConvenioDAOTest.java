@@ -2,6 +2,7 @@ package com.paroquiaTeam.sgeParoquia.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -188,12 +189,14 @@ class ConvenioDAOTest extends BaseDAOTest{
 	}
 
 	@Test
-	public void update_statusNuloThrowsConstraintViolationException() {
+	public void update_statusNuloThrowsConstraintViolationException() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 		LocalDate data = LocalDate.now().plusMonths(1);
 		Convenio c = new Convenio("abc123", "Unimed", 1.2, 10, 0, StatusConvenio.ATIVO, 0.5, data);
 		dao.save(c);
 		
-		c.setStatus(null);
+		Field statusField = Convenio.class.getDeclaredField("status");
+		statusField.setAccessible(true);
+		statusField.set(c, null);
 		assertThrows(PropertyValueException.class, () -> dao.update(c));
 	}
 	
