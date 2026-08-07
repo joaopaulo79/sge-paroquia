@@ -189,14 +189,12 @@ class ConvenioDAOTest extends BaseDAOTest{
 	}
 
 	@Test
-	public void update_statusNuloThrowsConstraintViolationException() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+	public void update_statusNuloThrowsConstraintViolationException() {
 		LocalDate data = LocalDate.now().plusMonths(1);
 		Convenio c = new Convenio("abc123", "Unimed", 1.2, 10, 0, StatusConvenio.ATIVO, 0.5, data);
 		dao.save(c);
 		
-		Field statusField = Convenio.class.getDeclaredField("status");
-		statusField.setAccessible(true);
-		statusField.set(c, null);
+		c.setStatus(null);
 		assertThrows(PropertyValueException.class, () -> dao.update(c));
 	}
 	
