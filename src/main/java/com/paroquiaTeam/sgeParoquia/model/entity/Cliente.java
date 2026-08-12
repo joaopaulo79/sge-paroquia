@@ -27,7 +27,7 @@ public class Cliente {
 	@Column(name = "nome_cliente", nullable = false)
 	private String nome;
 	
-	@Column(name = "cpf_cliente", nullable = false)
+	@Column(name = "cpf_cliente", nullable = false, unique = true)
 	private String cpf;
 	
 	@Column(name = "telefone_cliente", nullable = false)
@@ -51,9 +51,8 @@ public class Cliente {
 	
 	public Cliente() {}
 	
-	public Cliente(Long id, String nome, String cpf, String telefone, TipoCliente tipo, 
+	public Cliente(String nome, String cpf, String telefone, TipoCliente tipo, 
 			boolean status) {
-		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.telefone = telefone;
@@ -61,9 +60,8 @@ public class Cliente {
 		this.status = status;
 	}
 	
-	public Cliente(Long id, String nome, String cpf, String telefone, TipoCliente tipo, 
+	public Cliente(String nome, String cpf, String telefone, TipoCliente tipo, 
 			boolean status, Convenio convenio) {
-		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.telefone = telefone;
