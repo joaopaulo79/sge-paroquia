@@ -47,7 +47,7 @@ public class ClienteDAO {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Cliente c WHERE c.cpf = :cpf";
 			return sessao.createQuery(query, Cliente.class)
-						.setParameter("login", cpf)
+						.setParameter("cpf", cpf)
 						.uniqueResultOptional();
 					
 		}
@@ -95,7 +95,7 @@ public class ClienteDAO {
 			try {
 				Cliente cliente = sessao.get(Cliente.class, id);
 				if (cliente == null) {					
-					throw new IllegalArgumentException("Usuário com id especificado não encontrado");
+					throw new IllegalArgumentException("Cliente com id especificado não encontrado");
 				}
 				sessao.remove(cliente);
 				t.commit();
