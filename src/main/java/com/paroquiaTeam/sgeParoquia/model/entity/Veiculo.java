@@ -48,9 +48,8 @@ public class Veiculo {
 
 	public Veiculo() {}
 
-	public Veiculo(Long id, String placa, String marca, String modelo, String cor, 
+	public Veiculo(String placa, String marca, String modelo, String cor, 
 			String observacoes, TipoVeiculo tipo, Cliente cliente) {
-		this.id = id;
 		this.placa = placa;
 		this.marca = marca;
 		this.modelo = modelo;
