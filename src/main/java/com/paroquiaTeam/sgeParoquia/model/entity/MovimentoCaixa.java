@@ -33,6 +33,9 @@ public class MovimentoCaixa {
 	@Column(name = "tipo_movimento", nullable = false)
 	private TipoMovimento tipoMovimento;
 	
+	@Column(name = "descricao_movimento")
+	private String descricao;
+	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_caixa")
 	private Caixa caixa;
@@ -45,27 +48,32 @@ public class MovimentoCaixa {
 	
 	public MovimentoCaixa() {}
 	
-	public MovimentoCaixa(Long id, double valor, TipoPagamento formaPagamento, 
-			TipoMovimento tipoMovimento, Caixa caixa) {
-		this.id = id;
+	
+	
+	public MovimentoCaixa(double valor, TipoPagamento formaPagamento, TipoMovimento tipoMovimento, 
+			String descricao, Caixa caixa) {
 		this.valor = valor;
 		this.formaPagamento = formaPagamento;
 		this.tipoMovimento = tipoMovimento;
+		this.descricao = descricao;
 		this.caixa = caixa;
 	}
+
 	
-	public MovimentoCaixa(Long id, double valor, TipoPagamento formaPagamento, 
-			TipoMovimento tipoMovimento, Caixa caixa, Estadia estadia) {
-		this.id = id;
+	
+	
+	public MovimentoCaixa(double valor, TipoPagamento formaPagamento, TipoMovimento tipoMovimento,
+			String descricao, Caixa caixa, Estadia estadia) {
 		this.valor = valor;
 		this.formaPagamento = formaPagamento;
 		this.tipoMovimento = tipoMovimento;
+		this.descricao = descricao;
 		this.caixa = caixa;
 		this.estadia = estadia;
 	}
-	
-	
-	
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -100,8 +108,17 @@ public class MovimentoCaixa {
 		this.tipoMovimento = tipoMovimento;
 	}
 
+
 	
-	
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+
+
 	public Caixa getCaixa() {
 		return caixa;
 	}
