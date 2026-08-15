@@ -1,7 +1,5 @@
 package com.paroquiaTeam.sgeParoquia.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.time.LocalDateTime;
 
 import org.hibernate.Session;
@@ -10,6 +8,7 @@ import org.hibernate.Transaction;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
+import com.paroquiaTeam.sgeParoquia.TestSetup;
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
@@ -17,14 +16,9 @@ import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoUsuario;
 import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
 
-class BaseDAOTest {
-	protected static SessionFactory testSessionFactory;
-
+public class BaseDAOTest extends TestSetup {
 	@BeforeAll
 	public static void init() {
-		testSessionFactory = HibernateUtil.buildSessionFactory("hibernate-test.cfg.xml");
-		HibernateUtil.setSessionFactory(testSessionFactory);
-		
 		String senha = SenhaUtil.hash("senha");
 		Usuario userLogadoTest = new Usuario("Logado", "logado", senha , true, TipoUsuario.ADMINISTRADOR);
 		Caixa caixaAtualTest = new Caixa(LocalDateTime.now(), null, 0, userLogadoTest);
