@@ -12,7 +12,7 @@ import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
 
 public class UsuarioDAO {
 	
-	public boolean exists(long id) { 
+	public boolean existsById(long id) { 
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(u) FROM Usuario u WHERE u.id = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
@@ -22,7 +22,27 @@ public class UsuarioDAO {
 		}
 	}
 	
+	public boolean existsByLogin(String login) { 
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT COUNT(u) FROM Usuario u WHERE u.login = ?1";
+			Long quantidade = sessao.createQuery(query, Long.class)
+					.setParameter(1, login)
+					.uniqueResult();			
+			return quantidade != null && quantidade > 0;
+		}
+	}
+	
 	public Optional<Usuario> getById(Long id) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT DISTINCT u FROM Usuario u WHERE u.id = :id";
+			return sessao.createQuery(query, Usuario.class)
+						.setParameter("id", id)
+						.uniqueResultOptional();
+					
+		}
+	}
+	
+	public Optional<Usuario> getByIdWithCaixas(Long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT u FROM Usuario u LEFT JOIN FETCH u.caixas WHERE u.id = :id";
 			return sessao.createQuery(query, Usuario.class)
@@ -34,6 +54,16 @@ public class UsuarioDAO {
 	
 	public Optional<Usuario> getByLogin(String login) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT DISTINCT u FROM Usuario u WHERE u.login = :login";
+			return sessao.createQuery(query, Usuario.class)
+						.setParameter("login", login)
+						.uniqueResultOptional();
+					
+		}
+	}
+	
+	public Optional<Usuario> getByLoginWithCaixas(String login) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT u FROM Usuario u LEFT JOIN FETCH u.caixas WHERE u.login = :login";
 			return sessao.createQuery(query, Usuario.class)
 						.setParameter("login", login)
@@ -44,6 +74,15 @@ public class UsuarioDAO {
 	
 	
 	public List<Usuario> getAll() {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT u FROM Usuario u";
+			return sessao.createQuery(query, Usuario.class)
+						.getResultList();
+					
+		}
+	}
+	
+	public List<Usuario> getAllWithCaixas() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT u FROM Usuario u LEFT JOIN FETCH u.caixas";
 			return sessao.createQuery(query, Usuario.class)

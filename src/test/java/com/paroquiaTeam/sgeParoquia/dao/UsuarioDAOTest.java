@@ -38,16 +38,29 @@ class UsuarioDAOTest extends BaseDAOTest{
 	}
 	
 	@Test
-	public void exists_retornaTrueComIdExistente() {
+	public void existsById_retornaTrueComIdExistente() {
 		String senha = SenhaUtil.hash("123");
 		Usuario user = new Usuario("Teste", "valido", senha, true, TipoUsuario.OPERADOR);
 		dao.save(user);
-		assertTrue(dao.exists((long) user.getId()));
+		assertTrue(dao.existsById((long) user.getId()));
 	}
 	
 	@Test
-	public void exists_retornaFalseComIdNaoExistente() {
-		assertFalse(dao.exists((long) 0));
+	public void existsById_retornaFalseComIdNaoExistente() {
+		assertFalse(dao.existsById((long) 0));
+	}
+	
+	@Test
+	public void existsByLogin_retornaTrueComIdExistente() {
+		String senha = SenhaUtil.hash("123");
+		Usuario user = new Usuario("Teste", "valido", senha, true, TipoUsuario.OPERADOR);
+		dao.save(user);
+		assertTrue(dao.existsByLogin(user.getLogin()));
+	}
+	
+	@Test
+	public void existsByLogin_retornaFalseComIdNaoExistente() {
+		assertFalse(dao.existsByLogin("login"));
 	}
 	
 	@Test
@@ -99,6 +112,28 @@ class UsuarioDAOTest extends BaseDAOTest{
 	@Test
 	public void getAll_retornaApenasUsuarioDaSessaoQuandoNaoHouveInserts() {
 		List<Usuario> usuarios = dao.getAll();
+		
+		assertEquals(1, usuarios.size());
+	    assertEquals(SessaoSistema.getInstancia().getUserLogado().getId(), usuarios.get(0).getId());
+	}
+	
+	@Test
+	public void getAllWithCaixas_retornaMaisDeUmValorDoBanco() {
+		String senha = SenhaUtil.hash("123");
+		Usuario user = new Usuario("Teste", "valido", senha, true, TipoUsuario.OPERADOR);
+		dao.save(user);
+		
+		senha = SenhaUtil.hash("123");
+		Usuario user2 = new Usuario("Teste", "valido2", senha, true, TipoUsuario.OPERADOR);
+		dao.save(user2);
+		
+		List<Usuario> usuarios = dao.getAllWithCaixas();
+		assertTrue(usuarios.size() > 1);
+	}
+	
+	@Test
+	public void getAllWithCaixas_retornaApenasUsuarioDaSessaoQuandoNaoHouveInserts() {
+		List<Usuario> usuarios = dao.getAllWithCaixas();
 		
 		assertEquals(1, usuarios.size());
 	    assertEquals(SessaoSistema.getInstancia().getUserLogado().getId(), usuarios.get(0).getId());
