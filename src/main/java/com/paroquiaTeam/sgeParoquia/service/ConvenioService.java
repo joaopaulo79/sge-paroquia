@@ -8,12 +8,32 @@ import com.paroquiaTeam.sgeParoquia.model.dto.DadosConvenio;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
 import com.paroquiaTeam.sgeParoquia.model.enums.StatusConvenio;
 
+import jakarta.persistence.EntityNotFoundException;
+
 public class ConvenioService {
 	
 	private ConvenioDAO dao = new ConvenioDAO();
 	
+	// use no caso normal
 	public Optional<Convenio> buscarPorCnpj(String cnpj) {
 		return dao.getByCnpj(cnpj);
+	}
+	
+	// somente use se for estritamente necessária a presença de um Convenio
+	public Convenio obterPorCnpj(String cnpj) {
+		return buscarPorCnpj(cnpj)
+				.orElseThrow(() -> new EntityNotFoundException("Convênio não encontrado para o cnpj "+cnpj));
+	}
+	
+	// use no caso normal
+	public Optional<Convenio> buscarPorId(long id) {
+		return dao.getById(id);
+	}
+	
+	// somente use se for estritamente necessária a presença de um Convenio
+	public Convenio obterPorId(long id) {
+		return buscarPorId(id)
+				.orElseThrow(() -> new EntityNotFoundException("Convênio não encontrado para o id "+id));
 	}
 	
 	public Optional<Convenio> buscarPorNome(String nome) {
