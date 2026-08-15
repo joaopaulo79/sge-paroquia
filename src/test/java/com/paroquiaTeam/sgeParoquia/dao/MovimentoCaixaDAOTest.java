@@ -44,14 +44,14 @@ class MovimentoCaixaDAOTest extends BaseDAOTest {
 
     @Test
     public void exists_retornaTrueComIdExistente() {
-        MovimentoCaixa mov = new MovimentoCaixa(null, 50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, getCaixaTest());
+        MovimentoCaixa mov = new MovimentoCaixa(50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, "nada", getCaixaTest());
         dao.save(mov);
         assertTrue(dao.exists(mov.getId()));
     }
 
     @Test
     public void getById_retornaAlgoComIdValido() {
-        MovimentoCaixa mov = new MovimentoCaixa(null, 100.0, TipoPagamento.PIX, TipoMovimento.ENTRADA, getCaixaTest());
+        MovimentoCaixa mov = new MovimentoCaixa(100.0, TipoPagamento.PIX, TipoMovimento.ENTRADA, "nada", getCaixaTest());
         dao.save(mov);
         Optional<MovimentoCaixa> talvezMov = dao.getById(mov.getId());
         assertTrue(talvezMov.isPresent());
@@ -60,8 +60,8 @@ class MovimentoCaixaDAOTest extends BaseDAOTest {
 
     @Test
     public void getAll_retornaListaComDadosPersistidos() {
-        dao.save(new MovimentoCaixa(null, 50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, getCaixaTest()));
-        dao.save(new MovimentoCaixa(null, 25.0, TipoPagamento.DEBITO, TipoMovimento.DESPESA, getCaixaTest()));
+        dao.save(new MovimentoCaixa(50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, "nada", getCaixaTest()));
+        dao.save(new MovimentoCaixa(25.0, TipoPagamento.DEBITO, TipoMovimento.DESPESA, "nada", getCaixaTest()));
         
         List<MovimentoCaixa> movimentos = dao.getAll();
         assertEquals(2, movimentos.size());
@@ -69,13 +69,13 @@ class MovimentoCaixaDAOTest extends BaseDAOTest {
 
     @Test
     public void save_persisteMovimentoValido() {
-        MovimentoCaixa mov = new MovimentoCaixa(null, 150.0, TipoPagamento.CREDITO, TipoMovimento.ENTRADA, getCaixaTest());
+        MovimentoCaixa mov = new MovimentoCaixa(150.0, TipoPagamento.CREDITO, TipoMovimento.ENTRADA, "nada", getCaixaTest());
         assertDoesNotThrow(() -> dao.save(mov));
     }
 
     @Test
     public void update_atualizaMovimentoValido() {
-        MovimentoCaixa mov = new MovimentoCaixa(null, 50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, getCaixaTest());
+        MovimentoCaixa mov = new MovimentoCaixa(50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, "nada", getCaixaTest());
         dao.save(mov);
         mov.setValor(75.0);
         dao.update(mov);
@@ -84,7 +84,7 @@ class MovimentoCaixaDAOTest extends BaseDAOTest {
 
     @Test
     public void delete_excluiMovimentoValido() {
-        MovimentoCaixa mov = new MovimentoCaixa(null, 50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, getCaixaTest());
+        MovimentoCaixa mov = new MovimentoCaixa(50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, "nada", getCaixaTest());
         dao.save(mov);
         dao.delete(mov.getId());
         assertFalse(dao.exists(mov.getId()));
@@ -94,9 +94,9 @@ class MovimentoCaixaDAOTest extends BaseDAOTest {
 
     @Test
     public void getTotalPorCaixaEPagamento_retornaSomaCorreta() {
-        dao.save(new MovimentoCaixa(null, 50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, getCaixaTest()));
-        dao.save(new MovimentoCaixa(null, 30.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, getCaixaTest()));
-        dao.save(new MovimentoCaixa(null, 100.0, TipoPagamento.PIX, TipoMovimento.ENTRADA, getCaixaTest()));
+        dao.save(new MovimentoCaixa(50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, "nada", getCaixaTest()));
+        dao.save(new MovimentoCaixa(30.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, "nada", getCaixaTest()));
+        dao.save(new MovimentoCaixa(100.0, TipoPagamento.PIX, TipoMovimento.ENTRADA, "nada", getCaixaTest()));
         
         Double totalDinheiro = dao.getTotalPorCaixaEPagamento(getCaixaTest().getId(), TipoPagamento.DINHEIROFISICO);
         assertEquals(80.0, totalDinheiro);
@@ -128,7 +128,7 @@ class MovimentoCaixaDAOTest extends BaseDAOTest {
     
     @Test
     public void save_caixaNuloThrowsPropertyValueException() {
-        MovimentoCaixa mov = new MovimentoCaixa(null, 50.0, TipoPagamento.PIX, TipoMovimento.ENTRADA, null);
+        MovimentoCaixa mov = new MovimentoCaixa(50.0, TipoPagamento.PIX, TipoMovimento.ENTRADA, "nada", null);
         assertThrows(PropertyValueException.class, () -> dao.save(mov));
     }
     
