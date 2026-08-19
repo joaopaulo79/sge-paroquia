@@ -53,10 +53,20 @@ public class VeiculoDAO {
 	}
 	
 	
-	public List<Cliente> getAll() {
+	public List<Veiculo> getAll() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT v FROM Veiculo v";
-			return sessao.createQuery(query, Cliente.class)
+			return sessao.createQuery(query, Veiculo.class)
+						.getResultList();
+					
+		}
+	}
+	
+	public List<Veiculo> getAllByIdCliente(Long idCliente) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT c FROM Veiculo c WHERE c.cliente.id = ?1";
+			return sessao.createQuery(query, Veiculo.class)
+						.setParameter(1, idCliente)
 						.getResultList();
 					
 		}
