@@ -30,6 +30,9 @@ public class Veiculo {
 	@Column(name="modelo_veiculo", nullable = false)
 	private String modelo;
 	
+	@Column(name="ano_veiculo")
+	private int ano;
+	
 	@Column(name="cor_veiculo", nullable = false)
 	private String cor;
 	
