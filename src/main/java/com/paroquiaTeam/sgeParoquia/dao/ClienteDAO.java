@@ -61,6 +61,16 @@ public class ClienteDAO {
 		}
 	}
 	
+	public List<Cliente> getAllByIdConvenio(Long idConvenio) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT c FROM Cliente c WHERE c.convenio.id = ?1";
+			return sessao.createQuery(query, Cliente.class)
+						.setParameter(1, idConvenio)
+						.getResultList();
+					
+		}
+	}
+	
 	public void save(Cliente cliente) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
