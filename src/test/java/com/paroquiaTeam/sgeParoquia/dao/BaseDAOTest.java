@@ -45,6 +45,29 @@ public class BaseDAOTest extends TestSetup {
 	        tx.commit();
 	    }
 		
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tx = session.beginTransaction();
+            try {
+            	session.createNativeMutationQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
+                
+            	session.createNativeMutationQuery("TRUNCATE TABLE Cliente");
+            	session.createNativeMutationQuery("TRUNCATE TABLE Convenio");
+            	session.createNativeMutationQuery("TRUNCATE TABLE Estacionamento");
+            	session.createNativeMutationQuery("TRUNCATE TABLE Estadia");
+            	session.createNativeMutationQuery("TRUNCATE TABLE MovimentoCaixa");
+            	session.createNativeMutationQuery("TRUNCATE TABLE PrecificacaoFracionada");
+            	session.createNativeMutationQuery("TRUNCATE TABLE PrecificacaoPorHora");
+            	session.createNativeMutationQuery("TRUNCATE TABLE Usuario");
+            	session.createNativeMutationQuery("TRUNCATE TABLE Vaga");
+
+            	session.createNativeMutationQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
+
+                tx.commit();
+            } catch (Exception e) {
+                tx.rollback();
+                throw e;
+            }
+        }
 		HibernateUtil.shutdown();
 		sessaoSistema.encerrarSessao();
 	}
