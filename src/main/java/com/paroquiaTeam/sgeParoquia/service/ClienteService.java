@@ -1,13 +1,35 @@
 package com.paroquiaTeam.sgeParoquia.service;
 
+import java.util.Optional;
+
 import com.paroquiaTeam.sgeParoquia.dao.ClienteDAO;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosCliente;
 import com.paroquiaTeam.sgeParoquia.model.entity.Cliente;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoCliente;
 
+import jakarta.persistence.EntityNotFoundException;
+
 public class ClienteService {
 	private ClienteDAO dao = new ClienteDAO();
+	
+	public Optional<Cliente> buscarPorId(long id) {
+		return dao.getById(id);
+	}
+	
+	public Cliente obterPorId(long id) {
+		return buscarPorId(id)
+				.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado para o id "+id));
+	}
+	
+	public Optional<Cliente> buscarPorCpf(String cpf) {
+		return dao.getByCpf(cpf);
+	}
+	
+	public Cliente obterPorCpf(String cpf) {
+		return buscarPorCpf(cpf)
+				.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado para o id "+cpf));
+	}
 	
 	public void salvar(DadosCliente dados) {
 		validarClienteNovo(dados);
