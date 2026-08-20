@@ -103,6 +103,15 @@ public class Veiculo {
 
 	
 	
+	public Integer getAno() {
+		return ano;
+	}
+	public void setAno(Integer ano) {
+		this.ano = ano;
+	}
+
+	
+	
 	public String getCor() {
 		return cor;
 	}
