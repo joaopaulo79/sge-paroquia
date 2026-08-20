@@ -31,7 +31,7 @@ public class Veiculo {
 	private String modelo;
 	
 	@Column(name="ano_veiculo")
-	private int ano;
+	private Integer ano;
 	
 	@Column(name="cor_veiculo", nullable = false)
 	private String cor;
@@ -51,16 +51,19 @@ public class Veiculo {
 
 	public Veiculo() {}
 
-	public Veiculo(String placa, String marca, String modelo, String cor, 
+	public Veiculo(String placa, String marca, String modelo, Integer ano, String cor, 
 			String observacoes, TipoVeiculo tipo, Cliente cliente) {
 		this.placa = placa;
 		this.marca = marca;
 		this.modelo = modelo;
+		this.ano = ano;
 		this.cor = cor;
 		this.observacoes = observacoes;
 		this.tipo = tipo;
 		this.cliente = cliente;
 	}
+	
+	
 	
 	
 	
