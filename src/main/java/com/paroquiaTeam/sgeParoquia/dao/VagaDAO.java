@@ -25,6 +25,16 @@ public class VagaDAO {
 		}
 	}
 	
+	public boolean veiculoEstaEmAlgumaVaga(String placaOcupante) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "COUNT(v) FROM Vaga v WHERE v.placa = ?1";
+			Long quantidade = sessao.createSelectionQuery(query, Long.class)
+					.setParameter(1, placaOcupante)
+					.uniqueResult();
+			return quantidade != null && quantidade > 0;
+		}
+	}
+	
 	public Optional<Vaga> getById(Long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "FROM Vaga v WHERE v.id = ?1";
@@ -34,6 +44,7 @@ public class VagaDAO {
 					
 		}
 	}
+	
 	
 	public List<Vaga> getAll() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
