@@ -37,8 +37,10 @@ public class VeiculoService {
 	}
 	
 	public void excluir(Veiculo veiculo) {
-		// !!! TODO !!!
-		// Adicionar validação se o veiculo tiver no pátio
+		VagaService vService = new VagaService();
+		if (vService.veiculoEstaNoPatio(veiculo.getPlaca())) {
+			throw new IllegalStateException("Não foi possível excluir veículo pois está no pátio");
+		}
 		
 		dao.delete(veiculo.getId());
 	}

@@ -13,6 +13,10 @@ public class VagaService {
     
     private VagaDAO dao = new VagaDAO();
     
+    public boolean veiculoEstaNoPatio(String placa) {
+    	return dao.veiculoEstaEmAlgumaVaga(placa);
+    }
+    
     public List<Vaga> buscarVagas() {
     	return dao.getAll();
     }
