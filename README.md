@@ -6,6 +6,7 @@ Após isso, certifique-se que o banco está configurado corretamente
 
 Os parâmetros são:
 - nome do bd: sgeParoquia
+- nome do bd de teste: sgeParoquia_test
 - porta: 3306
 - user: root
 - senha: **em branco**
