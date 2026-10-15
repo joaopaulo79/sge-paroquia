@@ -26,7 +26,7 @@ public class Estadia {
 	private LocalDateTime dataHoraSaida;
 	
 	@Column(name = "valor_estadia", nullable = true)
-	private double valor;
+	private Double valor;
 	
 	@Column(name = "placa_veiculo", nullable = false)
 	private String placaVeiculo;
@@ -38,9 +38,8 @@ public class Estadia {
 	
 	public Estadia() {}
 	
-	public Estadia(Long id, LocalDateTime dataHoraEntrada, LocalDateTime dataHoraSaida, 
-				   double valor, String placaVeiculo) {
-		this.id = id;
+	public Estadia(LocalDateTime dataHoraEntrada, LocalDateTime dataHoraSaida, 
+				   Double valor, String placaVeiculo) {
 		this.dataHoraEntrada = dataHoraEntrada;
 		this.dataHoraSaida = dataHoraSaida;
 		this.valor = valor;
@@ -76,10 +75,10 @@ public class Estadia {
 
 	
 	
-	public double getValor() {
+	public Double getValor() {
 		return valor;
 	}
-	public void setValor(double valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
