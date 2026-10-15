@@ -28,7 +28,7 @@ public class ClienteService {
 	
 	public Cliente obterPorCpf(String cpf) {
 		return buscarPorCpf(cpf)
-				.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado para o id "+cpf));
+				.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado para o cpf "+cpf));
 	}
 	
 	public void salvar(DadosCliente dados) {
