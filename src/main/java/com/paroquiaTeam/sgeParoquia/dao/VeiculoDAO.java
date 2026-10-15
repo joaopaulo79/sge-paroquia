@@ -41,7 +41,7 @@ public class VeiculoDAO {
 		}
 	}
 	
-	public Optional<Veiculo> getByCpf(String placa) {
+	public Optional<Veiculo> getByPlaca(String placa) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT v FROM Veiculo v WHERE v.placa = :placa";
 			return sessao.createQuery(query, Veiculo.class)

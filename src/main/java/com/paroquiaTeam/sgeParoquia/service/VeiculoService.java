@@ -1,11 +1,34 @@
 package com.paroquiaTeam.sgeParoquia.service;
 
+import java.util.Optional;
+
 import com.paroquiaTeam.sgeParoquia.dao.VeiculoDAO;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosVeiculo;
+import com.paroquiaTeam.sgeParoquia.model.entity.Cliente;
 import com.paroquiaTeam.sgeParoquia.model.entity.Veiculo;
+
+import jakarta.persistence.EntityNotFoundException;
 
 public class VeiculoService {
 	VeiculoDAO dao = new VeiculoDAO();
+	
+	public Optional<Veiculo> buscarPorId(long id) {
+		return dao.getById(id);
+	}
+	
+	public Veiculo obterPorId(long id) {
+		return buscarPorId(id)
+				.orElseThrow(() -> new EntityNotFoundException("Veiculo não encontrado para o id "+id));
+	}
+	
+	public Optional<Veiculo> buscarPorPlaca(String placa) {
+		return dao.getByPlaca(placa);
+	}
+	
+	public Veiculo obterPorCpf(String placa) {
+		return buscarPorPlaca(placa)
+				.orElseThrow(() -> new EntityNotFoundException("Veiculo não encontrado para a placa "+placa));
+	}
 	
 	public void salvar(DadosVeiculo dados) {
 		validarVeiculoNovo(dados);
