@@ -26,6 +26,10 @@ public class EstadiaService {
 		return true; // se chegou aqui, estadia tem dataHora de saida
 	}
 	
+	public boolean existePorId(long id) {
+		return dao.exists(id);
+	}
+	
 	public Optional<Estadia> buscarPorPlaca(String placa) {
 		return dao.getLastByPlaca(placa);
 	}
