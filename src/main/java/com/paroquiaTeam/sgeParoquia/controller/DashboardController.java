@@ -33,7 +33,7 @@ public class DashboardController {
 	private void initialize() {
 		controllerCaixa.setDashboardController(this);
 		
-		boolean caixaAberto = SessaoSistema.getInstancia().isCaixaAberto();
+		boolean caixaAberto = SessaoSistema.getInstancia().temCaixaAberto();
 		
 		btnEntradaVeiculo.setOnAction(e -> {
 			handleEstadia(EstadiaController.TipoOperacao.ENTRADA);

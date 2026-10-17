@@ -38,7 +38,7 @@ public class SessaoSistema {
 	
 	
 	
-	public boolean isCaixaAberto() {
+	public boolean temCaixaAberto() {
         return caixaAtual != null && caixaAtual.getDataHoraFechamento() == null;
     }
 	
