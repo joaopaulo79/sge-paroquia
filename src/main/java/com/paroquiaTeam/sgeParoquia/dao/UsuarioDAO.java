@@ -139,6 +139,6 @@ public class UsuarioDAO {
 		if (talvezUsuario.isEmpty()) {
 			return false;
 		}
-		return SenhaUtil.verificar(senha, talvezUsuario.get().getSenha());
+		return SenhaUtil.isSenhaBate(senha, talvezUsuario.get().getSenha());
 	}
 }

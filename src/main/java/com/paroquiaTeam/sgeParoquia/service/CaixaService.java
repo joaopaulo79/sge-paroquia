@@ -66,7 +66,7 @@ public class CaixaService {
 		}
 		
 		if (SessaoSistema.getInstancia().getUserLogado().getTipo() != TipoUsuario.ADMINISTRADOR) {
-			throw new IllegalStateException("Usuário logado não possuí permissão para excluir caixa");
+			throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
 		}
 		
 		dao.delete(caixa.getId());
