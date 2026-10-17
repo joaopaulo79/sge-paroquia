@@ -16,6 +16,10 @@ import jakarta.persistence.EntityNotFoundException;
 public class CaixaService {
 	private CaixaDAO dao = new CaixaDAO();
 	
+	public boolean existePorId(long id) {
+		return dao.exists(id);
+	}
+	
 	public Optional<Caixa> buscarPorId(long id) {
 		return dao.getById(id);
 	}
@@ -62,8 +66,10 @@ public class CaixaService {
 		}
 		
 		if (SessaoSistema.getInstancia().getUserLogado().getTipo() != TipoUsuario.ADMINISTRADOR) {
-			throw new IllegalStateException("Usuário");
+			throw new IllegalStateException("Usuário logado não possuí permissão para excluir caixa");
 		}
+		
+		dao.delete(caixa.getId());
 	}
 	
 	private void validarAbertura(DadosCaixa dados) {
