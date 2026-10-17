@@ -8,10 +8,12 @@ import com.paroquiaTeam.sgeParoquia.model.dto.DadosEstadia;
 import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
 import com.paroquiaTeam.sgeParoquia.utils.TempoUtils;
 
+import jakarta.persistence.EntityNotFoundException;
+
 public class EstadiaService {
 	private EstadiaDAO dao = new EstadiaDAO();
 
-	public boolean estadiaTeveSaida(String placa) {
+	public boolean ultimaEstadiaTeveSaida(String placa) {
 		Optional<Estadia> talvezEstadia = dao.getLastByPlaca(placa);
 		if (talvezEstadia.isEmpty()) {
 			return true; // Não tem estadia, logo trata como se tivesse saída
@@ -30,6 +32,11 @@ public class EstadiaService {
 	
 	public Optional<Estadia> buscarPorId(Long id) {
 		return dao.getById(id);
+	}
+	
+	public Estadia obterPorId(Long id) {
+		return buscarPorId(id)
+				.orElseThrow(() -> new EntityNotFoundException("Estadia não encontrada para o id "+id));
 	}
 	
 	public void salvar(DadosEstadia dados) {
@@ -53,7 +60,7 @@ public class EstadiaService {
 	// se Valor não for null, a estadia foi adiantada
 	public void registrarEntrada(LocalDateTime dataHoraEntrada, String placa, Double valor) {
 		// Redundante mas vale a pena
-		if (!estadiaTeveSaida(placa)) {
+		if (!ultimaEstadiaTeveSaida(placa)) {
 			throw new IllegalStateException("Veículo informado está no pátio. Não foi possível registrar entrada");
 		}
 		
@@ -62,7 +69,7 @@ public class EstadiaService {
 	};
 	
 	public void registrarSaida(LocalDateTime dataHoraSaida, Double valor, Estadia estadia) {		
-		if (estadiaTeveSaida(estadia.getPlacaVeiculo())) {
+		if (ultimaEstadiaTeveSaida(estadia.getPlacaVeiculo())) {
 			throw new IllegalStateException("Veículo informado não está no pátio. Não foi possível registrar saída");
 		}
 		
