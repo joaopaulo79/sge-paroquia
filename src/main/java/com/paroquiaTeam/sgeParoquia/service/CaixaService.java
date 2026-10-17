@@ -34,7 +34,7 @@ public class CaixaService {
 				.orElseThrow(() -> new EntityNotFoundException("Nenhum caixa encontrado"));
 	} 
 	
-	public void abrirCaixa(DadosCaixa dados) {
+	public void abrir(DadosCaixa dados) {
 		validarAbertura(dados);
 		
 		Usuario user = new UsuarioService().obterPorId(dados.idOperador());
@@ -45,7 +45,7 @@ public class CaixaService {
 		SessaoSistema.getInstancia().setCaixa(caixa);
 	}
 	
-	public void fecharCaixa(Caixa caixa, LocalDateTime dataHoraFechamento) {
+	public void fechar(Caixa caixa, LocalDateTime dataHoraFechamento) {
 		validarFechamento(new DadosCaixa(
 				caixa.getDataHoraAbertura(), 
 				dataHoraFechamento,
@@ -56,7 +56,7 @@ public class CaixaService {
 		dao.update(caixa);
 	}
 	
-	public void excluirCaixa(Caixa caixa) {
+	public void excluir(Caixa caixa) {
 		if (!caixa.getMovimentos().isEmpty()) {
 			throw new IllegalStateException("Caixa tem movimentos registrados. Não foi possível excluir");
 		}
