@@ -1,6 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import com.paroquiaTeam.sgeParoquia.dao.ConvenioDAO;
@@ -34,6 +35,10 @@ public class ConvenioService {
 	public Convenio obterPorId(long id) {
 		return buscarPorId(id)
 				.orElseThrow(() -> new EntityNotFoundException("Convênio não encontrado para o id "+id));
+	}
+	
+	public List<Convenio> obterTodos() {
+		return dao.getAll();
 	}
 	
 	public Optional<Convenio> buscarPorNome(String nome) {

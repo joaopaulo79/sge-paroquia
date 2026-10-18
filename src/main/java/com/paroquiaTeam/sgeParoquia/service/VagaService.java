@@ -17,6 +17,10 @@ public class VagaService {
     	return dao.veiculoEstaEmAlgumaVaga(placa);
     }
     
+    public long contar(TipoVaga tipo, TipoReservaVaga reserva) {
+    	return dao.count(tipo, reserva);
+    }
+    
     public List<Vaga> buscarVagas() {
     	return dao.getAll();
     }

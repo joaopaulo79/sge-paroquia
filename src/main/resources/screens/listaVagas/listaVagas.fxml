@@ -16,8 +16,7 @@
             style="-fx-background-color: #F4F5F7;"
             stylesheets="@/css/app.css"
             xmlns="http://javafx.com/javafx/26"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.paroquiaTeam.sgeParoquia.controller.ListaVagasController">
+            xmlns:fx="http://javafx.com/fxml/1">
 
    <children>
 

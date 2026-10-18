@@ -17,9 +17,10 @@ public class BaseController {
 	
 	// nav buttons
 	@FXML private ToggleButton btnNavDashboard;
+	@FXML private ToggleButton btnNavConvenios;
 	@FXML private ToggleButton btnNavConfig;
 	@FXML private ToggleButton btnNavVagas;
-		
+	
 	private static BaseController instance;
 	
 	private Tela telaAtual;
@@ -43,6 +44,7 @@ public class BaseController {
 		btnNavVagas.setToggleGroup(grupoNav);
 		
 		btnNavDashboard.setOnAction(event -> navegar(event, Tela.DASHBOARD));
+		btnNavConvenios.setOnAction(event -> navegar(event, Tela.CONVENIOS));
 		btnNavConfig.setOnAction(event -> navegar(event, Tela.CONFIGURACAO));
 		btnNavVagas.setOnAction(event -> navegar(event, Tela.VAGAS));
 
@@ -61,7 +63,6 @@ public class BaseController {
 			btn.setSelected(true);
 			return;
 		}
-		
 		NavegacaoManager.getInstancia().navegarPara(tela);
 	}
 	

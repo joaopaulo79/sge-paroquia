@@ -1,6 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.core;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
 import javafx.application.Platform;
@@ -35,6 +36,10 @@ public class NavegacaoManager {
     public <T> T navegarPara(Tela tela) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(tela.getPathFxml()));
+            
+            Object instanciaController = tela.getClasseController().getDeclaredConstructor().newInstance();
+            loader.setController(instanciaController);
+            
             Parent root = loader.load();
             
             AnchorPane.setTopAnchor(root, 0.0);
@@ -53,7 +58,7 @@ public class NavegacaoManager {
             });
             
             return loader.getController();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Falha ao carregar a tela: " + tela, e);
         }
@@ -62,6 +67,10 @@ public class NavegacaoManager {
     public <T> T abrirModal(Popup popup) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(popup.getPathFxml()));
+            
+            Object instanciaController = popup.getClasseController().getDeclaredConstructor().newInstance();
+            loader.setController(instanciaController);
+            
             Parent root = loader.load();
 
             Stage dialogStage = new Stage();
@@ -82,7 +91,7 @@ public class NavegacaoManager {
             dialogStage.showAndWait(); 
 
             return loader.getController();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException("Erro ao abrir modal: " + popup, e);
         }
     }
