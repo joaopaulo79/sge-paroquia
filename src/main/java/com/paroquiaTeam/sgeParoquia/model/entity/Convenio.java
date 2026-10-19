@@ -133,7 +133,10 @@ public class Convenio {
 	public boolean isAtivo() {
 		return status.equals(StatusConvenio.ATIVO);
 	}
-
+	
+	public boolean isDesativado() {
+		return status.equals(StatusConvenio.DESATIVADO);
+	}
 	
 	
 	public double getCobrancaIndividual() {

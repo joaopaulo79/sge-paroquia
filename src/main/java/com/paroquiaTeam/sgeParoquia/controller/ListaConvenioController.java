@@ -5,14 +5,15 @@ import java.util.List;
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
 import com.paroquiaTeam.sgeParoquia.core.Popup;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
-import com.paroquiaTeam.sgeParoquia.model.enums.StatusConvenio;
 import com.paroquiaTeam.sgeParoquia.service.ConvenioService;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class ListaConvenioController {
 	ConvenioService convenioService = new ConvenioService();
@@ -57,10 +58,49 @@ public class ListaConvenioController {
 			}
 		});
 		
+		// ativar/desativar
+		Button btnAcao;
+		if (c.isDesativado()) {
+			btnAcao = new Button("Ativar");
+			
+			btnAcao.setOnAction(e -> {
+				if (NavegacaoManager.getInstancia().abrirAlerta(
+						"Confirmação", 
+						"Tem certeza que deseja ativar o convênio?", 
+						AlertType.CONFIRMATION)) {
+					try {
+						convenioService.ativar(c);
+					} catch (Exception e2) {
+						if (NavegacaoManager.getInstancia().abrirAlerta(
+								"Convênio atrasado", 
+								"O convênio não pode ser ativado, pois está com atraso em pagamento. Deseja marcar convênio como atrasado?", 
+								AlertType.CONFIRMATION)) {
+							convenioService.marcarAtraso(c);
+						}
+					}
+				}
+				
+				onAcao.run();
+			});
+		} else {
+			btnAcao = new Button("Desativar");
+			
+			btnAcao.setOnAction(e -> {
+				if (NavegacaoManager.getInstancia().abrirAlerta(
+						"Confirmação", 
+						"Tem certeza que deseja desativar o convênio?", 
+						AlertType.CONFIRMATION)) {
+					convenioService.desativar(c);
+				}
+				onAcao.run();
+			});
+		}
+		
 		card.getChildren().addAll(
 				new Label(c.getNome()), 
 				new Label(" "+(c.getVagasCarro()+c.getVagasMoto())),
-				btnEditar
+				btnEditar,
+				btnAcao
 				);
 		return card;
 	}
