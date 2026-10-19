@@ -47,8 +47,10 @@ public class ListaConvenioController {
 	}
 	
 	// MOCK
-	private HBox criarCard(Convenio c, Runnable onAcao) {
-		HBox card = new HBox();
+	private VBox criarCard(Convenio c, Runnable onAcao) {
+		VBox card = new VBox();
+		
+		HBox linhaPrincipal = new HBox();
 		Button btnEditar = new Button("Editar");
 		btnEditar.setOnAction(e -> {
 			NavegacaoManager.getInstancia().abrirModal(Popup.EDITARCONVENIO, c.getId());
@@ -96,12 +98,39 @@ public class ListaConvenioController {
 			});
 		}
 		
-		card.getChildren().addAll(
+		HBox linhaSecundaria = new HBox();
+		Button btnPagamento = new Button("Realizar Pagamento");
+		
+		
+		
+		Button btnExcluir = new Button("Excluir");
+		btnExcluir.setOnAction(e -> {
+			if (NavegacaoManager.getInstancia().abrirAlerta(
+					"Confirmação", 
+					"Tem certeza que deseja excluir o convênio?", 
+					AlertType.CONFIRMATION)) {
+				try {
+					convenioService.excluir(c.getId());
+				} catch (Exception e2) {
+					NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+				}
+			}
+			onAcao.run();
+		});
+		
+		linhaPrincipal.getChildren().addAll(
 				new Label(c.getNome()), 
 				new Label(" "+(c.getVagasCarro()+c.getVagasMoto())),
 				btnEditar,
 				btnAcao
 				);
+		
+		linhaSecundaria.getChildren().addAll(
+				btnPagamento,
+				btnExcluir
+				);
+		
+		card.getChildren().addAll(linhaPrincipal, linhaSecundaria);
 		return card;
 	}
 }

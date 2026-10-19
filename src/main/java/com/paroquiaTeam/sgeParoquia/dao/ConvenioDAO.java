@@ -41,6 +41,15 @@ public class ConvenioDAO {
 		}
 	}
 	
+	public Optional<Convenio> getByIdWithClientes(Long id) {
+	    try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+	        String query = "SELECT DISTINCT c FROM Convenio c LEFT JOIN FETCH c.clientes WHERE c.id = :id";
+	        return sessao.createQuery(query, Convenio.class)
+	                    .setParameter("id", id)
+	                    .uniqueResultOptional();
+	    }
+	}
+	
 	public Optional<Convenio> getByCnpj(String cnpj) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Convenio c WHERE c.cnpj = :cnpj";

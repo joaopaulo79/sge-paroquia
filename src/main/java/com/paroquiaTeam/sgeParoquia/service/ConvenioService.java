@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.dao.ConvenioDAO;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosConvenio;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
@@ -27,12 +28,12 @@ public class ConvenioService {
 	}
 	
 	// use no caso normal
-	public Optional<Convenio> buscarPorId(long id) {
+	public Optional<Convenio> buscarPorId(Long id) {
 		return dao.getById(id);
 	}
 	
 	// somente use se for estritamente necessária a presença de um Convenio
-	public Convenio obterPorId(long id) {
+	public Convenio obterPorId(Long id) {
 		return buscarPorId(id)
 				.orElseThrow(() -> new EntityNotFoundException("Convênio não encontrado para o id "+id));
 	}
@@ -92,6 +93,21 @@ public class ConvenioService {
 		convenio.setStatus(StatusConvenio.DESATIVADO);
 		dao.update(convenio);
 
+	}
+	
+	public void excluir(Long id) {
+		Convenio conv = dao.getByIdWithClientes(id)
+				.orElseThrow(() -> new IllegalArgumentException("Convênio não encontrado para o id "+id));
+		
+		if (conv.isAtivo()) {
+	        throw new IllegalArgumentException("Convenio está ativo, não foi possível excluir.");
+		}
+			
+		if (!conv.getClientes().isEmpty()) {
+	        throw new IllegalArgumentException("Convenio possuí clientes atrelados, não foi possível excluir.");
+		}
+		
+		dao.delete(id);
 	}
 	
 	private void validarNovoConvenio(DadosConvenio dados) {
