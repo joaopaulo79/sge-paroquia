@@ -65,10 +65,25 @@ public class NavegacaoManager {
     }
     
     public <T> T abrirModal(Popup popup) {
-        try {
+    	return abrirModal(popup, null);
+    }
+    
+    public <T, P> T abrirModal(Popup popup, P parametro) {
+    	try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(popup.getPathFxml()));
             
-            Object instanciaController = popup.getClasseController().getDeclaredConstructor().newInstance();
+            Class<?> classeController = popup.getClasseController();
+            Object instanciaController;
+            
+            if (parametro != null) {
+            	// Tenta encontrar o construtor que aceita o tipo exato do parâmetro
+            	instanciaController = classeController.getDeclaredConstructor(parametro.getClass()).newInstance(parametro);
+            } else {
+                // Se parâmetro for nulo, usa o construtor padrão sem argumentos
+                instanciaController = classeController.getDeclaredConstructor().newInstance();
+            }
+
+            // Define explicitamente o controller no loader antes do .load()
             loader.setController(instanciaController);
             
             Parent root = loader.load();

@@ -5,6 +5,7 @@ import java.util.List;
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
 import com.paroquiaTeam.sgeParoquia.core.Popup;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
+import com.paroquiaTeam.sgeParoquia.model.enums.StatusConvenio;
 import com.paroquiaTeam.sgeParoquia.service.ConvenioService;
 
 import javafx.fxml.FXML;
@@ -40,9 +41,27 @@ public class ListaConvenioController {
 		
 		List<Convenio> convenios = convenioService.obterTodos();
 		for (Convenio c : convenios) {
-			HBox card = new HBox();
-			card.getChildren().addAll(new Label(c.getNome()), new Label(""+(c.getVagasCarro()+c.getVagasMoto())));
-			vBoxCards.getChildren().add(card);
+			vBoxCards.getChildren().add(criarCard(c, this::carregarConvenios));
 		}
+	}
+	
+	// MOCK
+	private HBox criarCard(Convenio c, Runnable onAcao) {
+		HBox card = new HBox();
+		Button btnEditar = new Button("Editar");
+		btnEditar.setOnAction(e -> {
+			NavegacaoManager.getInstancia().abrirModal(Popup.EDITARCONVENIO, c.getId());
+			
+			if (onAcao != null) {
+				onAcao.run();
+			}
+		});
+		
+		card.getChildren().addAll(
+				new Label(c.getNome()), 
+				new Label(" "+(c.getVagasCarro()+c.getVagasMoto())),
+				btnEditar
+				);
+		return card;
 	}
 }
