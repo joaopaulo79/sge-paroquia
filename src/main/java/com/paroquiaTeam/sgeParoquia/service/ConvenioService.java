@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.dao.ConvenioDAO;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosConvenio;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
@@ -70,7 +69,8 @@ public class ConvenioService {
 		dao.update(convenio);
 	}
 	
-	public void ativar(Convenio convenio) {
+	public void ativar(Long id) {
+		Convenio convenio = obterPorId(id);
 		if (convenio.getDataVencimento().isBefore(LocalDate.now())) {
 			throw new IllegalStateException("Convenio com atraso. Não foi possível ativar");
 		}
@@ -79,7 +79,8 @@ public class ConvenioService {
 		dao.update(convenio);
 	}
 	
-	public void marcarAtraso(Convenio convenio) {
+	public void marcarAtraso(Long id) {
+		Convenio convenio = obterPorId(id);
 		if (!convenio.getDataVencimento().isBefore(LocalDate.now())) {
 			throw new IllegalStateException("Data de vencimento é posterior à data atual. Não foi possível marcar atraso");
 		}
@@ -89,7 +90,8 @@ public class ConvenioService {
 
 	}
 	
-	public void desativar(Convenio convenio) {
+	public void desativar(Long id) {
+		Convenio convenio = obterPorId(id);
 		convenio.setStatus(StatusConvenio.DESATIVADO);
 		dao.update(convenio);
 
