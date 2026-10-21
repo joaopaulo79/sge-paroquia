@@ -9,6 +9,7 @@ import com.paroquiaTeam.sgeParoquia.model.enums.TipoPagamento;
 import com.paroquiaTeam.sgeParoquia.service.MovimentoCaixaService;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Spinner;
@@ -17,10 +18,10 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class RegistrarMovimentoCaixaController {
-	TipoMovimento tipoMovimento;
+	private final DadosMovimentoCaixa dadosImutaveis;
 	
-	public RegistrarMovimentoCaixaController(TipoMovimento tipoMovimento) {
-		this.tipoMovimento = tipoMovimento;
+	public RegistrarMovimentoCaixaController(DadosMovimentoCaixa dadosImutaveis) {
+		this.dadosImutaveis = dadosImutaveis;
 	}
 	
 	MovimentoCaixaService service = new MovimentoCaixaService();
@@ -34,21 +35,40 @@ public class RegistrarMovimentoCaixaController {
 	
 	@FXML
 	private void initialize() {
+		double valorInicial;
+		
+		if (dadosImutaveis.valor() == null) {
+			valorInicial = 0;
+			spinnerValor.setEditable(true);
+		} else {
+			valorInicial = dadosImutaveis.valor();
+			spinnerValor.setDisable(true);
+		}
 		spinnerValor.setValueFactory(
-				new SpinnerValueFactory.DoubleSpinnerValueFactory(-1000000, 1000000, 0, 0.01)
+				new SpinnerValueFactory.DoubleSpinnerValueFactory(-1000000, 1000000, valorInicial, 0.01)
 			);
-		spinnerValor.setEditable(true);
+		
 		
 		choiceFormaPagamento.getItems().addAll(TipoPagamento.values());
-		choiceFormaPagamento.setValue(TipoPagamento.CREDITO);
+		if (dadosImutaveis.formaPagamento() == null) {
+			choiceFormaPagamento.setValue(TipoPagamento.CREDITO);
+		} else {
+			choiceFormaPagamento.setValue(dadosImutaveis.formaPagamento());
+			choiceFormaPagamento.setDisable(true);
+		}
+		
 		
 		choiceTipoMovimento.getItems().addAll(TipoMovimento.values());
-		if (tipoMovimento == null) {
+		if (dadosImutaveis.tipoMovimento() == null) {
 			choiceTipoMovimento.setValue(TipoMovimento.ENTRADA);
 		} else {
-			// se um tipo específico é fornecido, forçar que esse tipo seja usado
-			choiceTipoMovimento.setValue(tipoMovimento);
+			choiceTipoMovimento.setValue(dadosImutaveis.tipoMovimento());
 			choiceTipoMovimento.setDisable(true);
+		}
+		
+		if (dadosImutaveis.descricao() != null && !dadosImutaveis.descricao().isBlank()) {
+			textAreaDescricao.setText(dadosImutaveis.descricao());
+			textAreaDescricao.setDisable(true);
 		}
 		
 		btnCancelar.setOnAction(e -> {

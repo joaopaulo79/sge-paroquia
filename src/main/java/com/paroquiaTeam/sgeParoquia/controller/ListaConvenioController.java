@@ -1,10 +1,16 @@
 package com.paroquiaTeam.sgeParoquia.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 import com.paroquiaTeam.sgeParoquia.controller.records.AcoesConvenio;
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
 import com.paroquiaTeam.sgeParoquia.core.Popup;
+import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
+import com.paroquiaTeam.sgeParoquia.model.dto.DadosConvenio;
+import com.paroquiaTeam.sgeParoquia.model.dto.DadosMovimentoCaixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoMovimento;
 import com.paroquiaTeam.sgeParoquia.service.ConvenioService;
@@ -107,12 +113,53 @@ public class ListaConvenioController {
 		carregarConvenios();
 	}
 
-	private void registrarPagamento(Long idConvenio) {
-		NavegacaoManager.getInstancia().abrirModal(Popup.REGISTRARMOVIMENTO, TipoMovimento.ENTRADA);
-		
-		// TODO: ver a melhor forma de adiar a data de vencimento
-		
-		carregarConvenios();
+	private void registrarPagamento(Convenio conv) {
+		try {
+			if (!SessaoSistema.getInstancia().temCaixaAberto()) {
+				throw new IllegalStateException("É necessário ter um caixa aberto para registrar um movimento");
+			}
+			
+			String mes = conv.getDataVencimento().format(
+					DateTimeFormatter.ofPattern("MMMM", Locale.forLanguageTag("pt-BR"))
+					);
+			String ano = conv.getDataVencimento().format(
+					DateTimeFormatter.ofPattern("yyyy", Locale.forLanguageTag("pt-BR"))
+					);
+			
+			String descricao = "Pagamento de mensalidade do convênio de nome " + conv.getNome()
+					+ ", de valor R$"+ conv.getMensalidade() 
+					+ " para o mês de " + mes
+					+ " do ano " + ano;
+			
+			DadosMovimentoCaixa dadosMovimento = new DadosMovimentoCaixa(
+					conv.getMensalidade(),
+					null,
+					TipoMovimento.ENTRADA,
+					descricao,
+					SessaoSistema.getInstancia().getCaixa().getId(),
+					null
+					);
+			
+			NavegacaoManager.getInstancia().abrirModal(Popup.REGISTRARMOVIMENTO, dadosMovimento);
+			
+			LocalDate dataVencimentoNova = conv.getDataVencimento().plusMonths(1);
+			DadosConvenio dadosNovos = new DadosConvenio(
+					conv.getCnpj(),
+					conv.getNome(),
+					conv.getMensalidade(),
+					conv.getVagasCarro(),
+					conv.getVagasMoto(),
+					conv.getStatus(),
+					conv.getCobrancaIndividual(),
+					dataVencimentoNova
+					);
+			
+			convenioService.atualizar(dadosNovos, conv);
+			
+			carregarConvenios();
+		} catch (Exception e) {
+			NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
+		}
 	}
 	// MOCK
 	private VBox criarCard(Convenio c, AcoesConvenio acoes) {
@@ -137,7 +184,7 @@ public class ListaConvenioController {
 
 		}
 
-		btnPagamento.setOnAction(e -> acoes.onRegistrarPagamento().accept(c.getId()) );
+		btnPagamento.setOnAction(e -> acoes.onRegistrarPagamento().accept(c) );
 		btnExcluir.setOnAction(e -> acoes.onExcluir().accept(c.getId()) );
 		
 		linhaPrincipal.getChildren().addAll(

@@ -7,7 +7,7 @@ import com.paroquiaTeam.sgeParoquia.model.enums.TipoMovimento;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoPagamento;
 
 public record DadosMovimentoCaixa(
-		double valor, 
+		Double valor, 
 		TipoPagamento formaPagamento, 
 		TipoMovimento tipoMovimento, 
 		String descricao,
