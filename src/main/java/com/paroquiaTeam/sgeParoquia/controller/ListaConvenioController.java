@@ -107,7 +107,7 @@ public class ListaConvenioController {
 		carregarConvenios();
 	}
 
-	private void registrarPagamento() {
+	private void registrarPagamento(Long idConvenio) {
 		NavegacaoManager.getInstancia().abrirModal(Popup.REGISTRARMOVIMENTO, TipoMovimento.ENTRADA);
 		
 		// TODO: ver a melhor forma de adiar a data de vencimento
@@ -137,7 +137,7 @@ public class ListaConvenioController {
 
 		}
 
-		btnPagamento.setOnAction(e -> acoes.onRegistrarPagamento().run() );
+		btnPagamento.setOnAction(e -> acoes.onRegistrarPagamento().accept(c.getId()) );
 		btnExcluir.setOnAction(e -> acoes.onExcluir().accept(c.getId()) );
 		
 		linhaPrincipal.getChildren().addAll(

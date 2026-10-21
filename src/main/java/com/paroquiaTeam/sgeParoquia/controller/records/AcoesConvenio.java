@@ -7,7 +7,7 @@ public record AcoesConvenio(
 	    Consumer<Long> onExcluir,
 	    Consumer<Long> onAtivar,
 	    Consumer<Long> onDesativar,
-	    Runnable onRegistrarPagamento
+	    Consumer<Long> onRegistrarPagamento
 	    ) {
 
 }
