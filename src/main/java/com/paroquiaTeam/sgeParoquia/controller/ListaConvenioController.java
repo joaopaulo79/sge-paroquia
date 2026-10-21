@@ -6,6 +6,7 @@ import com.paroquiaTeam.sgeParoquia.controller.records.AcoesConvenio;
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
 import com.paroquiaTeam.sgeParoquia.core.Popup;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoMovimento;
 import com.paroquiaTeam.sgeParoquia.service.ConvenioService;
 
 import javafx.fxml.FXML;
@@ -107,7 +108,9 @@ public class ListaConvenioController {
 	}
 
 	private void registrarPagamento() {
-		NavegacaoManager.getInstancia().abrirAlertaSucesso("Pagamento iria aqui");
+		NavegacaoManager.getInstancia().abrirModal(Popup.REGISTRARMOVIMENTO, TipoMovimento.ENTRADA);
+		
+		// TODO: ver a melhor forma de adiar a data de vencimento
 		
 		carregarConvenios();
 	}
