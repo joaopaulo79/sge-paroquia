@@ -1,15 +1,18 @@
 package com.paroquiaTeam.sgeParoquia.dao;
 
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoFracionada;
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
+import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoFracionada;
 
 class PrecificacaoFracionadaDAOTest extends BaseDAOTest {
 
@@ -112,7 +115,7 @@ class PrecificacaoFracionadaDAOTest extends BaseDAOTest {
 	public void update_atualizaPrecificacaoValida() {
 	    PrecificacaoFracionada prec = new PrecificacaoFracionada(10, 5.0, 10.0, 50.0, 3.0, 6.0, 30.0);
 	    dao.save(prec);
-	
+
 	    prec.setValorHora(15.0);
 	    assertDoesNotThrow(() -> dao.update(prec));
 	}

@@ -22,43 +22,43 @@ public class Vaga {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_vaga")
 	private Long id;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_ocupacao", nullable = false)
 	private StatusVaga status;
-	
+
 	@Column(name = "placa_ocupador", nullable = true)
 	private String placa;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_vaga", nullable = false)
 	private TipoVaga tipo;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_reserva", nullable = false)
 	private TipoReservaVaga reserva;
-	
+
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "id_convenio")
 	private Convenio convenio;
 
-	
-	
+
+
 	public Vaga() {}
 
 	public Vaga(TipoVaga tipo, TipoReservaVaga reserva) {
 		this.tipo = tipo;
 		this.reserva = reserva;
 	}
-	
+
 	public Vaga(TipoVaga tipo, TipoReservaVaga reserva, Convenio convenio) {
 		this.tipo = tipo;
 		this.reserva = reserva;
 		this.convenio = convenio;
 	}
 
-	
-	
+
+
 	public Long getId() {
 		return id;
 	}
@@ -68,7 +68,7 @@ public class Vaga {
 	}
 
 
-	
+
 	public StatusVaga getStatus() {
 		return status;
 	}
@@ -77,8 +77,8 @@ public class Vaga {
 		this.status = status;
 	}
 
-	
-	
+
+
 	public String getPlaca() {
 		return placa;
 	}
@@ -87,8 +87,8 @@ public class Vaga {
 		this.placa = placa;
 	}
 
-	
-	
+
+
 	public TipoVaga getTipo() {
 		return tipo;
 	}
@@ -97,8 +97,8 @@ public class Vaga {
 		this.tipo = tipo;
 	}
 
-	
-	
+
+
 	public TipoReservaVaga getReserva() {
 		return reserva;
 	}
@@ -107,8 +107,8 @@ public class Vaga {
 		this.reserva = reserva;
 	}
 
-	
-	
+
+
 	public Convenio getConvenio() {
 		return convenio;
 	}

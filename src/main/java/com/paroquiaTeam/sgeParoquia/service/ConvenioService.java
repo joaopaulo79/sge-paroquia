@@ -12,50 +12,50 @@ import com.paroquiaTeam.sgeParoquia.model.enums.StatusConvenio;
 import jakarta.persistence.EntityNotFoundException;
 
 public class ConvenioService {
-	
+
 	private ConvenioDAO dao = new ConvenioDAO();
-	
+
 	// use no caso normal
 	public Optional<Convenio> buscarPorCnpj(String cnpj) {
 		return dao.getByCnpj(cnpj);
 	}
-	
+
 	// somente use se for estritamente necessária a presença de um Convenio
 	public Convenio obterPorCnpj(String cnpj) {
 		return buscarPorCnpj(cnpj)
 				.orElseThrow(() -> new EntityNotFoundException("Convênio não encontrado para o cnpj "+cnpj));
 	}
-	
+
 	// use no caso normal
 	public Optional<Convenio> buscarPorId(Long id) {
 		return dao.getById(id);
 	}
-	
+
 	// somente use se for estritamente necessária a presença de um Convenio
 	public Convenio obterPorId(Long id) {
 		return buscarPorId(id)
 				.orElseThrow(() -> new EntityNotFoundException("Convênio não encontrado para o id "+id));
 	}
-	
+
 	public List<Convenio> obterTodos() {
 		return dao.getAll();
 	}
-	
+
 	public Optional<Convenio> buscarPorNome(String nome) {
 		return dao.getByNome(nome);
 	}
-	
+
 	public void salvar (DadosConvenio dados) {
 		validarNovoConvenio(dados);
-		
+
 		Convenio convenio = dados.paraConvenio();
-		
+
 		dao.save(convenio);
 	}
-	
+
 	public void atualizar (DadosConvenio dadosNovos, Convenio convenio) {
 		validarAtualizacaoConvenio(dadosNovos, convenio);
-		
+
 		convenio.setCnpj(dadosNovos.cnpj());
 		convenio.setNome(dadosNovos.nome());
 		convenio.setMensalidade(dadosNovos.mensalidade());
@@ -63,12 +63,12 @@ public class ConvenioService {
 		convenio.setVagasMoto(dadosNovos.vagasMoto());
 		convenio.setCobrancaIndividual(dadosNovos.cobrancaIndividual());
 		convenio.setDataVencimento(dadosNovos.dataVencimento());
-		
-		
-		
+
+
+
 		dao.update(convenio);
 	}
-	
+
 	public void ativar(Long id) {
 		Convenio convenio = obterPorId(id);
 		if (convenio.getDataVencimento().isBefore(LocalDate.now())) {
@@ -78,40 +78,40 @@ public class ConvenioService {
 		convenio.setStatus(StatusConvenio.ATIVO);
 		dao.update(convenio);
 	}
-	
+
 	public void marcarAtraso(Long id) {
 		Convenio convenio = obterPorId(id);
 		if (!convenio.getDataVencimento().isBefore(LocalDate.now())) {
 			throw new IllegalStateException("Data de vencimento é posterior à data atual. Não foi possível marcar atraso");
 		}
-		
+
 		convenio.setStatus(StatusConvenio.ATRASO);
 		dao.update(convenio);
 
 	}
-	
+
 	public void desativar(Long id) {
 		Convenio convenio = obterPorId(id);
 		convenio.setStatus(StatusConvenio.DESATIVADO);
 		dao.update(convenio);
 
 	}
-	
+
 	public void excluir(Long id) {
 		Convenio conv = dao.getByIdWithClientes(id)
 				.orElseThrow(() -> new IllegalArgumentException("Convênio não encontrado para o id "+id));
-		
+
 		if (conv.isAtivo()) {
 	        throw new IllegalArgumentException("Convenio está ativo, não foi possível excluir.");
 		}
-			
+
 		if (!conv.getClientes().isEmpty()) {
 	        throw new IllegalArgumentException("Convenio possuí clientes atrelados, não foi possível excluir.");
 		}
-		
+
 		dao.delete(id);
 	}
-	
+
 	private void validarNovoConvenio(DadosConvenio dados) {
 		validarCamposBasicos(dados);
 
@@ -119,17 +119,17 @@ public class ConvenioService {
 			throw new IllegalArgumentException("Convênio com este cnpj já existe");
 		}
 	}
-	
+
 	private void validarAtualizacaoConvenio(DadosConvenio dados, Convenio convenioAtual) {
 	    validarCamposBasicos(dados);
 
 	    boolean cnpjFoiAlterado = !dados.cnpj().equalsIgnoreCase(convenioAtual.getCnpj());
-	    
+
 	    if (cnpjFoiAlterado && dao.existsByCnpj(dados.cnpj())) {
 	        throw new IllegalArgumentException("O novo CNPJ informado já pertence a outro convênio.");
 	    }
 	}
-	
+
 	private void validarCamposBasicos(DadosConvenio dados) {
 		// Checando se o parametro em si passado não é nulo
 		if (dados == null) {
@@ -151,7 +151,7 @@ public class ConvenioService {
 	    if (dados.dataVencimento() == null) {
 	        throw new IllegalArgumentException("A data de vencimento é obrigatória.");
 	    }
-		
+
 		if (dados.mensalidade() < 0 || dados.vagasCarro() < 0 ||
 				dados.vagasMoto() < 0 || dados.cobrancaIndividual() < 0) {
 			throw new IllegalArgumentException("Dados numéricos não podem ser negativos");

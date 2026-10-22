@@ -14,17 +14,17 @@ import com.paroquiaTeam.sgeParoquia.model.enums.TipoVaga;
 
 public class VagaDAO {
     public record AjusteVaga(TipoVaga tipo, TipoReservaVaga reserva, long novaQuantidade) {}
-	
-	public boolean exists(long id) { 
+
+	public boolean exists(long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.id = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, id)
-					.uniqueResult();			
+					.uniqueResult();
 			return quantidade != null && quantidade > 0;
 		}
 	}
-	
+
 	public boolean veiculoEstaEmAlgumaVaga(String placaOcupante) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "COUNT(v) FROM Vaga v WHERE v.placa = ?1";
@@ -34,27 +34,27 @@ public class VagaDAO {
 			return quantidade != null && quantidade > 0;
 		}
 	}
-	
+
 	public Optional<Vaga> getById(Long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "FROM Vaga v WHERE v.id = ?1";
 			return sessao.createSelectionQuery(query, Vaga.class)
 						.setParameter(1, id)
 						.uniqueResultOptional();
-					
+
 		}
 	}
-	
-	
+
+
 	public List<Vaga> getAll() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "FROM Vaga v";
 			return sessao.createSelectionQuery(query, Vaga.class)
 						.getResultList();
-					
+
 		}
 	}
-	
+
 	public List<Long> getIdsByStatus(TipoVaga tipo, TipoReservaVaga reserva, StatusVaga status, long max) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT v.id FROM Vaga v WHERE v.status = ?1 AND v.tipo = ?2 AND v.reserva = ?3";
@@ -66,7 +66,7 @@ public class VagaDAO {
 						.getResultList();
 		}
 	}
-	
+
 	public List<Vaga> getByStatus(TipoVaga tipo, TipoReservaVaga reserva, StatusVaga status, long max) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "FROM Vaga v WHERE v.status = ?1 AND v.tipo = ?2 AND v.reserva = ?3";
@@ -78,17 +78,17 @@ public class VagaDAO {
 						.getResultList();
 		}
 	}
-	
+
 	public Vaga getFirstLivre(TipoVaga tipo, TipoReservaVaga reserva) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2 AND v.status = LIVRE";
 			return sessao.createSelectionQuery(query, Vaga.class)
 						.setParameter(1, tipo)
 						.setParameter(2, reserva)
-						.getSingleResultOrNull();			
+						.getSingleResultOrNull();
 		}
 	}
-	
+
 	public void save(Vaga vaga) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
@@ -101,12 +101,12 @@ public class VagaDAO {
 			}
 		}
 	}
-	
+
 	public long batchSave(TipoVaga tipo, TipoReservaVaga reserva, long quantidade) {
 		if (quantidade <= 0) {
 			return 0;
 		}
-		
+
 	    try (Session sessao = HibernateUtil.getSessionFactory().openSession()) {
 	        Transaction t = sessao.beginTransaction();
 	        try {
@@ -118,7 +118,7 @@ public class VagaDAO {
 	                sessao.persist(vaga);
 	            }
 	            t.commit();
-	            
+
 	            return quantidade;
 	        } catch (Exception e) {
 	            t.rollback();
@@ -126,7 +126,7 @@ public class VagaDAO {
 	        }
 	    }
 	}
-	
+
 	public void update(Vaga vaga) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
@@ -139,19 +139,19 @@ public class VagaDAO {
 			}
 		}
 	}
-	
+
 	public int batchLiberar(StatusVaga statusAntigo) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				String hql = "UPDATE Vaga v SET v.status = :statusLivre WHERE v.status = :statusAntigo";
-	            
+
 	            int linhas = sessao.createMutationQuery(hql)
 	                    .setParameter("statusLivre", StatusVaga.LIVRE)
 	                    .setParameter("statusAntigo", statusAntigo)
 	                    .executeUpdate();
 				t.commit();
-				
+
 				return linhas;
 			} catch (Exception e) {
 				t.rollback();
@@ -159,7 +159,7 @@ public class VagaDAO {
 			}
 		}
 	}
-	
+
 	public int batchUpdateStatus(List<Long> ids, StatusVaga novoStatus) {
 		if (ids == null || ids.isEmpty()) {
 			throw new IllegalArgumentException("Nenhum id fornecido");
@@ -169,7 +169,7 @@ public class VagaDAO {
 	        Transaction t = sessao.beginTransaction();
 	        try {
 	            String hql = "UPDATE Vaga v SET v.status = :novoStatus WHERE v.id IN :ids";
-	            
+
 	            int linhas = sessao.createMutationQuery(hql)
 	                    .setParameter("novoStatus", novoStatus)
 	                    .setParameter("ids", ids)
@@ -182,13 +182,13 @@ public class VagaDAO {
 	        }
 	    }
 	}
-	
+
 	public void delete(Long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				Vaga vaga = sessao.get(Vaga.class, id);
-				if (vaga == null) {					
+				if (vaga == null) {
 					throw new IllegalArgumentException("Vaga com id especificado não encontrada");
 				}
 				if (vaga.getStatus().equals(StatusVaga.OCUPADA)) {
@@ -198,31 +198,31 @@ public class VagaDAO {
 				t.commit();
 			} catch (Exception e) {
 				t.rollback();
-				throw e;			
+				throw e;
 			}
 		}
 	}
-	
+
 	public long countAll() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(v) FROM Vaga v";
 			Long quantidade = sessao.createQuery(query, Long.class)
-					.uniqueResult();			
+					.uniqueResult();
 			return quantidade;
 		}
 	}
-	
+
 	public long count(TipoVaga tipoVaga, TipoReservaVaga tipoReserva) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, tipoVaga)
 					.setParameter(2, tipoReserva)
-					.uniqueResult();			
+					.uniqueResult();
 			return quantidade;
 		}
 	}
-	
+
 	public long countComStatus(TipoVaga tipoVaga, TipoReservaVaga tipoReserva, StatusVaga status) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2 AND v.status = ?3";
@@ -230,7 +230,7 @@ public class VagaDAO {
 					.setParameter(1, tipoVaga)
 					.setParameter(2, tipoReserva)
 					.setParameter(3, status)
-					.uniqueResult();			
+					.uniqueResult();
 			return quantidade;
 		}
 	}

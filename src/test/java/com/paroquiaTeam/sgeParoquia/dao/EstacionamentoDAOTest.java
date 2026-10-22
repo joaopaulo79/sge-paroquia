@@ -1,16 +1,21 @@
 package com.paroquiaTeam.sgeParoquia.dao;
 
-import com.paroquiaTeam.sgeParoquia.model.entity.Estacionamento;
-import com.paroquiaTeam.sgeParoquia.model.enums.TipoPrecificacao;
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.PropertyValueException;
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.hibernate.PropertyValueException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
+import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.model.entity.Estacionamento;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoPrecificacao;
 
 class EstacionamentoDAOTest extends BaseDAOTest {
 
@@ -53,7 +58,7 @@ class EstacionamentoDAOTest extends BaseDAOTest {
         dao.save(est);
         assertTrue(dao.exists());
     }
-    
+
     @Test
     public void save_precificacaoNulaThrowsPropertyValueException() {
         assertThrows(PropertyValueException.class, () -> {

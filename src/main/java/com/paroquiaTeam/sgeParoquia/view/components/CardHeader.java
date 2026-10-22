@@ -19,7 +19,7 @@ public class CardHeader extends HBox {
 
         HBox.setHgrow(containerExtras, Priority.ALWAYS);
         containerExtras.setAlignment(Pos.CENTER_RIGHT);
-        
+
         if (id == null) {
         	this.labelId = null;
         	getChildren().addAll(containerExtras);
@@ -27,7 +27,7 @@ public class CardHeader extends HBox {
             this.labelId = new Label("#"+id);
             getChildren().addAll(containerExtras, labelId);
         }
-        
+
         getStyleClass().add("card-header");
     }
 

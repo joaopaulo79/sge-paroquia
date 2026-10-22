@@ -1,9 +1,9 @@
 package com.paroquiaTeam.sgeParoquia.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -19,7 +19,7 @@ import com.paroquiaTeam.sgeParoquia.model.enums.TipoCliente;
 
 class ClienteDAOTest extends BaseDAOTest {
 	ClienteDAO dao = new ClienteDAO();
-	
+
 	@AfterEach
 	void removeDados() {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -34,18 +34,18 @@ class ClienteDAOTest extends BaseDAOTest {
             }
         }
 	}
-	
+
 	@Test
 	void getAllByIdConvenio_retornaValoresComIdValido() {
 		LocalDate data = LocalDate.now().plusMonths(1);
 		Convenio conv = new Convenio("abc123", "Unimed", 1.2, 10, 0, StatusConvenio.ATIVO, 0.5, data);
 		new ConvenioDAO().save(conv);
-		
+
 		Cliente c = new Cliente("Nome", "123", "123", TipoCliente.CONVENIADO, true, conv);
 		dao.save(c);
 		long idConv = conv.getId();
 		List<Cliente> clientes = dao.getAllByIdConvenio(idConv);
-		
+
 		assertFalse(clientes.isEmpty());
 		boolean valido = true;
 		for (Cliente c2 : clientes) {

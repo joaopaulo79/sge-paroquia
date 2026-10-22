@@ -23,35 +23,35 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cliente")
 	private Long id;
-	
+
 	@Column(name = "nome_cliente", nullable = false)
 	private String nome;
-	
+
 	@Column(name = "cpf_cliente", nullable = false, unique = true)
 	private String cpf;
-	
+
 	@Column(name = "telefone_cliente")
 	private String telefone;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_cliente", nullable = false)
 	private TipoCliente tipo;
-	
+
 	@Column(name = "status_cliente", nullable = false)
 	private boolean status;
-	
+
 	@OneToMany(mappedBy = "cliente")
 	private List<Veiculo> veiculos;
-	
+
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "id_convenio")
 	private Convenio convenio;
 
-	
-	
+
+
 	public Cliente() {}
-	
-	public Cliente(String nome, String cpf, String telefone, TipoCliente tipo, 
+
+	public Cliente(String nome, String cpf, String telefone, TipoCliente tipo,
 			boolean status) {
 		this.nome = nome;
 		this.cpf = cpf;
@@ -59,8 +59,8 @@ public class Cliente {
 		this.tipo = tipo;
 		this.status = status;
 	}
-	
-	public Cliente(String nome, String cpf, String telefone, TipoCliente tipo, 
+
+	public Cliente(String nome, String cpf, String telefone, TipoCliente tipo,
 			boolean status, Convenio convenio) {
 		this.nome = nome;
 		this.cpf = cpf;
@@ -69,17 +69,17 @@ public class Cliente {
 		this.status = status;
 		this.convenio = convenio;
 	}
-	
-	
-	
+
+
+
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	
+
+
 
 	public String getNome() {
 		return nome;
@@ -88,16 +88,16 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	
-	
+
+
 	public String getCpf() {
 		return cpf;
 	}
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	
-	
+
+
 
 	public String getTelefone() {
 		return telefone;
@@ -105,8 +105,8 @@ public class Cliente {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	
-	
+
+
 
 	public TipoCliente getTipo() {
 		return tipo;
@@ -114,8 +114,8 @@ public class Cliente {
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo;
 	}
-	
-	
+
+
 
 	public boolean getStatus() {
 		return status;
@@ -123,8 +123,8 @@ public class Cliente {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	
-	
+
+
 
 	public List<Veiculo> getVeiculos() {
 		return veiculos;
@@ -133,8 +133,8 @@ public class Cliente {
 		this.veiculos = veiculos;
 	}
 
-	
-	
+
+
 	public Convenio getConvenio() {
 		return convenio;
 	}

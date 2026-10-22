@@ -9,25 +9,25 @@ import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoPorHora;
 
 public class PrecificacaoPorHoraDAO {
-	
-	public boolean exists() { 
+
+	public boolean exists() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(p) FROM PrecificacaoPorHora p WHERE p.id = 1";
-			Long quantidade = sessao.createQuery(query, Long.class).uniqueResult();			
+			Long quantidade = sessao.createQuery(query, Long.class).uniqueResult();
 			return quantidade != null && quantidade > 0;
 		}
-		
+
 	}
-	
+
 	public Optional<PrecificacaoPorHora> get() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "FROM PrecificacaoPorHora p WHERE p.id = 1";
 			return sessao.createSelectionQuery(query, PrecificacaoPorHora.class)
 						.uniqueResultOptional();
-					
+
 		}
 	}
-	
+
 	public void saveOrUpdate(PrecificacaoPorHora precificacao) {
 		boolean existe = exists();
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
@@ -36,7 +36,7 @@ public class PrecificacaoPorHoraDAO {
 				if (existe) {
 					sessao.merge(precificacao);
 				} else {
-					sessao.persist(precificacao);					
+					sessao.persist(precificacao);
 				}
 				t.commit();
 			} catch (Exception e) {
@@ -45,7 +45,7 @@ public class PrecificacaoPorHoraDAO {
 			}
 		}
 	}
-	
+
 	public void save(PrecificacaoPorHora precificacao) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
@@ -58,7 +58,7 @@ public class PrecificacaoPorHoraDAO {
 			}
 		}
 	}
-	
+
 	public void update(PrecificacaoPorHora precificacao) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
@@ -67,7 +67,7 @@ public class PrecificacaoPorHoraDAO {
 				t.commit();
 			} catch (Exception e) {
 				t.rollback();
-				throw e;			
+				throw e;
 			}
 		}
 	}

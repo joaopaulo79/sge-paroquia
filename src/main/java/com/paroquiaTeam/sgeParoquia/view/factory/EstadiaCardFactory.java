@@ -14,31 +14,31 @@ public class EstadiaCardFactory {
 	public CardGenerico criarCardEntrada(Estadia estadia) {
 		CardHeader header = new CardHeader(null);
 		header.getStyleClass().add("card-header-primario");
-		
+
 		VBox conteudo = new VBox();
-		
+
 		HBox linhaPlaca = new HBox();
 		linhaPlaca.getChildren().addAll(new Label("Placa:"), new Label(estadia.getPlacaVeiculo()));
 
 		HBox linhaHoraEntrada = new HBox();
 		String horaEntrada = (estadia.getDataHoraEntrada().getHour()+":"+estadia.getDataHoraEntrada().getMinute());
 		linhaHoraEntrada.getChildren().addAll(new Label("Hora de entrada:"), new Label(horaEntrada));
-		
+
 		conteudo.getChildren().addAll(linhaPlaca, linhaHoraEntrada);
 
 		CardGenerico card = new CardGenerico.Builder(header)
 				.comConteudo(conteudo)
 				.build();
-		
+
 		card.getStyleClass().add("card");
 		return card;
 	}
-	
+
 	public CardGenerico criarCardSaida(Estadia estadia) {
 		CardHeader header = new CardHeader(null);
-		
+
 		VBox conteudo = new VBox();
-				
+
 		conteudo.getChildren().addAll(
 				criarLinhaInfo("Placa:", estadia.getPlacaVeiculo()),
 		        criarLinhaInfo("Data de entrada:", formatarData(estadia.getDataHoraEntrada())),
@@ -51,19 +51,19 @@ public class EstadiaCardFactory {
 		CardGenerico card = new CardGenerico.Builder(header)
 				.comConteudo(conteudo)
 				.build();
-		
+
 		card.getStyleClass().add("card");
 		return card;
 	}
-	
+
 	private String formatarData(LocalDateTime dataHora) {
 		return dataHora.getDayOfMonth()+"/"+dataHora.getMonthValue()+"/"+dataHora.getYear();
 	}
-	
+
 	private String formatarHora(LocalDateTime dataHora) {
 		return dataHora.getHour()+":"+dataHora.getMinute();
 	}
-	
+
 	private HBox criarLinhaInfo(String label, String valor) {
 	    return new HBox(new Label(label), new Label(valor));
 	}

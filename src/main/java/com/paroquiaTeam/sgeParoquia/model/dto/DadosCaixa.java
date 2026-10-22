@@ -10,12 +10,12 @@ public record DadosCaixa(
 		LocalDateTime dataHoraFechamento,
 		double valorInicial,
 		long idOperador) {
-	
+
 	public Caixa paraCaixa(Usuario operador) {
 		return new Caixa(
-				this.dataHoraAbertura, 
-				this.dataHoraFechamento, 
-				this.valorInicial, 
+				this.dataHoraAbertura,
+				this.dataHoraFechamento,
+				this.valorInicial,
 				operador);
 	}
 }

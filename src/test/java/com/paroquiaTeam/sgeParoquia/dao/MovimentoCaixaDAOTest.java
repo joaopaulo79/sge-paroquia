@@ -1,6 +1,10 @@
 package com.paroquiaTeam.sgeParoquia.dao;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +66,7 @@ class MovimentoCaixaDAOTest extends BaseDAOTest {
     public void getAll_retornaListaComDadosPersistidos() {
         dao.save(new MovimentoCaixa(50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, "nada", getCaixaTest()));
         dao.save(new MovimentoCaixa(25.0, TipoPagamento.DEBITO, TipoMovimento.DESPESA, "nada", getCaixaTest()));
-        
+
         List<MovimentoCaixa> movimentos = dao.getAll();
         assertEquals(2, movimentos.size());
     }
@@ -97,7 +101,7 @@ class MovimentoCaixaDAOTest extends BaseDAOTest {
         dao.save(new MovimentoCaixa(50.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, "nada", getCaixaTest()));
         dao.save(new MovimentoCaixa(30.0, TipoPagamento.DINHEIROFISICO, TipoMovimento.ENTRADA, "nada", getCaixaTest()));
         dao.save(new MovimentoCaixa(100.0, TipoPagamento.PIX, TipoMovimento.ENTRADA, "nada", getCaixaTest()));
-        
+
         Double totalDinheiro = dao.getTotalPorCaixaEPagamento(getCaixaTest().getId(), TipoPagamento.DINHEIROFISICO);
         assertEquals(80.0, totalDinheiro);
     }
@@ -113,25 +117,25 @@ class MovimentoCaixaDAOTest extends BaseDAOTest {
     public void exists_retornaFalseComIdInexistente() {
         assertFalse(dao.exists(0L));
     }
-    
+
     @Test
     public void getById_retornaNadaComIdInvalido() {
         Optional<MovimentoCaixa> talvezMov = dao.getById(0L);
-        assertTrue(talvezMov.isEmpty());    
+        assertTrue(talvezMov.isEmpty());
     }
-    
+
     @Test
     public void getAll_retornaListaVaziaSemDadosPersistidos() {
         List<MovimentoCaixa> movimentos = dao.getAll();
         assertTrue(movimentos.isEmpty());
     }
-    
+
     @Test
     public void save_caixaNuloThrowsPropertyValueException() {
         MovimentoCaixa mov = new MovimentoCaixa(50.0, TipoPagamento.PIX, TipoMovimento.ENTRADA, "nada", null);
         assertThrows(PropertyValueException.class, () -> dao.save(mov));
     }
-    
+
     @Test
     public void delete_throwsIdInvalido() {
         assertThrows(IllegalArgumentException.class, () -> dao.delete(0L));

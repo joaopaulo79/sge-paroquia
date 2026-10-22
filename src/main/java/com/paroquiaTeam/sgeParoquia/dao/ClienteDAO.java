@@ -10,67 +10,67 @@ import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.entity.Cliente;
 
 public class ClienteDAO {
-	
-	public boolean existsById(long id) { 
+
+	public boolean existsById(long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(c) FROM Cliente c WHERE c.id = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, id)
-					.uniqueResult();			
+					.uniqueResult();
 			return quantidade != null && quantidade > 0;
 		}
 	}
-	
-	public boolean existsByCpf(String cpf) { 
+
+	public boolean existsByCpf(String cpf) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(c) FROM Cliente c WHERE c.cpf = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, cpf)
-					.uniqueResult();			
+					.uniqueResult();
 			return quantidade != null && quantidade > 0;
 		}
 	}
-	
+
 	public Optional<Cliente> getById(Long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Cliente c WHERE c.id = :id";
 			return sessao.createQuery(query, Cliente.class)
 						.setParameter("id", id)
 						.uniqueResultOptional();
-					
+
 		}
 	}
-	
+
 	public Optional<Cliente> getByCpf(String cpf) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Cliente c WHERE c.cpf = :cpf";
 			return sessao.createQuery(query, Cliente.class)
 						.setParameter("cpf", cpf)
 						.uniqueResultOptional();
-					
+
 		}
 	}
-	
-	
+
+
 	public List<Cliente> getAll() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT c FROM Cliente c";
 			return sessao.createQuery(query, Cliente.class)
 						.getResultList();
-					
+
 		}
 	}
-	
+
 	public List<Cliente> getAllByIdConvenio(Long idConvenio) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT c FROM Cliente c WHERE c.convenio.id = ?1";
 			return sessao.createQuery(query, Cliente.class)
 						.setParameter(1, idConvenio)
 						.getResultList();
-					
+
 		}
 	}
-	
+
 	public void save(Cliente cliente) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
@@ -83,7 +83,7 @@ public class ClienteDAO {
 			}
 		}
 	}
-	
+
 	public void update(Cliente cliente) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
@@ -96,13 +96,13 @@ public class ClienteDAO {
 			}
 		}
 	}
-	
+
 	public void delete(Long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				Cliente cliente = sessao.get(Cliente.class, id);
-				if (cliente == null) {					
+				if (cliente == null) {
 					throw new IllegalArgumentException("Cliente com id especificado não encontrado");
 				}
 				sessao.remove(cliente);

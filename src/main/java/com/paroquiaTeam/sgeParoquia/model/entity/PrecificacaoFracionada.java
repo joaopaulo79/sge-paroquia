@@ -12,28 +12,28 @@ import jakarta.persistence.Table;
 public class PrecificacaoFracionada implements Calculavel {
 	@Id
 	private long id = 1;
-	
+
 	@Column(nullable = false)
 	private int tolerancia;
-	
+
 	@Column(name = "valor_meia_hora", nullable = false)
 	private double valorMeiaHora;
-	
+
 	@Column(name = "valor_hora", nullable = false)
 	private double valorHora;
-	
+
 	@Column(name = "valor_diaria", nullable = false)
 	private double valorDiaria;
-	
+
 	@Column(name = "valor_meia_hora_moto", nullable = false)
 	private double valorMeiaHoraMoto;
-	
+
 	@Column(name = "valor_hora_moto", nullable = false)
 	private double valorHoraMoto;
-	
+
 	@Column(name = "valor_diaria_moto", nullable = false)
 	private double valorDiariaMoto;
-	
+
 	public PrecificacaoFracionada() {}
 
 	public PrecificacaoFracionada(int tolerancia, double valorMeiaHora, double valorHora, double valorDiaria,
@@ -48,13 +48,13 @@ public class PrecificacaoFracionada implements Calculavel {
 	}
 
 
-	
+
 	public long getId() {
 		return id;
 	}
-	
-	
-	
+
+
+
 	public int getTolerancia() {
 		return tolerancia;
 	}
@@ -62,8 +62,8 @@ public class PrecificacaoFracionada implements Calculavel {
 		this.tolerancia = tolerancia;
 	}
 
-	
-	
+
+
 	public double getValorMeiaHora() {
 		return valorMeiaHora;
 	}
@@ -71,8 +71,8 @@ public class PrecificacaoFracionada implements Calculavel {
 		this.valorMeiaHora = valorMeiaHora;
 	}
 
-	
-	
+
+
 	public double getValorHora() {
 		return valorHora;
 	}
@@ -80,8 +80,8 @@ public class PrecificacaoFracionada implements Calculavel {
 		this.valorHora = valorHora;
 	}
 
-	
-	
+
+
 	public double getValorDiaria() {
 		return valorDiaria;
 	}
@@ -89,8 +89,8 @@ public class PrecificacaoFracionada implements Calculavel {
 		this.valorDiaria = valorDiaria;
 	}
 
-	
-	
+
+
 	public double getValorMeiaHoraMoto() {
 		return valorMeiaHoraMoto;
 	}
@@ -98,8 +98,8 @@ public class PrecificacaoFracionada implements Calculavel {
 		this.valorMeiaHoraMoto = valorMeiaHoraMoto;
 	}
 
-	
-	
+
+
 	public double getValorHoraMoto() {
 		return valorHoraMoto;
 	}
@@ -107,15 +107,15 @@ public class PrecificacaoFracionada implements Calculavel {
 		this.valorHoraMoto = valorHoraMoto;
 	}
 
-	
-	
+
+
 	public double getValorDiariaMoto() {
 		return valorDiariaMoto;
 	}
 	public void setValorDiariaMoto(double valorDiariaMoto) {
 		this.valorDiariaMoto = valorDiariaMoto;
 	}
-	
+
 	public double calcular(long tempoEmMinutos, boolean ehMoto) {
 		if (tempoEmMinutos <= tolerancia) {
 			return 0.0;

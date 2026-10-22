@@ -6,31 +6,31 @@ import java.util.List;
 import javafx.scene.layout.VBox;
 
 public class CardGenerico extends VBox {
-    
+
     // Construtor privado: apenas o Builder pode instanciar
     private CardGenerico(Builder builder) {
         CardHeader header = builder.header;
         getChildren().add(header);
-        
+
         if (builder.conteudoPrincipal != null) {
             getChildren().add(builder.conteudoPrincipal);
         }
-        
+
         if (!builder.linhasExtras.isEmpty()) {
             VBox conteudoExpandido = new VBox();
             for (int i = 0; i < builder.linhasExtras.size(); i++) {
             	VBox linha = builder.linhasExtras.get(i);
-            	
+
                 if (i == builder.linhasExtras.size() - 1) {
                     linha.getStyleClass().add("borda-inferior-arredondada");
                 }
-            	
+
             	conteudoExpandido.getChildren().add(linha);
 			}
 
             conteudoExpandido.setVisible(false);
             conteudoExpandido.setManaged(false);
-            
+
             header.setOnMouseClicked(e -> {
                 boolean expandido = !conteudoExpandido.isVisible();
                 conteudoExpandido.setVisible(expandido);

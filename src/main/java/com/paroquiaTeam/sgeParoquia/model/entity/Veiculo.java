@@ -20,38 +20,38 @@ public class Veiculo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_veiculo")
 	private Long id;
-	
+
 	@Column(name="placa_veiculo", nullable = false, unique = true)
 	private String placa;
-	
+
 	@Column(name="marca_veiculo", nullable = false)
 	private String marca;
-	
+
 	@Column(name="modelo_veiculo", nullable = false)
 	private String modelo;
-	
+
 	@Column(name="ano_veiculo")
 	private Integer ano;
-	
+
 	@Column(name="cor_veiculo", nullable = false)
 	private String cor;
-	
+
 	@Column(name="observacoes_veiculo", nullable = true)
 	private String observacoes;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name="tipo_veiculo", nullable = false)
 	private TipoVeiculo tipo;
-	
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
-	
-	
+
+
 
 	public Veiculo() {}
 
-	public Veiculo(String placa, String marca, String modelo, Integer ano, String cor, 
+	public Veiculo(String placa, String marca, String modelo, Integer ano, String cor,
 			String observacoes, TipoVeiculo tipo, Cliente cliente) {
 		this.placa = placa;
 		this.marca = marca;
@@ -62,11 +62,11 @@ public class Veiculo {
 		this.tipo = tipo;
 		this.cliente = cliente;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -74,8 +74,8 @@ public class Veiculo {
 		this.id = id;
 	}
 
-	
-	
+
+
 	public String getPlaca() {
 		return placa;
 	}
@@ -83,8 +83,8 @@ public class Veiculo {
 		this.placa = placa;
 	}
 
-	
-	
+
+
 	public String getMarca() {
 		return marca;
 	}
@@ -92,8 +92,8 @@ public class Veiculo {
 		this.marca = marca;
 	}
 
-	
-	
+
+
 	public String getModelo() {
 		return modelo;
 	}
@@ -101,8 +101,8 @@ public class Veiculo {
 		this.modelo = modelo;
 	}
 
-	
-	
+
+
 	public Integer getAno() {
 		return ano;
 	}
@@ -110,8 +110,8 @@ public class Veiculo {
 		this.ano = ano;
 	}
 
-	
-	
+
+
 	public String getCor() {
 		return cor;
 	}
@@ -119,26 +119,26 @@ public class Veiculo {
 		this.cor = cor;
 	}
 
-	
-	
+
+
 	public String getObservacoes() {
 		return observacoes;
 	}
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
 	}
-	
-	
-	
+
+
+
 	public TipoVeiculo getTipo() {
 		return tipo;
 	}
 	public void setTipo(TipoVeiculo tipo) {
 		this.tipo = tipo;
 	}
-	
-	
-	
+
+
+
 	public Cliente getCliente() {
 		return cliente;
 	}

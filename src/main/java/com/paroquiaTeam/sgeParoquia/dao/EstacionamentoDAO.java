@@ -10,23 +10,23 @@ import com.paroquiaTeam.sgeParoquia.model.entity.Estacionamento;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoPrecificacao;
 
 public class EstacionamentoDAO {
-	
-	public boolean exists() { 
+
+	public boolean exists() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(e) FROM Estacionamento e WHERE e.id = 1";
-			Long quantidade = sessao.createQuery(query, Long.class).uniqueResult();			
+			Long quantidade = sessao.createQuery(query, Long.class).uniqueResult();
 			return quantidade != null && quantidade > 0;
 		}
 	}
-	
+
 	public Optional<Estacionamento> get() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "FROM Estacionamento e WHERE e.id = 1";
 			return sessao.createSelectionQuery(query, Estacionamento.class).uniqueResultOptional();
-					
+
 		}
 	}
-	
+
 	public void saveOrUpdate(Estacionamento estacionamento) {
 		boolean existe = exists();
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
@@ -34,7 +34,7 @@ public class EstacionamentoDAO {
 			try {
 				if (existe) {
 					sessao.merge(estacionamento);
-				} else {					
+				} else {
 					sessao.persist(estacionamento);
 				}
 				t.commit();
@@ -44,8 +44,8 @@ public class EstacionamentoDAO {
 			}
 		}
 	}
-	
-	
+
+
 	public void save(Estacionamento estacionamento) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
@@ -58,7 +58,7 @@ public class EstacionamentoDAO {
 			}
 		}
 	}
-	
+
 	public void update(Estacionamento estacionamento) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
@@ -71,7 +71,7 @@ public class EstacionamentoDAO {
 			}
 		}
 	}
-	
+
 	public void updatePrecificacao(TipoPrecificacao p) {
 		Optional<Estacionamento> talvezEstacionamento = get();
 		Estacionamento estacionamento = talvezEstacionamento.get();

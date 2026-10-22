@@ -9,7 +9,7 @@ public class HibernateUtil {
     static {
         sessionFactory = buildSessionFactory("hibernate.cfg.xml");
     }
-    
+
     public static SessionFactory buildSessionFactory(String config) {
     	try {
     		return new Configuration()
@@ -23,7 +23,7 @@ public class HibernateUtil {
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
-    
+
     public static void setSessionFactory(SessionFactory sf) {
         if (sessionFactory != null && sessionFactory.isOpen()) {
         	sessionFactory.close();

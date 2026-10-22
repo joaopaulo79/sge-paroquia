@@ -11,86 +11,86 @@ import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
 
 public class UsuarioDAO {
-	
-	public boolean existsById(long id) { 
+
+	public boolean existsById(long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(u) FROM Usuario u WHERE u.id = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, id)
-					.uniqueResult();			
+					.uniqueResult();
 			return quantidade != null && quantidade > 0;
 		}
 	}
-	
-	public boolean existsByLogin(String login) { 
+
+	public boolean existsByLogin(String login) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(u) FROM Usuario u WHERE u.login = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, login)
-					.uniqueResult();			
+					.uniqueResult();
 			return quantidade != null && quantidade > 0;
 		}
 	}
-	
+
 	public Optional<Usuario> getById(Long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT u FROM Usuario u WHERE u.id = :id";
 			return sessao.createQuery(query, Usuario.class)
 						.setParameter("id", id)
 						.uniqueResultOptional();
-					
+
 		}
 	}
-	
+
 	public Optional<Usuario> getByIdWithCaixas(Long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT u FROM Usuario u LEFT JOIN FETCH u.caixas WHERE u.id = :id";
 			return sessao.createQuery(query, Usuario.class)
 						.setParameter("id", id)
 						.uniqueResultOptional();
-					
+
 		}
 	}
-	
+
 	public Optional<Usuario> getByLogin(String login) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT u FROM Usuario u WHERE u.login = :login";
 			return sessao.createQuery(query, Usuario.class)
 						.setParameter("login", login)
 						.uniqueResultOptional();
-					
+
 		}
 	}
-	
+
 	public Optional<Usuario> getByLoginWithCaixas(String login) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT u FROM Usuario u LEFT JOIN FETCH u.caixas WHERE u.login = :login";
 			return sessao.createQuery(query, Usuario.class)
 						.setParameter("login", login)
 						.uniqueResultOptional();
-					
+
 		}
 	}
-	
-	
+
+
 	public List<Usuario> getAll() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT u FROM Usuario u";
 			return sessao.createQuery(query, Usuario.class)
 						.getResultList();
-					
+
 		}
 	}
-	
+
 	public List<Usuario> getAllWithCaixas() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT u FROM Usuario u LEFT JOIN FETCH u.caixas";
 			return sessao.createQuery(query, Usuario.class)
 						.getResultList();
-					
+
 		}
 	}
-	
+
 	public void save(Usuario user) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
@@ -103,7 +103,7 @@ public class UsuarioDAO {
 			}
 		}
 	}
-	
+
 	public void update(Usuario user) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
@@ -116,13 +116,13 @@ public class UsuarioDAO {
 			}
 		}
 	}
-	
+
 	public void delete(Long id) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				Usuario usuario = sessao.get(Usuario.class, id);
-				if (usuario == null) {					
+				if (usuario == null) {
 					throw new IllegalArgumentException("Usuário com id especificado não encontrado");
 				}
 				sessao.remove(usuario);
@@ -133,7 +133,7 @@ public class UsuarioDAO {
 			}
 		}
 	}
-	
+
 	public boolean autenticar(String login, String senha) {
 		Optional<Usuario> talvezUsuario = getByLogin(login);
 		if (talvezUsuario.isEmpty()) {

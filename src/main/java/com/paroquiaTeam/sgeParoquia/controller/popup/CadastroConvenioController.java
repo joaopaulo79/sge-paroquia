@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 public class CadastroConvenioController {
 	ConvenioService service = new ConvenioService();
-	
+
 	@FXML TextField textFieldCnpj;
 	@FXML TextField textFieldNome;
 	@FXML Spinner<Double> spinnerMensalidade;
@@ -25,23 +25,23 @@ public class CadastroConvenioController {
 	@FXML Button btnCancelar;
 	@FXML Button btnSalvar;
 	@FXML DatePicker pickerDataVencimento;
-	
-	@FXML 
+
+	@FXML
 	private void initialize() {
 		spinnerMensalidade.setEditable(true);
 		spinnerCobrancaIndividual.setEditable(true);
 		spinnerVagasCarro.setEditable(true);
 		spinnerVagasMoto.setEditable(true);
-		
+
 		btnCancelar.setOnAction(e -> {
 			Stage stage = (Stage) btnCancelar.getScene().getWindow();
 			stage.close();
 		});
-		
+
 		spinnerMensalidade.setValueFactory(
 			new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000000, 0, 0.01)
 		);
-		
+
 		spinnerCobrancaIndividual.setValueFactory(
 			new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000000, 0, 0.01)
 		);
@@ -52,11 +52,11 @@ public class CadastroConvenioController {
 			new SpinnerValueFactory.IntegerSpinnerValueFactory(0, vagasConvMax, 0)
 		);
 
-		
+
 		spinnerVagasMoto.setValueFactory(
 			new SpinnerValueFactory.IntegerSpinnerValueFactory(0, vagasConvMax, 0)
 		);
-		
+
 		btnSalvar.setOnAction(e -> {
 			try {
 				DadosConvenio dados = new DadosConvenio(
@@ -69,13 +69,13 @@ public class CadastroConvenioController {
 						spinnerCobrancaIndividual.getValue(),
 						pickerDataVencimento.getValue()
 						);
-				
+
 				service.salvar(dados);
-				
+
 				NavegacaoManager.getInstancia().abrirAlertaSucesso("Cadastrado com sucesso!");
 				Stage stage = (Stage) btnSalvar.getScene().getWindow();
 				stage.close();
-				
+
 			} catch (Exception e2) {
 				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
 			}

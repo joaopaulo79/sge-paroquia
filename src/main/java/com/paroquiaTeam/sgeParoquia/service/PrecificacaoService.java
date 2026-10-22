@@ -15,81 +15,81 @@ public class PrecificacaoService {
 	private final PrecificacaoFracionadaDAO daoFrac = new PrecificacaoFracionadaDAO();
 	private final PrecificacaoPorHoraDAO daoHora = new PrecificacaoPorHoraDAO();
 	private final EstacionamentoDAO daoEst = new EstacionamentoDAO();
-	
+
 	public Optional<PrecificacaoFracionada> buscarPrecificacaoFracionada() {
 		return daoFrac.get();
 	}
-	
+
 	public Optional<PrecificacaoPorHora> buscarPrecificacaoPorHora() {
 		return daoHora.get();
 	}
-	
+
 	public double calcular(long tempoMinutos, boolean ehMoto) {
 		try {
 			TipoPrecificacao prec = new EstacionamentoDAO().get().get().getPrecificacao();
-			
+
 			Calculavel estrategia;
-			
+
 			switch (prec) {
 				case FRACIONADA -> estrategia = new PrecificacaoFracionadaDAO().get().get();
 				case POR_HORA -> estrategia = new PrecificacaoPorHoraDAO().get().get();
 				default -> throw new IllegalStateException("Erro: precificação ativa inválida ou não implementada");
 			}
-			
+
 			return estrategia.calcular(tempoMinutos, ehMoto);
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	
+
 	public void salvarFracionada(DadosPrecificacaoFracionada dados) {
 		validarPrecificacao(
-				dados.tolerancia(), 
-				dados.meiaHora(), 
+				dados.tolerancia(),
+				dados.meiaHora(),
 				dados.hora(),
-				dados.diaria(), 
+				dados.diaria(),
 				dados.meiaHoraMoto(),
 				dados.horaMoto(),
 				dados.diariaMoto());
-		
+
 		PrecificacaoFracionada prec = new PrecificacaoFracionada(
-				dados.tolerancia(), 
-				dados.meiaHora(), 
+				dados.tolerancia(),
+				dados.meiaHora(),
 				dados.hora(),
-				dados.diaria(), 
+				dados.diaria(),
 				dados.meiaHoraMoto(),
 				dados.horaMoto(),
 				dados.diariaMoto());
-		
+
 		daoFrac.saveOrUpdate(prec);
-		
+
 		daoEst.updatePrecificacao(TipoPrecificacao.FRACIONADA);
 	}
-	
+
 	public void salvarPorHora(DadosPrecificacaoPorHora dados) {
 		validarPrecificacao(
-				dados.tolerancia(), 
-				dados.entrada(), 
+				dados.tolerancia(),
+				dados.entrada(),
 				dados.hora(),
-				dados.diaria(), 
+				dados.diaria(),
 				dados.entradaMoto(),
 				dados.horaMoto(),
 				dados.diariaMoto());
-		
+
 		PrecificacaoPorHora prec = new PrecificacaoPorHora(
-				dados.tolerancia(), 
-				dados.entrada(), 
+				dados.tolerancia(),
+				dados.entrada(),
 				dados.hora(),
-				dados.diaria(), 
+				dados.diaria(),
 				dados.entradaMoto(),
 				dados.horaMoto(),
 				dados.diariaMoto());
-		
+
 		daoHora.saveOrUpdate(prec);
-		
+
 		daoEst.updatePrecificacao(TipoPrecificacao.POR_HORA);
 	}
-	
+
 	private void validarPrecificacao(int tolerancia, double... valores) {
 		if (tolerancia < 0) {
 			throw new IllegalArgumentException("Tolerância não pode ser negativa.");

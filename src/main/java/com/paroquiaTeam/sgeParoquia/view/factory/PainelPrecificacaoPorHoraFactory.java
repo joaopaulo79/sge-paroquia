@@ -15,25 +15,25 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 public class PainelPrecificacaoPorHoraFactory {
-	
+
 	private final PrecificacaoController controller;
-	
+
 	public PainelPrecificacaoPorHoraFactory(PrecificacaoController controller) {
 		this.controller = controller;
 	}
-	
+
 	public PainelPrecificacao criar() {
-		
+
 		TextField campoTolerancia = new TextField();
-		
+
 		TextField campoEntrada = new TextField();
 		TextField campoHora = new TextField();
 		TextField campoDiaria = new TextField();
-		
+
 		TextField campoEntradaMoto = new TextField();
 		TextField campoHoraMoto = new TextField();
 		TextField campoDiariaMoto = new TextField();
-		
+
 		// TAMANHO DOS CAMPOS
         campoTolerancia.setPrefWidth(150);
 
@@ -44,20 +44,20 @@ public class PainelPrecificacaoPorHoraFactory {
         campoEntradaMoto.setPrefWidth(150);
         campoHoraMoto.setPrefWidth(150);
         campoDiariaMoto.setPrefWidth(150);
-		
+
 		controller.buscarPorHora().ifPresent((p) -> {
-			
+
 			campoTolerancia.setText(Integer.toString(p.getTolerancia()));
-			
+
 			campoEntrada.setText(Double.toString(p.getValorEntrada()));
 			campoHora.setText(Double.toString(p.getValorHora()));
 			campoDiaria.setText(Double.toString(p.getValorDiaria()));
-			
+
 			campoEntradaMoto.setText(Double.toString(p.getValorEntradaMoto()));
 			campoHoraMoto.setText(Double.toString(p.getValorHoraMoto()));
 			campoDiariaMoto.setText(Double.toString(p.getValorDiariaMoto()));
 		});
-		
+
 		// GRID CARROS
         GridPane gridCarros = new GridPane();
 
@@ -72,7 +72,7 @@ public class PainelPrecificacaoPorHoraFactory {
         gridCarros.add(campoEntrada, 0, 1);
         gridCarros.add(campoHora, 1, 1);
         gridCarros.add(campoDiaria, 2, 1);
-        
+
         // GRID MOTOS
         GridPane gridMotos = new GridPane();
 
@@ -87,36 +87,36 @@ public class PainelPrecificacaoPorHoraFactory {
         gridMotos.add(campoEntradaMoto, 0, 1);
         gridMotos.add(campoHoraMoto, 1, 1);
         gridMotos.add(campoDiariaMoto, 2, 1);
-        
+
         // BOTÃO
 		Button btnSalvar = new Button("Salvar");
 		VBox.setMargin(btnSalvar, new Insets(25, 0, 0, 0));
 		btnSalvar.setOnAction(e -> {
 			int tolerancia = Integer.parseInt(campoTolerancia.getText());
-			
-			double valorEntrada = 
+
+			double valorEntrada =
 					Double.parseDouble(campoEntrada.getText());
-			double valorHora = 
+			double valorHora =
 					Double.parseDouble(campoHora.getText());
-			double valorDiaria = 
+			double valorDiaria =
 					Double.parseDouble(campoDiaria.getText());
-			double valorEntradaMoto = 
+			double valorEntradaMoto =
 					Double.parseDouble(campoEntradaMoto.getText());
-			double valorHoraMoto = 
+			double valorHoraMoto =
 					Double.parseDouble(campoEntradaMoto.getText());
-			double valorDiariaMoto = 
+			double valorDiariaMoto =
 					Double.parseDouble(campoDiariaMoto.getText());
 			controller.salvarPrecificacaoPorHora(
-					tolerancia, 
-					valorEntrada, 
-					valorHora, 
-					valorDiaria, 
-					valorEntradaMoto, 
-					valorHoraMoto, 
+					tolerancia,
+					valorEntrada,
+					valorHora,
+					valorDiaria,
+					valorEntradaMoto,
+					valorHoraMoto,
 					valorDiariaMoto
 			);
 		});
-		
+
 		Label tituloTolerancia = new Label("TOLERÂNCIA (MIN):");
         tituloTolerancia.setStyle(
         		"-fx-font-size: 17px;" +
@@ -150,8 +150,8 @@ public class PainelPrecificacaoPorHoraFactory {
                 tituloMotos,
                 gridMotos
         );
-        
+
         return new PainelPrecificacao(elementos, btnSalvar);
-		
+
 	}
 }

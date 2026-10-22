@@ -14,15 +14,15 @@ import jakarta.persistence.Table;
 public class Estacionamento {
 	@Id
 	private long id = 1;
-	
-	
+
+
 	@Column(name = "numero_vagas", nullable = false)
 	private int numeroDeVagas;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "precificacao_ativa", nullable = false)
 	private TipoPrecificacao precificacao;
-	
+
 	public Estacionamento() {}
 
 	public Estacionamento(int numeroDeVagas, TipoPrecificacao precificacao) {
@@ -35,9 +35,9 @@ public class Estacionamento {
 	public long getId() {
 		return id;
 	}
-	
-	
-	
+
+
+
 	public int getNumeroDeVagas() {
 		return numeroDeVagas;
 	}
@@ -45,8 +45,8 @@ public class Estacionamento {
 		this.numeroDeVagas = numeroDeVagas;
 	}
 
-	
-	
+
+
 	public TipoPrecificacao getPrecificacao() {
 		return precificacao;
 	}

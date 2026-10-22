@@ -18,36 +18,36 @@ public class Estadia {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_estadia")
 	private Long id;
-	
+
 	@Column(name = "data_hora_entrada", nullable = false)
 	private LocalDateTime dataHoraEntrada;
 
 	@Column(name = "data_hora_saida", nullable = true)
 	private LocalDateTime dataHoraSaida;
-	
+
 	@Column(name = "valor_estadia", nullable = true)
 	private Double valor;
-	
+
 	@Column(name = "placa_veiculo", nullable = false)
 	private String placaVeiculo;
 
 	@OneToMany(mappedBy = "estadia")
 	private List<MovimentoCaixa> movimentos;
-	
-	
-	
+
+
+
 	public Estadia() {}
-	
-	public Estadia(LocalDateTime dataHoraEntrada, LocalDateTime dataHoraSaida, 
+
+	public Estadia(LocalDateTime dataHoraEntrada, LocalDateTime dataHoraSaida,
 				   Double valor, String placaVeiculo) {
 		this.dataHoraEntrada = dataHoraEntrada;
 		this.dataHoraSaida = dataHoraSaida;
 		this.valor = valor;
 		this.placaVeiculo = placaVeiculo;
 	}
-	
-	
-	
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -55,8 +55,8 @@ public class Estadia {
 		this.id = id;
 	}
 
-	
-	
+
+
 	public LocalDateTime getDataHoraEntrada() {
 		return dataHoraEntrada;
 	}
@@ -64,8 +64,8 @@ public class Estadia {
 		this.dataHoraEntrada = dataHoraEntrada;
 	}
 
-	
-	
+
+
 	public LocalDateTime getDataHoraSaida() {
 		return dataHoraSaida;
 	}
@@ -73,8 +73,8 @@ public class Estadia {
 		this.dataHoraSaida = dataHoraSaida;
 	}
 
-	
-	
+
+
 	public Double getValor() {
 		return valor;
 	}
@@ -82,17 +82,17 @@ public class Estadia {
 		this.valor = valor;
 	}
 
-	
-	
+
+
 	public String getPlacaVeiculo() {
 		return placaVeiculo;
 	}
 	public void setPlacaVeiculo(String placaVeiculo) {
 		this.placaVeiculo = placaVeiculo;
 	}
-	
-	
-	
+
+
+
 	public List<MovimentoCaixa> getMovimentos() {
 		return movimentos;
 	}

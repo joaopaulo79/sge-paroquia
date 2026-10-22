@@ -20,37 +20,37 @@ public class Caixa {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_caixa")
 	private Long id;
-	
+
 	@Column(name = "data_hora_abertura", nullable = false)
 	private LocalDateTime dataHoraAbertura;
 
 	@Column(name = "data_hora_fechamento", nullable = true)
 	private LocalDateTime dataHoraFechamento;
-	
+
 	@Column(name = "valor_inicial", nullable = false)
 	private double valorInicial;
-	
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_operador")
 	private Usuario operador;
 
 	@OneToMany(mappedBy = "caixa")
 	private List<MovimentoCaixa> movimentos;
-	
-	
-	
+
+
+
 	public Caixa() {}
-	
-	public Caixa(LocalDateTime dataHoraAbertura, LocalDateTime dataHoraFechamento, 
+
+	public Caixa(LocalDateTime dataHoraAbertura, LocalDateTime dataHoraFechamento,
 			double valorInicial, Usuario operador) {
 		this.dataHoraAbertura = dataHoraAbertura;
 		this.dataHoraFechamento = dataHoraFechamento;
 		this.valorInicial = valorInicial;
 		this.operador = operador;
 	}
-	
-	
-	
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -58,44 +58,44 @@ public class Caixa {
 		this.id = id;
 	}
 
-	
-	
+
+
 	public LocalDateTime getDataHoraAbertura() {
 		return dataHoraAbertura;
 	}
 	public void setDataHoraAbertura(LocalDateTime dataHoraAbertura) {
 		this.dataHoraAbertura = dataHoraAbertura;
 	}
-	
-	
-	
+
+
+
 	public LocalDateTime getDataHoraFechamento() {
 		return dataHoraFechamento;
 	}
 	public void setDataHoraFechamento(LocalDateTime dataHoraFechamento) {
 		this.dataHoraFechamento = dataHoraFechamento;
 	}
-	
-	
-	
+
+
+
 	public double getValorInicial() {
 		return valorInicial;
 	}
 	public void setValorInicial(double valorInicial) {
 		this.valorInicial = valorInicial;
 	}
-	
-	
-	
+
+
+
 	public Usuario getOperador() {
 		return operador;
 	}
 	public void setOperador(Usuario operador) {
 		this.operador = operador;
 	}
-	
-	
-	
+
+
+
 	public List<MovimentoCaixa> getMovimentos() {
 		return movimentos;
 	}

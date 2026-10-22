@@ -8,7 +8,7 @@ public class TempoUtils {
 		long diferencaSegundos = Duration.between(inicio, fim).getSeconds();
 		long minutos = diferencaSegundos / 60;
 		long segundos = diferencaSegundos % 60;
-		
+
 		return minutos + (segundos > 0 ? 1 : 0);
 	}
 }

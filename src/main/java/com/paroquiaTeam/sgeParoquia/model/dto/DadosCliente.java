@@ -12,7 +12,7 @@ public record DadosCliente(
 		boolean status,
 		Long idConvenio
 		) {
-	
+
 	public Cliente paraCliente() {
 		return new Cliente(
 				this.nome,
@@ -22,7 +22,7 @@ public record DadosCliente(
 				this.status
 				);
 	}
-	
+
 	public Cliente paraCliente(Convenio convenio) {
 		return new Cliente(
 				this.nome,

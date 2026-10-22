@@ -1,19 +1,24 @@
 package com.paroquiaTeam.sgeParoquia.dao;
 
-import com.paroquiaTeam.sgeParoquia.model.entity.Vaga;
-import com.paroquiaTeam.sgeParoquia.model.enums.StatusVaga;
-import com.paroquiaTeam.sgeParoquia.model.enums.TipoReservaVaga;
-import com.paroquiaTeam.sgeParoquia.model.enums.TipoVaga;
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.PropertyValueException;
-import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.hibernate.PropertyValueException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
+import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.model.entity.Vaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.StatusVaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoReservaVaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoVaga;
 
 class VagaDAOTest extends BaseDAOTest {
 
@@ -39,12 +44,12 @@ class VagaDAOTest extends BaseDAOTest {
     public void exists_retornaTrueComIdExistente() {
         Vaga vaga = new Vaga(TipoVaga.CARRO, TipoReservaVaga.COMUM);
         dao.save(vaga);
-        assertTrue(dao.exists((long) vaga.getId()));
+        assertTrue(dao.exists(vaga.getId()));
     }
 
     @Test
     public void exists_retornaFalseComIdNaoExistente() {
-        assertFalse(dao.exists((long) 0));
+        assertFalse(dao.exists(0));
     }
 
     // --- getById() ---
@@ -78,7 +83,7 @@ class VagaDAOTest extends BaseDAOTest {
     @Test
     public void getAll_retornaListaVaziaQuandoBancoVazio() {
         List<Vaga> vagas = dao.getAll();
-        
+
         assertTrue(vagas.isEmpty());
     }
 

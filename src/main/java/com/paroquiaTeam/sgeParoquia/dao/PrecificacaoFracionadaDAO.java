@@ -9,25 +9,25 @@ import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoFracionada;
 
 public class PrecificacaoFracionadaDAO {
-	
-	public boolean exists() { 
+
+	public boolean exists() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(p) FROM PrecificacaoFracionada p WHERE p.id = 1";
-			Long quantidade = sessao.createQuery(query, Long.class).uniqueResult();			
+			Long quantidade = sessao.createQuery(query, Long.class).uniqueResult();
 			return quantidade != null && quantidade > 0;
 		}
-		
+
 	}
-	
+
 	public Optional<PrecificacaoFracionada> get() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "FROM PrecificacaoFracionada p WHERE p.id = 1";
 			return sessao.createSelectionQuery(query, PrecificacaoFracionada.class)
 						.uniqueResultOptional();
-					
+
 		}
 	}
-	
+
 	public void saveOrUpdate(PrecificacaoFracionada precificacao) {
 		boolean existe = exists();
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
@@ -36,7 +36,7 @@ public class PrecificacaoFracionadaDAO {
 				if (existe) {
 					sessao.merge(precificacao);
 				} else {
-					sessao.persist(precificacao);					
+					sessao.persist(precificacao);
 				}
 				t.commit();
 			} catch (Exception e) {
@@ -45,7 +45,7 @@ public class PrecificacaoFracionadaDAO {
 			}
 		}
 	}
-	
+
 	public void save(PrecificacaoFracionada precificacao) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
@@ -58,7 +58,7 @@ public class PrecificacaoFracionadaDAO {
 			}
 		}
 	}
-	
+
 	public void update(PrecificacaoFracionada precificacao) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();

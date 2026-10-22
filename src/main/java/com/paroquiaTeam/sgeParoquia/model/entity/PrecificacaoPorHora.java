@@ -12,34 +12,34 @@ import jakarta.persistence.Table;
 public class PrecificacaoPorHora implements Calculavel {
 	@Id
 	private long id = 1;
-	
+
 	@Column(nullable = false)
 	private int tolerancia;
-	
+
 	@Column(name = "valor_entrada", nullable = false)
 	private double valorEntrada;
-	
+
 	@Column(name = "valor_hora", nullable = false)
 	private double valorHora;
-	
+
 	@Column(name = "valor_diaria", nullable = false)
 	private double valorDiaria;
-	
+
 	@Column(name = "valor_entrada_moto", nullable = false)
 	private double valorEntradaMoto;
-	
+
 	@Column(name = "valor_hora_moto", nullable = false)
 	private double valorHoraMoto;
-	
+
 	@Column(name = "valor_diaria_moto", nullable = false)
 	private double valorDiariaMoto;
-	
-	
-	
+
+
+
 	public PrecificacaoPorHora() {}
 
-	public PrecificacaoPorHora(int tolerancia, double valorEntrada, 
-			double valorHora, double valorDiaria, double valorEntradaMoto, 
+	public PrecificacaoPorHora(int tolerancia, double valorEntrada,
+			double valorHora, double valorDiaria, double valorEntradaMoto,
 			double valorHoraMoto, double valorDiariaMoto) {
 		this.tolerancia = tolerancia;
 		this.valorEntrada = valorEntrada;
@@ -49,15 +49,15 @@ public class PrecificacaoPorHora implements Calculavel {
 		this.valorHoraMoto = valorHoraMoto;
 		this.valorDiariaMoto = valorDiariaMoto;
 	}
-	
-	
-	
+
+
+
 	public long getId() {
 		return id;
 	}
-	
-	
-	
+
+
+
 	public int getTolerancia() {
 		return tolerancia;
 	}
@@ -65,8 +65,8 @@ public class PrecificacaoPorHora implements Calculavel {
 		this.tolerancia = tolerancia;
 	}
 
-	
-	
+
+
 	public double getValorEntrada() {
 		return valorEntrada;
 	}
@@ -74,8 +74,8 @@ public class PrecificacaoPorHora implements Calculavel {
 		this.valorEntrada = valorEntrada;
 	}
 
-	
-	
+
+
 	public double getValorHora() {
 		return valorHora;
 	}
@@ -83,8 +83,8 @@ public class PrecificacaoPorHora implements Calculavel {
 		this.valorHora = valorHora;
 	}
 
-	
-	
+
+
 	public double getValorDiaria() {
 		return valorDiaria;
 	}
@@ -92,8 +92,8 @@ public class PrecificacaoPorHora implements Calculavel {
 		this.valorDiaria = valorDiaria;
 	}
 
-	
-	
+
+
 	public double getValorEntradaMoto() {
 		return valorEntradaMoto;
 	}
@@ -101,8 +101,8 @@ public class PrecificacaoPorHora implements Calculavel {
 		this.valorEntradaMoto = valorEntradaMoto;
 	}
 
-	
-	
+
+
 	public double getValorHoraMoto() {
 		return valorHoraMoto;
 	}
@@ -110,8 +110,8 @@ public class PrecificacaoPorHora implements Calculavel {
 		this.valorHoraMoto = valorHoraMoto;
 	}
 
-	
-	
+
+
 	public double getValorDiariaMoto() {
 		return valorDiariaMoto;
 	}
@@ -121,14 +121,14 @@ public class PrecificacaoPorHora implements Calculavel {
 
 	public double calcular(long tempoEmMinutos, boolean ehMoto) {
 		if (tempoEmMinutos <= tolerancia) return 0.0;
-		
+
 		double valor = (ehMoto) ? valorEntradaMoto : valorEntrada;
 		long horas = Math.floorDiv(tempoEmMinutos, 60);
 		valor += horas * ((ehMoto) ? valorHoraMoto : valorHora);
-		
+
 		return valor;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "PrecificacaoPorHora [id=" + id + ", tolerancia=" + tolerancia + ", valorEntrada=" + valorEntrada

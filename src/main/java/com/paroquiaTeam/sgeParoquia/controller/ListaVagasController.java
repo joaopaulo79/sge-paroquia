@@ -22,9 +22,9 @@ public class ListaVagasController {
 	@FXML Button btnSalvar;
 	@FXML FlowPane paneVagas;
 	@FXML AnchorPane root;
-	
+
 	@FXML Button btnAlterarVagas;
-	
+
 	@FXML
 	private void initialize() {
 //		btnSalvar.setOnAction(e -> {
@@ -32,7 +32,7 @@ public class ListaVagasController {
 //			//números de vaga, tipoReserva
 //			long carroComum = Long.parseLong(vagasCarroComum.getText());
 //			long motoComum = Long.parseLong(vagasMotoComum.getText());
-//			
+//
 //			//Atualizando Vagas
 //			dao.ajustarVagas(List.of(
 //					new VagaDAO.AjusteVaga(TipoVaga.CARRO, TipoReservaVaga.COMUM, carroComum),
@@ -40,23 +40,23 @@ public class ListaVagasController {
 //			));
 //			atualizarCards();
 //		});
-		
+
 		btnAlterarVagas.setOnAction(e -> {
 			NavegacaoManager.getInstancia().abrirModal(Popup.ALTERARVAGAS);
-			
+
 			atualizarCards();
 		});
-		
+
 		atualizarCards();
 	}
-	
+
 	public void atualizarCards() {
 		paneVagas.getChildren().clear();
-		
+
 		VagaDAO dao = new VagaDAO();
 		VagaCardFactory cardFactory = new VagaCardFactory();
-		
-		dao.getAll().forEach(v -> {			
+
+		dao.getAll().forEach(v -> {
 			CardGenerico card = cardFactory.criarCard(v);
 			paneVagas.getChildren().add(card);
 		});

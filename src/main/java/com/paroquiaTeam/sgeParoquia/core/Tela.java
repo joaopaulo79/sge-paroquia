@@ -11,7 +11,7 @@ public enum Tela {
     DASHBOARD("/screens/dashboard/dashboard.fxml", "Painel Principal", DashboardController.class),
     CONFIGURACAO("/screens/configuracaoSistema/configuracaoSistema.fxml", "Configurações do Sistema", ConfiguracaoSistemaController.class),
     VAGAS("/screens/listaVagas/listaVagas.fxml", "Vagas", ListaVagasController.class),
-    
+
     // Telas que usam listaBase
 	CONVENIOS("/shared/listaBase/listaBase.fxml", "Convênios", ListaConvenioController.class);
 

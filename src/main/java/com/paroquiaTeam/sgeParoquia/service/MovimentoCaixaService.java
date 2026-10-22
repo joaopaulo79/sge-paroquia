@@ -13,27 +13,27 @@ import jakarta.persistence.EntityNotFoundException;
 
 public class MovimentoCaixaService {
 	private MovimentoCaixaDAO dao = new MovimentoCaixaDAO();
-	
+
 	public Optional<MovimentoCaixa> buscarPorId(long id) {
 		return dao.getById(id);
 	}
-	
+
 	public MovimentoCaixa obterPorId(long id) {
 		return buscarPorId(id)
 				.orElseThrow(() -> new EntityNotFoundException("Movimento de caixa não encontrado para o id "+id));
 	}
-	
+
 	public List<MovimentoCaixa> buscarPorCaixa(Long idCaixa) {
 		return dao.getByCaixa(idCaixa);
 	}
-	
+
 	public List<MovimentoCaixa> buscarPorEstadia(Long idEstadia) {
 		return dao.getByEstadia(idEstadia);
 	}
-	
+
 	public void salvar(DadosMovimentoCaixa dados) {
 		validarMovimento(dados);
-		
+
 		Caixa caixa = new CaixaService().obterPorId(dados.idCaixa());
 		MovimentoCaixa movimento;
 		if (dados.idEstadia() == null) {
@@ -42,19 +42,19 @@ public class MovimentoCaixaService {
 			Estadia estadia = new EstadiaService().obterPorId(dados.idEstadia());
 			movimento = dados.paraMovimentoCaixa(caixa, estadia);
 		}
-		
+
 		dao.save(movimento);
 	}
-	
+
 	public void excluir(MovimentoCaixa movimento) {
 		dao.delete(movimento.getId());
 	}
-	
+
 	private void validarMovimento(DadosMovimentoCaixa dados) {
 		if (dados.formaPagamento() == null) {
 			throw new IllegalArgumentException("Forma de pagamento é obrigatória");
 		}
-		
+
 		if (dados.tipoMovimento() == null) {
 			throw new IllegalArgumentException("Tipo de movimento é obrigatório");
 		}
@@ -62,11 +62,11 @@ public class MovimentoCaixaService {
 		if (!new CaixaService().existePorId(dados.idCaixa())) {
 			throw new IllegalArgumentException("Não foi possível encontrar caixa com id informado");
 		}
-		
+
 		if (dados.idEstadia() != null) {
 			if (!new EstadiaService().existePorId(dados.idEstadia())) {
 				throw new IllegalArgumentException("Não foi possível encontrar estadia com id informado");
-			} 
+			}
 		}
 	}
 }

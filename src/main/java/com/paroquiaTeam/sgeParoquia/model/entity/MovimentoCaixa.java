@@ -21,36 +21,36 @@ public class MovimentoCaixa {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_movimento")
 	private Long id;
-	
+
 	@Column(name = "valor_movimento", nullable = false)
 	private double valor;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "forma_pagamento", nullable = false)
 	private TipoPagamento formaPagamento;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_movimento", nullable = false)
 	private TipoMovimento tipoMovimento;
-	
+
 	@Column(name = "descricao_movimento")
 	private String descricao;
-	
+
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_caixa")
 	private Caixa caixa;
-	
+
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "id_estadia")
 	private Estadia estadia;
 
-	
-	
+
+
 	public MovimentoCaixa() {}
-	
-	
-	
-	public MovimentoCaixa(double valor, TipoPagamento formaPagamento, TipoMovimento tipoMovimento, 
+
+
+
+	public MovimentoCaixa(double valor, TipoPagamento formaPagamento, TipoMovimento tipoMovimento,
 			String descricao, Caixa caixa) {
 		this.valor = valor;
 		this.formaPagamento = formaPagamento;
@@ -59,9 +59,9 @@ public class MovimentoCaixa {
 		this.caixa = caixa;
 	}
 
-	
-	
-	
+
+
+
 	public MovimentoCaixa(double valor, TipoPagamento formaPagamento, TipoMovimento tipoMovimento,
 			String descricao, Caixa caixa, Estadia estadia) {
 		this.valor = valor;
@@ -81,8 +81,8 @@ public class MovimentoCaixa {
 		this.id = id;
 	}
 
-	
-	
+
+
 	public double getValor() {
 		return valor;
 	}
@@ -90,8 +90,8 @@ public class MovimentoCaixa {
 		this.valor = valor;
 	}
 
-	
-	
+
+
 	public TipoPagamento getFormaPagamento() {
 		return formaPagamento;
 	}
@@ -99,8 +99,8 @@ public class MovimentoCaixa {
 		this.formaPagamento = formaPagamento;
 	}
 
-	
-	
+
+
 	public TipoMovimento getTipoMovimento() {
 		return tipoMovimento;
 	}
@@ -109,7 +109,7 @@ public class MovimentoCaixa {
 	}
 
 
-	
+
 	public String getDescricao() {
 		return descricao;
 	}
@@ -126,8 +126,8 @@ public class MovimentoCaixa {
 		this.caixa = caixa;
 	}
 
-	
-	
+
+
 	public Estadia getEstadia() {
 		return estadia;
 	}
