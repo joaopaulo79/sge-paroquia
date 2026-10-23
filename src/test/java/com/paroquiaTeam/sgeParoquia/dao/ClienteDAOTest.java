@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.entity.Cliente;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
+import com.paroquiaTeam.sgeParoquia.model.enums.StatusCliente;
 import com.paroquiaTeam.sgeParoquia.model.enums.StatusConvenio;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoCliente;
 
@@ -41,7 +42,7 @@ class ClienteDAOTest extends BaseDAOTest {
 		Convenio conv = new Convenio("abc123", "Unimed", 1.2, 10, 0, StatusConvenio.ATIVO, 0.5, data);
 		new ConvenioDAO().save(conv);
 
-		Cliente c = new Cliente("Nome", "123", "123", TipoCliente.CONVENIADO, true, conv);
+		Cliente c = new Cliente("Nome", "123", "123", TipoCliente.CONVENIADO, StatusCliente.ATIVO, null, null, conv);
 		dao.save(c);
 		long idConv = conv.getId();
 		List<Cliente> clientes = dao.getAllByIdConvenio(idConv);

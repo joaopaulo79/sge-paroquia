@@ -1,7 +1,9 @@
 package com.paroquiaTeam.sgeParoquia.model.entity;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import com.paroquiaTeam.sgeParoquia.model.enums.StatusCliente;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoCliente;
 
 import jakarta.persistence.Column;
@@ -38,7 +40,13 @@ public class Cliente {
 	private TipoCliente tipo;
 
 	@Column(name = "status_cliente", nullable = false)
-	private boolean status;
+	private StatusCliente status;
+	
+	@Column(name = "data_vencimento_mensalidade", nullable = true)
+	private LocalDate dataVencimentoMensalidade;
+	
+	@Column(name = "valor_mensalidade", nullable = true)
+	private Double valorMensalidade;
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Veiculo> veiculos;
@@ -52,21 +60,25 @@ public class Cliente {
 	public Cliente() {}
 
 	public Cliente(String nome, String cpf, String telefone, TipoCliente tipo,
-			boolean status) {
+			StatusCliente status, LocalDate dataVencimentoMensalidade, Double valorMensalidade) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.telefone = telefone;
 		this.tipo = tipo;
 		this.status = status;
+		this.dataVencimentoMensalidade = dataVencimentoMensalidade;
+		this.valorMensalidade = valorMensalidade;
 	}
 
 	public Cliente(String nome, String cpf, String telefone, TipoCliente tipo,
-			boolean status, Convenio convenio) {
+			StatusCliente status, LocalDate dataVencimentoMensalidade, Double valorMensalidade, Convenio convenio) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.telefone = telefone;
 		this.tipo = tipo;
 		this.status = status;
+		this.dataVencimentoMensalidade = dataVencimentoMensalidade;
+		this.valorMensalidade = valorMensalidade;
 		this.convenio = convenio;
 	}
 
@@ -117,11 +129,35 @@ public class Cliente {
 
 
 
-	public boolean getStatus() {
+	public StatusCliente getStatus() {
 		return status;
 	}
-	public void setStatus(boolean status) {
+	public void setStatus(StatusCliente status) {
 		this.status = status;
+	}
+	public boolean isAtivo() {
+		return status == StatusCliente.ATIVO;
+	}
+	public boolean isDesativado() {
+		return status == StatusCliente.DESATIVADO;
+	}
+
+	
+
+	public LocalDate getDataVencimentoMensalidade() {
+		return dataVencimentoMensalidade;
+	}
+	public void setDataVencimentoMensalidade(LocalDate dataVencimentoMensalidade) {
+		this.dataVencimentoMensalidade = dataVencimentoMensalidade;
+	}
+
+
+
+	public Double getValorMensalidade() {
+		return valorMensalidade;
+	}
+	public void setValorMensalidade(Double valorMensalidade) {
+		this.valorMensalidade = valorMensalidade;
 	}
 
 

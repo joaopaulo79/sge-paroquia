@@ -40,6 +40,16 @@ public class ClienteDAO {
 
 		}
 	}
+	
+	public Optional<Cliente> getByIdWithVeiculos(Long id) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT DISTINCT c FROM Cliente c LEFT JOIN FETCH c.veiculos WHERE c.id = :id";
+			return sessao.createQuery(query, Cliente.class)
+						.setParameter("id", id)
+						.uniqueResultOptional();
+
+		}
+	}
 
 	public Optional<Cliente> getByCpf(String cpf) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){

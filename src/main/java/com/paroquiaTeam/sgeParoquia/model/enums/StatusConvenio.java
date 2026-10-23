@@ -2,10 +2,10 @@ package com.paroquiaTeam.sgeParoquia.model.enums;
 
 public enum StatusConvenio {
 	ATIVO("Ativo"),
-	ATRASO("Em Atraso"),
+	ATRASO("Mensalidade Em Atraso"),
 	DESATIVADO("Desativado");
 
-	private String nome;
+	private final String nome;
 
 	private StatusConvenio(String nome) {
 		this.nome = nome;

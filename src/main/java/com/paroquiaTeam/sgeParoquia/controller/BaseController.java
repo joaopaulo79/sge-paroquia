@@ -17,6 +17,7 @@ public class BaseController {
 	// nav buttons
 	@FXML private ToggleButton btnNavDashboard;
 	@FXML private ToggleButton btnNavConvenios;
+	@FXML private ToggleButton btnNavClientes;
 	@FXML private ToggleButton btnNavConfig;
 	@FXML private ToggleButton btnNavVagas;
 
@@ -44,6 +45,7 @@ public class BaseController {
 
 		btnNavDashboard.setOnAction(event -> navegar(event, Tela.DASHBOARD));
 		btnNavConvenios.setOnAction(event -> navegar(event, Tela.CONVENIOS));
+		btnNavClientes.setOnAction(event -> navegar(event, Tela.CLIENTES));
 		btnNavConfig.setOnAction(event -> navegar(event, Tela.CONFIGURACAO));
 		btnNavVagas.setOnAction(event -> navegar(event, Tela.VAGAS));
 

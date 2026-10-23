@@ -1,7 +1,10 @@
 package com.paroquiaTeam.sgeParoquia.model.dto;
 
+import java.time.LocalDate;
+
 import com.paroquiaTeam.sgeParoquia.model.entity.Cliente;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
+import com.paroquiaTeam.sgeParoquia.model.enums.StatusCliente;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoCliente;
 
 public record DadosCliente(
@@ -9,7 +12,9 @@ public record DadosCliente(
 		String cpf,
 		String telefone,
 		TipoCliente tipo,
-		boolean status,
+		StatusCliente status,
+		LocalDate dataVencimentoMensalidade,
+		Double valorMensalidade,
 		Long idConvenio
 		) {
 
@@ -19,7 +24,9 @@ public record DadosCliente(
 				this.cpf,
 				this.telefone,
 				this.tipo,
-				this.status
+				this.status,
+				this.dataVencimentoMensalidade,
+				this.valorMensalidade
 				);
 	}
 
@@ -30,6 +37,8 @@ public record DadosCliente(
 				this.telefone,
 				this.tipo,
 				this.status,
+				this.dataVencimentoMensalidade,
+				this.valorMensalidade,
 				convenio
 				);
 	}

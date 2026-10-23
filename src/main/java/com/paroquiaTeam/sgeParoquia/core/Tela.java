@@ -2,6 +2,7 @@ package com.paroquiaTeam.sgeParoquia.core;
 
 import com.paroquiaTeam.sgeParoquia.controller.ConfiguracaoSistemaController;
 import com.paroquiaTeam.sgeParoquia.controller.DashboardController;
+import com.paroquiaTeam.sgeParoquia.controller.ListaClienteController;
 import com.paroquiaTeam.sgeParoquia.controller.ListaConvenioController;
 import com.paroquiaTeam.sgeParoquia.controller.ListaVagasController;
 import com.paroquiaTeam.sgeParoquia.controller.LoginController;
@@ -13,7 +14,9 @@ public enum Tela {
     VAGAS("/screens/listaVagas/listaVagas.fxml", "Vagas", ListaVagasController.class),
 
     // Telas que usam listaBase
-	CONVENIOS("/shared/listaBase/listaBase.fxml", "Convênios", ListaConvenioController.class);
+	CONVENIOS("/shared/listaBase/listaBase.fxml", "Convênios", ListaConvenioController.class),
+	CLIENTES("/shared/listaBase/listaBase.fxml", "Clientes", ListaClienteController.class);
+
 
     private final String pathFxml;
     private final String titulo;

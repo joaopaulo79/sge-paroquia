@@ -36,6 +36,17 @@ public class ConvenioService {
 		return buscarPorId(id)
 				.orElseThrow(() -> new EntityNotFoundException("Convênio não encontrado para o id "+id));
 	}
+	
+	// use no caso normal
+	public Optional<Convenio> buscarComClientesPorId(Long id) {
+		return dao.getByIdWithClientes(id);
+	}
+
+	// somente use se for estritamente necessária a presença de um Convenio
+	public Convenio obterComClientesPorId(Long id) {
+		return buscarComClientesPorId(id)
+				.orElseThrow(() -> new EntityNotFoundException("Convênio não encontrado para o id "+id));
+	}
 
 	public List<Convenio> obterTodos() {
 		return dao.getAll();
@@ -72,7 +83,7 @@ public class ConvenioService {
 	public void ativar(Long id) {
 		Convenio convenio = obterPorId(id);
 		if (convenio.getDataVencimento().isBefore(LocalDate.now())) {
-			throw new IllegalStateException("Convenio com atraso. Não foi possível ativar");
+			throw new IllegalStateException("Mensalidade do convênio atrasada. Não foi possível ativar");
 		}
 
 		convenio.setStatus(StatusConvenio.ATIVO);
@@ -98,8 +109,7 @@ public class ConvenioService {
 	}
 
 	public void excluir(Long id) {
-		Convenio conv = dao.getByIdWithClientes(id)
-				.orElseThrow(() -> new IllegalArgumentException("Convênio não encontrado para o id "+id));
+		Convenio conv = obterComClientesPorId(id);
 
 		if (conv.isAtivo()) {
 	        throw new IllegalArgumentException("Convenio está ativo, não foi possível excluir.");
