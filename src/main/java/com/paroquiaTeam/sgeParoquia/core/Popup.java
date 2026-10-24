@@ -3,6 +3,7 @@ package com.paroquiaTeam.sgeParoquia.core;
 import com.paroquiaTeam.sgeParoquia.controller.popup.AlterarVagasController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroClienteController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroConvenioController;
+import com.paroquiaTeam.sgeParoquia.controller.popup.EditarClienteController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.EditarConvenioController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.RegistrarMovimentoCaixaController;
 
@@ -11,6 +12,7 @@ public enum Popup {
 	CADASTRARCONVENIO("/popups/cadastrarConvenio/cadastrarConvenio.fxml", "Cadastrar Convênio", CadastroConvenioController.class),
 	CADASTRARCLIENTE("/popups/cadastrarCliente/cadastrarCliente.fxml", "Cadastrar Cliente", CadastroClienteController.class),
 	EDITARCONVENIO("/popups/cadastrarConvenio/cadastrarConvenio.fxml", "Editar Convenio", EditarConvenioController.class),
+	EDITARCLIENTE("/popups/cadastrarCliente/cadastrarCliente.fxml", "Editar Cliente", EditarClienteController.class),
 	REGISTRARMOVIMENTO("/popups/registrarMovimento/registrarMovimento.fxml", "Registrar Movimento de Caixa", RegistrarMovimentoCaixaController.class);
 
 	private final String pathFxml;

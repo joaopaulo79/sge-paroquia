@@ -65,7 +65,7 @@ public class ListaClienteController {
 	}
 
 	private void editar(Long id) {
-		//NavegacaoManager.getInstancia().abrirModal(Popup.EDITARCONVENIO, id);
+		NavegacaoManager.getInstancia().abrirModal(Popup.EDITARCLIENTE, id);
 		carregarClientes();
 	}
 

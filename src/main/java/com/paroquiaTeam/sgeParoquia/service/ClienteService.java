@@ -88,6 +88,8 @@ public class ClienteService {
 				cliente.setConvenio(convenioNovo);
 			}
 		}
+		
+		dao.update(cliente);
 	}
 
 	public void ativar(Long id) {
