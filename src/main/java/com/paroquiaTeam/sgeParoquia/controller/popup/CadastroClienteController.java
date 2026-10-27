@@ -56,10 +56,12 @@ public class CadastroClienteController {
 		spinnerMensalidade.setValueFactory(
 				new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000000, 0, 0.01)
 			);
+		spinnerMensalidade.setEditable(true);
 		
 		spinnerConvenio.setValueFactory(
 				new IntegerSpinnerValueFactory(0, 1000)
 			);
+		spinnerConvenio.setEditable(true);
 		
 		btnSalvar.setOnAction(e -> {
 			try {

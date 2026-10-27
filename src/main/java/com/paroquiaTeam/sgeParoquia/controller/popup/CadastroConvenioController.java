@@ -22,9 +22,9 @@ public class CadastroConvenioController {
 	@FXML Spinner<Double> spinnerCobrancaIndividual;
 	@FXML Spinner<Integer> spinnerVagasCarro;
 	@FXML Spinner<Integer> spinnerVagasMoto;
+	@FXML DatePicker pickerDataVencimento;
 	@FXML Button btnCancelar;
 	@FXML Button btnSalvar;
-	@FXML DatePicker pickerDataVencimento;
 
 	@FXML
 	private void initialize() {

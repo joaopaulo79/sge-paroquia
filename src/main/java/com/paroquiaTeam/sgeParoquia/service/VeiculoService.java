@@ -1,5 +1,6 @@
 package com.paroquiaTeam.sgeParoquia.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.paroquiaTeam.sgeParoquia.dao.VeiculoDAO;
@@ -27,6 +28,10 @@ public class VeiculoService {
 	public Veiculo obterPorCpf(String placa) {
 		return buscarPorPlaca(placa)
 				.orElseThrow(() -> new EntityNotFoundException("Veiculo não encontrado para a placa "+placa));
+	}
+	
+	public List<Veiculo> obterTodos() {
+		return dao.getAll();
 	}
 
 	public void salvar(DadosVeiculo dados) {
@@ -58,13 +63,15 @@ public class VeiculoService {
 		dao.update(veiculo);
 	}
 
-	public void excluir(Veiculo veiculo) {
+	public void excluir(Long id) {
+		Veiculo veiculo = obterPorId(id);
+		
 		VagaService vService = new VagaService();
 		if (vService.veiculoEstaNoPatio(veiculo.getPlaca())) {
 			throw new IllegalStateException("Não foi possível excluir veículo pois está no pátio");
 		}
 
-		dao.delete(veiculo.getId());
+		dao.delete(id);
 	}
 
 	private void validarVeiculoNovo(DadosVeiculo dados) {

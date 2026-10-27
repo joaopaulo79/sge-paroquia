@@ -27,7 +27,7 @@ public class VagaDAO {
 
 	public boolean veiculoEstaEmAlgumaVaga(String placaOcupante) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "COUNT(v) FROM Vaga v WHERE v.placa = ?1";
+			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.placa = ?1";
 			Long quantidade = sessao.createSelectionQuery(query, Long.class)
 					.setParameter(1, placaOcupante)
 					.uniqueResult();
