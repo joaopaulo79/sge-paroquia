@@ -6,6 +6,7 @@ import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroConvenioController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroVeiculoController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.EditarClienteController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.EditarConvenioController;
+import com.paroquiaTeam.sgeParoquia.controller.popup.EditarVeiculoController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.RegistrarMovimentoCaixaController;
 
 public enum Popup {
@@ -18,7 +19,7 @@ public enum Popup {
 	EDITARCLIENTE("/popups/cadastrarCliente/cadastrarCliente.fxml", "Editar Cliente", EditarClienteController.class),
 	
 	CADASTRARVEICULO("/popups/cadastrarVeiculo/cadastrarVeiculo.fxml", "Cadastrar Veículo", CadastroVeiculoController.class),
-	EDITARVEICULO("/popups/cadastrarVeiculo/cadastrarVeiculo.fxml", "Editar Veículo", null),
+	EDITARVEICULO("/popups/cadastrarVeiculo/cadastrarVeiculo.fxml", "Editar Veículo", EditarVeiculoController.class),
 
 	REGISTRARMOVIMENTO("/popups/registrarMovimento/registrarMovimento.fxml", "Registrar Movimento de Caixa", RegistrarMovimentoCaixaController.class);
 
