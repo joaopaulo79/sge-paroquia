@@ -1,13 +1,18 @@
 package com.paroquiaTeam.sgeParoquia.controller.popup;
 
+import com.paroquiaTeam.sgeParoquia.controller.records.DadosSelecaoCliente;
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
+import com.paroquiaTeam.sgeParoquia.core.Popup;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosVeiculo;
+import com.paroquiaTeam.sgeParoquia.model.entity.Cliente;
 import com.paroquiaTeam.sgeParoquia.model.entity.Veiculo;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoVeiculo;
 import com.paroquiaTeam.sgeParoquia.service.VeiculoService;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextArea;
@@ -15,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class EditarVeiculoController {
@@ -39,10 +45,13 @@ public class EditarVeiculoController {
 	@FXML RadioButton radioCarro;
 	@FXML RadioButton radioMoto;
 	
-	@FXML Spinner<Integer> spinnerIdCliente;
+	@FXML VBox vBoxDadosCliente;
+	@FXML Button btnSelecionarCliente;
 	
 	@FXML Button btnCancelar;
 	@FXML Button btnSalvar;
+	
+	Long idCliente;
 	
 	@FXML
 	private void initialize() {
@@ -63,15 +72,6 @@ public class EditarVeiculoController {
 			);
 		spinnerAno.setEditable(true);
 		
-		int idCliente = 0;
-		if (veiculo.getCliente() != null) {
-			idCliente = Math.toIntExact(veiculo.getCliente().getId());
-		}
-		spinnerIdCliente.setValueFactory(
-				new IntegerSpinnerValueFactory(0, 1000, idCliente)
-			);
-		spinnerIdCliente.setEditable(true);
-		
 		if (veiculo.getTipo() == TipoVeiculo.CARRO) {
 			radioCarro.setSelected(true);
 		} else {
@@ -82,9 +82,31 @@ public class EditarVeiculoController {
 		
 		radioMoto.setUserData(TipoVeiculo.MOTO);
 		
+		Cliente c = veiculo.getCliente();
+		DadosSelecaoCliente dadosCliente = new DadosSelecaoCliente(
+				c.getId(),
+				c.getCpf(),
+				c.getNome(),
+				c.getTipo());
+		carregarCliente(dadosCliente);
+		
+		btnSelecionarCliente.setOnAction(e -> {
+			SelecaoClienteController sCC = NavegacaoManager.getInstancia().abrirModal(Popup.SELECAOCLIENTE);
+			DadosSelecaoCliente dadosNovoCliente = sCC.getDadosCliente();
+			
+			carregarCliente(dadosNovoCliente);
+			
+			Stage stage = (Stage) vBoxDadosCliente.getScene().getWindow();
+			Platform.runLater(stage::sizeToScene);
+		});
+		
 		btnSalvar.setOnAction(e -> {
 			try {
 				TipoVeiculo tipo = obterTipoVeiculoSelecionado();
+				
+				if (idCliente == null) {
+					throw new IllegalStateException("Selecione um cliente");
+				}
 				
 				DadosVeiculo dadosNovos = new DadosVeiculo(
 						textFieldPlaca.getText(),
@@ -94,7 +116,7 @@ public class EditarVeiculoController {
 						textFieldCor.getText(),
 						textAreaObservacoes.getText(),
 						tipo,
-						spinnerIdCliente.getValue());
+						idCliente);
 				
 				service.atualizar(dadosNovos, veiculo);
 				
@@ -107,7 +129,22 @@ public class EditarVeiculoController {
 		});
 	}
 	
-	public TipoVeiculo obterTipoVeiculoSelecionado() {
+	private void carregarCliente(DadosSelecaoCliente dados) {
+		idCliente = dados.id();
+		
+		vBoxDadosCliente.getChildren().clear();
+		
+		// Temporário
+		// Substituir por card builder
+		vBoxDadosCliente.getChildren().addAll(
+				new Label("ID: " + dados.id()),
+				new Label("CPF: " + dados.cpf()),
+				new Label("Nome: " + dados.nome()),
+				new Label("Tipo: " + dados.tipo().toString())
+				);
+	}
+	
+	private TipoVeiculo obterTipoVeiculoSelecionado() {
 	    Toggle selectedToggle = grupoTipoVeiculo.getSelectedToggle();
 	    
 	    if (selectedToggle != null && selectedToggle.getUserData() instanceof TipoVeiculo) {

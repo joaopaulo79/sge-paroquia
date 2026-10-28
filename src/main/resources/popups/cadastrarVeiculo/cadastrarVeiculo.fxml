@@ -62,10 +62,10 @@
                   <RadioButton fx:id="radioMoto" mnemonicParsing="false" text="Moto" toggleGroup="$grupoTipoVeiculo" />
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox layoutX="10.0" layoutY="342.0" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label text="Id Cliente" />
-                  <Spinner fx:id="spinnerIdCliente" />
+                  <VBox fx:id="vBoxDadosCliente" prefHeight="200.0" prefWidth="100.0" />
+                  <Button fx:id="btnSelecionarCliente" mnemonicParsing="false" text="Selecionar Cliente" />
                </children>
             </VBox>
             <HBox prefHeight="100.0" prefWidth="200.0">

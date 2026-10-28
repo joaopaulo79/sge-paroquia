@@ -14,7 +14,7 @@
    <content>
       <VBox prefHeight="200.0" prefWidth="597.0">
          <children>
-            <GridPane alignment="CENTER" VBox.vgrow="NEVER">
+            <GridPane alignment="CENTER" VBox.vgrow="NEVER" fx:id="gridPrincipal">
               <columnConstraints>
                 <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="390.0" minWidth="10.0" prefWidth="390.0" />
