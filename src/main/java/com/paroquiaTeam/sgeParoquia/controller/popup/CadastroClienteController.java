@@ -1,6 +1,8 @@
 package com.paroquiaTeam.sgeParoquia.controller.popup;
 
+import com.paroquiaTeam.sgeParoquia.controller.records.DadosSelecaoConvenio;
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
+import com.paroquiaTeam.sgeParoquia.core.Popup;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosCliente;
 import com.paroquiaTeam.sgeParoquia.model.enums.StatusCliente;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoCliente;
@@ -11,9 +13,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -24,6 +26,7 @@ public class CadastroClienteController {
 
 	@FXML VBox campoDadosMensalista;
 	@FXML VBox campoDadosConveniado;
+	@FXML VBox vBoxDadosConvenio;
 	
 	@FXML TextField textFieldCpf;
 	@FXML TextField textFieldNome;
@@ -31,10 +34,12 @@ public class CadastroClienteController {
 	@FXML ChoiceBox<TipoCliente> choiceTipo;
 	@FXML DatePicker pickerDataVencimento;
 	@FXML Spinner<Double> spinnerMensalidade;
-	@FXML Spinner<Integer> spinnerConvenio;
+	@FXML Button btnSelecionarConvenio;
 	
 	@FXML Button btnCancelar;
 	@FXML Button btnSalvar;
+	
+	Long idConv = null;
 
 	@FXML
 	private void initialize() {
@@ -51,20 +56,29 @@ public class CadastroClienteController {
 
 		choiceTipo.getItems().setAll(TipoCliente.values());
 		choiceTipo.setValue(TipoCliente.AVULSO);
-		choiceTipo.setOnAction(e -> ativarCamposEspecificos());
+		choiceTipo.setOnAction(e -> onAlterarTipo());
 		
 		spinnerMensalidade.setValueFactory(
 				new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000000, 0, 0.01)
 			);
 		spinnerMensalidade.setEditable(true);
 		
-		spinnerConvenio.setValueFactory(
-				new IntegerSpinnerValueFactory(0, 1000)
-			);
-		spinnerConvenio.setEditable(true);
+		btnSelecionarConvenio.setOnAction(e -> {
+			SelecaoConvenioController sCC = NavegacaoManager.getInstancia().abrirModal(Popup.SELECAOCONVENIO);
+			DadosSelecaoConvenio dados = sCC.getDadosConvenio();
+			
+			carregarConvenio(dados);
+			
+			Stage stage = (Stage) vBoxDadosConvenio.getScene().getWindow();
+			Platform.runLater(stage::sizeToScene);
+		});
 		
 		btnSalvar.setOnAction(e -> {
 			try {
+				if (idConv == null && choiceTipo.getValue() == TipoCliente.CONVENIADO) {
+					throw new IllegalStateException("Selecione um convênio");
+				}
+				
 				DadosCliente dados = new DadosCliente(
 						textFieldNome.getText(),
 						textFieldCpf.getText(),
@@ -73,7 +87,7 @@ public class CadastroClienteController {
 						StatusCliente.DESATIVADO,
 						pickerDataVencimento.getValue(),
 						spinnerMensalidade.getValue(),
-						(long) spinnerConvenio.getValue());
+						idConv);
 				
 				service.salvar(dados);
 
@@ -87,7 +101,22 @@ public class CadastroClienteController {
 		});
 	}
 	
-	private void ativarCamposEspecificos() {
+	private void carregarConvenio(DadosSelecaoConvenio dados) {
+		idConv = dados.id();
+		
+		vBoxDadosConvenio.getChildren().clear();
+		
+		// Temporário
+		// Substituir por card builder
+		vBoxDadosConvenio.getChildren().addAll(
+				new Label("ID: " + dados.id()),
+				new Label("CNPJ: " + dados.cnpj()),
+				new Label("Nome: " + dados.nome()),
+				new Label("Cobrança individual: R$" + dados.cobrancaIndividual())
+				);
+	}
+	
+	private void onAlterarTipo() {
 		boolean isMensalista;
 		boolean isConveniado;
 		
@@ -108,6 +137,10 @@ public class CadastroClienteController {
 		
 		campoDadosConveniado.setVisible(isConveniado);
 		campoDadosConveniado.setManaged(isConveniado);
+		
+		if (!isConveniado) {
+			idConv = null;
+		}
 		
 		Stage stage = (Stage) campoDadosConveniado.getScene().getWindow();
 		Platform.runLater(stage::sizeToScene);

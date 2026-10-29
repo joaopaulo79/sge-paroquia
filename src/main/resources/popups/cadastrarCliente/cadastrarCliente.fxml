@@ -55,12 +55,8 @@
                </children></VBox>
             <VBox fx:id="campoDadosConveniado" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label text="Convênio" />
-                        <Spinner fx:id="spinnerConvenio" />
-                     </children>
-                  </VBox>
+                  <VBox fx:id="vBoxDadosConvenio" prefHeight="200.0" prefWidth="100.0" />
+                  <Button fx:id="btnSelecionarConvenio" mnemonicParsing="false" text="Selecionar" />
                </children>
             </VBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
