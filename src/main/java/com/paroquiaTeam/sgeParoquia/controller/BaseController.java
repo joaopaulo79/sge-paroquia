@@ -21,6 +21,7 @@ public class BaseController {
 	@FXML private ToggleButton btnNavVeiculos;
 	@FXML private ToggleButton btnNavConfig;
 	@FXML private ToggleButton btnNavVagas;
+	@FXML private ToggleButton btnNavUsuarios;
 
 	private static BaseController instance;
 
@@ -41,8 +42,12 @@ public class BaseController {
 
 		ToggleGroup grupoNav = new ToggleGroup();
 		btnNavDashboard.setToggleGroup(grupoNav);
+		btnNavConvenios.setToggleGroup(grupoNav);
+		btnNavClientes.setToggleGroup(grupoNav);
+		btnNavVeiculos.setToggleGroup(grupoNav);
 		btnNavConfig.setToggleGroup(grupoNav);
 		btnNavVagas.setToggleGroup(grupoNav);
+		btnNavUsuarios.setToggleGroup(grupoNav);
 
 		btnNavDashboard.setOnAction(event -> navegar(event, Tela.DASHBOARD));
 		btnNavConvenios.setOnAction(event -> navegar(event, Tela.CONVENIOS));
@@ -50,6 +55,7 @@ public class BaseController {
 		btnNavVeiculos.setOnAction(event -> navegar(event, Tela.VEICULOS));
 		btnNavConfig.setOnAction(event -> navegar(event, Tela.CONFIGURACAO));
 		btnNavVagas.setOnAction(event -> navegar(event, Tela.VAGAS));
+		btnNavUsuarios.setOnAction(event -> navegar(event, Tela.USUARIOS));
 
 		instance = this;
 	}

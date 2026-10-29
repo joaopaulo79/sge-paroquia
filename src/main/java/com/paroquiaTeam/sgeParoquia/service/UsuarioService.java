@@ -1,5 +1,6 @@
 package com.paroquiaTeam.sgeParoquia.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
@@ -12,6 +13,10 @@ import jakarta.persistence.EntityNotFoundException;
 
 public class UsuarioService {
 	UsuarioDAO dao = new UsuarioDAO();
+	
+	public List<Usuario> obterTodos() {
+		return dao.getAll();
+	}
 
 	public boolean existePorId(Long id) {
 		return dao.existsById(id);
@@ -26,6 +31,15 @@ public class UsuarioService {
 				.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado para o id "+id));
 	}
 
+	public Optional<Usuario> buscarPorIdComCaixas(Long id) {
+		return dao.getByIdWithCaixas(id);
+	}
+	
+	public Usuario obterPorIdComCaixas(Long id) {
+		return buscarPorIdComCaixas(id)
+				.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado para o id "+id));
+	}
+	
 	public Optional<Usuario> buscarPorLogin(String login) {
 		return dao.getByLogin(login);
 	}
@@ -36,7 +50,7 @@ public class UsuarioService {
 	}
 
 	public void salvar(DadosUsuario dados) {
-		validar(dados);
+		validarNovoUsuario(dados);
 
 		String senhaHash = SenhaUtil.hash(dados.senha());
 		Usuario user = dados.paraUsuario(senhaHash);
@@ -80,7 +94,11 @@ public class UsuarioService {
 		if (SenhaUtil.isSenhaBate(senhaNova, user.getSenha())) {
 			throw new IllegalArgumentException("Senha nova não pode ser igual à senha anterior");
 		}
-
+		
+		String senhaHash = SenhaUtil.hash(senhaNova);
+		user.setSenha(senhaHash);
+		
+		dao.update(user);
 	}
 
 	public void atualizar(Long id, DadosUsuario dadosNovos) {
@@ -88,7 +106,7 @@ public class UsuarioService {
 			throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
 		}
 
-		validar(dadosNovos);
+		validarDados(dadosNovos);
 
 		Usuario user = obterPorId(id);
 		user.setNome(dadosNovos.nome());
@@ -104,7 +122,7 @@ public class UsuarioService {
 			throw new IllegalStateException("Usuário está logado atualmente. Não foi possível excluir");
 		}
 
-		Usuario user = obterPorId(id);
+		Usuario user = obterPorIdComCaixas(id);
 		if (!user.getCaixas().isEmpty()) {
 			throw new IllegalStateException("Usuário tem caixas. Não foi possível excluir");
 		}
@@ -119,8 +137,14 @@ public class UsuarioService {
 		}
 		return SenhaUtil.isSenhaBate(senha, talvezUsuario.get().getSenha());
 	}
-
-	private void validar(DadosUsuario dados) {
+		
+	private void validarNovoUsuario(DadosUsuario dados) {
+		validarDados(dados);
+		
+		validarSenha(dados.senha(), dados.login());
+	}
+	
+	private void validarDados(DadosUsuario dados) {
 		if (dados.nome() == null || dados.nome().isBlank()) {
 			throw new IllegalArgumentException("Nome é obrigatório");
 		}
@@ -129,19 +153,17 @@ public class UsuarioService {
 			throw new IllegalArgumentException("Login é obrigatório");
 		}
 
-		if (dados.senha() == null || dados.senha().isBlank()) {
-			throw new IllegalArgumentException("Senha é obrigatória");
-		}
-
 		if (dados.tipo() == null) {
 			throw new IllegalArgumentException("Tipo é obrigatório");
 		}
-
-		validarSenha(dados.senha(), dados.login());
 	}
 
 	private void validarSenha(String senha, String login) {
-		if (SenhaUtil.validarRequisitosSenha(senha, login)) {
+		if (senha == null || senha.isBlank()) {
+			throw new IllegalArgumentException("Senha é obrigatória");
+		}
+		
+		if (!SenhaUtil.validarRequisitosSenha(senha, login)) {
 			throw new IllegalArgumentException("Senha não atende requisitos.");
 		}
 	}

@@ -19,6 +19,7 @@
 			<ToggleButton fx:id="btnNavVeiculos" minWidth="48.0" mnemonicParsing="false" text="Veículos" userData="" wrapText="true" />
             <ToggleButton fx:id="btnNavVagas" minWidth="48.0" mnemonicParsing="false" text="Vagas" />
             <ToggleButton fx:id="btnNavConfig" minWidth="48.0" mnemonicParsing="false" text="Config" userData="" wrapText="true" />
+			<ToggleButton fx:id="btnNavUsuarios" minWidth="48.0" mnemonicParsing="false" text="Usuários" userData="" wrapText="true" />
          </children></VBox>
    </left>
    <center>
