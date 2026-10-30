@@ -3,6 +3,7 @@ package com.paroquiaTeam.sgeParoquia.view.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class CardGenerico extends VBox {
@@ -43,14 +44,14 @@ public class CardGenerico extends VBox {
     // Classe estática interna Builder
     public static class Builder {
         private CardHeader header;
-        private javafx.scene.layout.Pane conteudoPrincipal;
+        private Pane conteudoPrincipal;
         private List<VBox> linhasExtras = new ArrayList<VBox>();
 
         public Builder(CardHeader header) {
             this.header = header;
         }
 
-        public Builder comConteudo(javafx.scene.layout.Pane conteudo) {
+        public Builder comConteudo(Pane conteudo) {
             this.conteudoPrincipal = conteudo;
             return this;
         }

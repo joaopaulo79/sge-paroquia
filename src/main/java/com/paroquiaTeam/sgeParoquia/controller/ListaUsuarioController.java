@@ -8,6 +8,8 @@ import com.paroquiaTeam.sgeParoquia.core.Popup;
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 import com.paroquiaTeam.sgeParoquia.service.UsuarioService;
+import com.paroquiaTeam.sgeParoquia.view.components.CardGenerico;
+import com.paroquiaTeam.sgeParoquia.view.factory.UsuarioCardFactory;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -142,8 +144,10 @@ public class ListaUsuarioController {
 				this::alterarSenha
 				);
 		
+		UsuarioCardFactory cardFactory = new UsuarioCardFactory();
 		for (Usuario u : usuarios) {
-			vBoxCards.getChildren().add(criarCard(u, acoes));
+			CardGenerico card = cardFactory.criarCardExpandivel(u, acoes);
+			vBoxCards.getChildren().add(card);
 		}
 	}
 	
