@@ -1,5 +1,6 @@
 package com.paroquiaTeam.sgeParoquia.core;
 
+import com.paroquiaTeam.sgeParoquia.controller.EntradaVeiculoController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.AlterarSenhaUsuarioController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.AlterarVagasController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroClienteController;
@@ -16,6 +17,8 @@ import com.paroquiaTeam.sgeParoquia.controller.popup.SelecaoConvenioController;
 
 public enum Popup {
 	ALTERARVAGAS("/popups/alterarVagas/alterarVagas.fxml","Alterar Vagas", AlterarVagasController.class),
+	
+	ENTRADAVEICULO("/popups/estadia/estadia.fxml", "Registrar Entrada", EntradaVeiculoController.class),
 	
 	CADASTRARUSUARIO("/popups/cadastrarUsuario/cadastrarUsuario.fxml", "Cadastrar Usuário", CadastroUsuarioController.class),
 	EDITARUSUARIO("/popups/cadastrarUsuario/cadastrarUsuario.fxml", "Editar Usuário", EditarUsuarioController.class),

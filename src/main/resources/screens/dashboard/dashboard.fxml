@@ -26,7 +26,7 @@
                         <Button fx:id="btnSaidaVeiculo" alignment="CENTER_RIGHT" disable="true" mnemonicParsing="false" text="Registrar saída" textAlignment="CENTER" wrapText="true" HBox.hgrow="NEVER" />
                      </children>
                   </HBox>
-                  <StackPane fx:id="containerAcaoCaixa" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                  <StackPane fx:id="containerCaixa" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
             <VBox prefHeight="388.0" prefWidth="228.0" HBox.hgrow="ALWAYS">

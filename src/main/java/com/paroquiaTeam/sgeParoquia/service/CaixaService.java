@@ -58,6 +58,8 @@ public class CaixaService {
 
 		caixa.setDataHoraFechamento(dataHoraFechamento);
 		dao.update(caixa);
+		
+		SessaoSistema.getInstancia().setCaixa(null);;
 	}
 
 	public void excluir(Caixa caixa) {
