@@ -1,9 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.controller.popup;
 
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
-import com.paroquiaTeam.sgeParoquia.model.dto.DadosUsuario;
 import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
-import com.paroquiaTeam.sgeParoquia.model.enums.TipoUsuario;
 import com.paroquiaTeam.sgeParoquia.service.UsuarioService;
 
 import javafx.fxml.FXML;
