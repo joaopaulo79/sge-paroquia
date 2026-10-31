@@ -50,11 +50,32 @@ public class VeiculoDAO {
 
 		}
 	}
+	
+	public Optional<Veiculo> getByPlacaWithClienteEConvenio(String placa) {
+	    try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+	        String query = "SELECT DISTINCT v FROM Veiculo v "
+	        		+ "JOIN FETCH v.cliente "
+	        		+ "LEFT JOIN FETCH v.cliente.convenio "
+	        		+ "WHERE v.placa = :placa";
+	        return sessao.createQuery(query, Veiculo.class)
+	                    .setParameter("placa", placa)
+	                    .uniqueResultOptional();
+	    }
+	}
 
 
 	public List<Veiculo> getAll() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT v FROM Veiculo v";
+			return sessao.createQuery(query, Veiculo.class)
+						.getResultList();
+
+		}
+	}
+	
+	public List<Veiculo> getAllWithClientes() {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT v FROM Veiculo v JOIN FETCH v.cliente";
 			return sessao.createQuery(query, Veiculo.class)
 						.getResultList();
 

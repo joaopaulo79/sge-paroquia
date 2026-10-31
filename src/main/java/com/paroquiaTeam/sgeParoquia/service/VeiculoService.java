@@ -25,8 +25,17 @@ public class VeiculoService {
 		return dao.getByPlaca(placa);
 	}
 
-	public Veiculo obterPorCpf(String placa) {
+	public Veiculo obterPorPlaca(String placa) {
 		return buscarPorPlaca(placa)
+				.orElseThrow(() -> new EntityNotFoundException("Veiculo não encontrado para a placa "+placa));
+	}
+	
+	public Optional<Veiculo> buscarPorPlacaComClienteEConvenio(String placa) {
+		return dao.getByPlacaWithClienteEConvenio(placa);
+	}
+
+	public Veiculo obterPorPlacaComClienteEConvenio(String placa) {
+		return buscarPorPlacaComClienteEConvenio(placa)
 				.orElseThrow(() -> new EntityNotFoundException("Veiculo não encontrado para a placa "+placa));
 	}
 	

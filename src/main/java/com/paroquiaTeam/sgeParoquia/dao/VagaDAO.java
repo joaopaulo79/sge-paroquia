@@ -44,6 +44,35 @@ public class VagaDAO {
 
 		}
 	}
+	
+	public Vaga getFirstLivreByIdConvenio(Long idConvenio, TipoVaga tipo) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT DISTINCT v FROM Vaga v WHERE v.convenio.id = ?1 AND v.tipo = ?2 AND v.status = LIVRE";
+			return sessao.createQuery(query, Vaga.class)
+						.setParameter(1, idConvenio)
+						.setParameter(2, tipo)
+						.getSingleResultOrNull();
+		}
+	}
+	
+	public List<Vaga> getAllByIdConvenio(Long idConvenio) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT v FROM Vaga v WHERE v.convenio.id = ?1";
+			return sessao.createQuery(query, Vaga.class)
+						.setParameter(1, idConvenio)
+						.getResultList();
+		}
+	}
+	
+	public Optional<Vaga> getByPlaca(String placa) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT DISTINCT v FROM Vaga v WHERE v.placa = ?1";
+			return sessao.createSelectionQuery(query, Vaga.class)
+						.setParameter(1, placa)
+						.uniqueResultOptional();
+
+		}
+	}
 
 
 	public List<Vaga> getAll() {
@@ -79,6 +108,30 @@ public class VagaDAO {
 		}
 	}
 
+	public boolean isThereVagaLivre(TipoVaga tipo, TipoReservaVaga reserva) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2 AND v.status = LIVRE";
+			Long quantidade = sessao.createSelectionQuery(query, Long.class)
+						.setParameter(1, tipo)
+						.setParameter(2, reserva)
+						.getSingleResultOrNull();
+			
+			return quantidade != null && quantidade > 0;
+		}
+	}
+	
+	public boolean isThereVagaConvenioLivre(TipoVaga tipo, Long id) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.tipo = ?1 AND v.convenio.id = ?2 AND v.status = LIVRE";
+			Long quantidade = sessao.createSelectionQuery(query, Long.class)
+						.setParameter(1, tipo)
+						.setParameter(2, id)
+						.getSingleResultOrNull();
+			
+			return quantidade != null && quantidade > 0;
+		}
+	}
+	
 	public Vaga getFirstLivre(TipoVaga tipo, TipoReservaVaga reserva) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2 AND v.status = LIVRE";

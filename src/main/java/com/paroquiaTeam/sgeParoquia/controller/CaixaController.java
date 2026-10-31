@@ -5,10 +5,8 @@ import java.util.function.Consumer;
 
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
-import com.paroquiaTeam.sgeParoquia.dao.CaixaDAO;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosCaixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
-import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 import com.paroquiaTeam.sgeParoquia.service.CaixaService;
 
 import javafx.fxml.FXML;

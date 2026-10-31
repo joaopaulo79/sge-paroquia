@@ -41,6 +41,22 @@ public class PrecificacaoService {
 			throw e;
 		}
 	}
+	
+	public double obterValorDiaria(boolean ehMoto) {
+		TipoPrecificacao prec = new EstacionamentoDAO().get().get().getPrecificacao();
+
+		switch (prec) {
+			case FRACIONADA -> {
+				if (ehMoto) return daoFrac.get().get().getValorDiariaMoto();
+				else return daoFrac.get().get().getValorDiaria();
+			}
+			case POR_HORA -> {
+				if (ehMoto) return daoHora.get().get().getValorDiariaMoto();
+				else return daoHora.get().get().getValorDiaria();
+			}
+			default -> throw new IllegalStateException("Erro: precificação ativa inválida ou não implementada");
+		}
+	}
 
 	public void salvarFracionada(DadosPrecificacaoFracionada dados) {
 		validarPrecificacao(

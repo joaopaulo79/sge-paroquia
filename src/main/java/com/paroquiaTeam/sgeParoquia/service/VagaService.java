@@ -20,11 +20,45 @@ public class VagaService {
     public long contar(TipoVaga tipo, TipoReservaVaga reserva) {
     	return dao.count(tipo, reserva);
     }
+    
+    public boolean temEspaco(TipoVaga tipo, TipoReservaVaga reserva) {
+    	return dao.isThereVagaLivre(tipo, reserva);
+    }
+    
+    public boolean temEspacoConvenio(TipoVaga tipo, Long id) {
+    	return dao.isThereVagaConvenioLivre(tipo, id);
+    }
 
     public List<Vaga> buscarVagas() {
     	return dao.getAll();
     }
 
+    public void registrarEntradaComum(TipoVaga tipo, String placa) {
+    	Vaga vaga = dao.getFirstLivre(tipo, TipoReservaVaga.COMUM);
+    	
+    	if (vaga == null) {
+    		throw new IllegalStateException("Não há vagas livres!");
+    	}
+    	
+    	vaga.setPlaca(placa);
+    	vaga.setStatus(StatusVaga.OCUPADA);
+    	
+    	dao.update(vaga);
+    }
+    
+    public void registrarEntradaConvenio(TipoVaga tipo, Long idConv, String placa) {
+    	Vaga vaga = dao.getFirstLivreByIdConvenio(idConv, tipo);
+    	
+    	if (vaga == null) {
+    		throw new IllegalStateException("Não há vagas livres!");
+    	}
+    	
+    	vaga.setPlaca(placa);
+    	vaga.setStatus(StatusVaga.OCUPADA);
+    	
+    	dao.update(vaga);
+    }
+    
     public long adicionarVagas(AjusteVaga ajuste) {
     	return dao.batchSave(ajuste.tipo, ajuste.reserva, ajuste.quantidade);
     }

@@ -17,9 +17,6 @@ public class DashboardController {
 	@FXML Button btnEntradaVeiculo;
 	@FXML Button btnSaidaVeiculo;
 	
-    private enum TipoOperacaoEstadia { ENTRADA, SAIDA }
-
-	
 	@FXML
 	private void initialize() {
 		CaixaController caixaController = new CaixaController(containerCaixa);
@@ -38,20 +35,21 @@ public class DashboardController {
 
 
 		btnMovimentoVeiculo.setOnAction(e -> {
-			
+			try {
+				String placa = campoPlaca.getText();
+				
+				if (placa == null || placa.isBlank()) {
+					throw new IllegalArgumentException("Insira uma placa");
+				}
+				
+				new EstadiaController().handleEstadia(placa);
+			} catch (Exception e2) {
+				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getLocalizedMessage());
+				e2.printStackTrace();
+			}
 		});
 	}
 	
-	private void handleEstadia(TipoOperacaoEstadia op) {
-		try {
-			switch (op) {
-				case ENTRADA -> NavegacaoManager.getInstancia().abrirAlertaSucesso("Entrada");
-				case SAIDA -> NavegacaoManager.getInstancia().abrirAlertaSucesso("Saída");
-			}
-		} catch (Exception e) {
-			NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
-		}
-	}
 /*
 	private void handleEstadia(EstadiaController.TipoOperacao operacao) {
 		String placa = campoPlaca.getText();

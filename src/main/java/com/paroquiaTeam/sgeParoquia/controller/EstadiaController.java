@@ -3,9 +3,20 @@ package com.paroquiaTeam.sgeParoquia.controller;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import com.paroquiaTeam.sgeParoquia.controller.popup.SelecionarTipoVeiculoController;
+import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
+import com.paroquiaTeam.sgeParoquia.core.Popup;
 import com.paroquiaTeam.sgeParoquia.dao.EstadiaDAO;
+import com.paroquiaTeam.sgeParoquia.model.entity.Cliente;
+import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
 import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
+import com.paroquiaTeam.sgeParoquia.model.entity.Veiculo;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoVaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoVeiculo;
+import com.paroquiaTeam.sgeParoquia.service.EstadiaService;
 import com.paroquiaTeam.sgeParoquia.service.PrecificacaoService;
+import com.paroquiaTeam.sgeParoquia.service.VagaService;
+import com.paroquiaTeam.sgeParoquia.service.VeiculoService;
 import com.paroquiaTeam.sgeParoquia.utils.TempoUtils;
 import com.paroquiaTeam.sgeParoquia.view.factory.EstadiaCardFactory;
 
@@ -15,10 +26,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class EstadiaController {
-
+	public record Entidades(Veiculo veiculo, Cliente cliente, Convenio convenio) {}
+	public record DadosEntrada(Entidades entidades, TipoVaga tipo, String placa) {};
+	
     // Enum para deixar o código mais limpo
-    public enum TipoOperacao { ENTRADA, SAIDA }
-
+    private enum TipoOperacao { ENTRADA, SAIDA }
+    
+    private EstadiaService estadiaService = new EstadiaService();
+    private VagaService vagaService = new VagaService();
+    
     private TipoOperacao operacao;
     private Estadia estadia;
     private EstadiaDAO dao = new EstadiaDAO();
@@ -26,7 +42,49 @@ public class EstadiaController {
     @FXML VBox containerCards;
     @FXML Button btnConfirmar;
     @FXML Button btnCancelar;
-
+    
+    public void handleEstadia(String placa) {    	
+    	Veiculo veiculo = null;
+    	Cliente cliente = null;
+    	Convenio convenio = null;
+    	
+    	Optional<Veiculo> talvezVeiculo = new VeiculoService().buscarPorPlacaComClienteEConvenio(placa);
+    	if (talvezVeiculo.isPresent()) {
+    		veiculo = talvezVeiculo.get();
+    		cliente = veiculo.getCliente();
+    		convenio = cliente.getConvenio();
+    	}
+    	
+    	// Todos podem acabar nulo
+    	Entidades entidades = new Entidades(veiculo, cliente, convenio);
+    	
+    	if (vagaService.veiculoEstaNoPatio(placa)) {
+    		
+    	} 
+    	else {
+    		TipoVaga tipoVaga;
+    		if (veiculo == null) {
+    			SelecionarTipoVeiculoController sTVC = NavegacaoManager
+    					.getInstancia().abrirModal(Popup.SELECIONARTIPOVEICULO);
+    			tipoVaga = sTVC.getTipoSelecionado();
+    		} else {
+    			if (veiculo.getTipo() == TipoVeiculo.CARRO) {
+    				tipoVaga = TipoVaga.CARRO;
+    			} else {
+    				tipoVaga = TipoVaga.MOTO;
+    			}
+    		}
+    		
+    		DadosEntrada dados = new DadosEntrada(entidades, tipoVaga, placa);
+    		
+    		NavegacaoManager.getInstancia().abrirModal(Popup.ENTRADAVEICULO, dados);
+    	}
+    	
+    }
+    
+    
+  
+    
     public boolean configurarEValidar(TipoOperacao operacao, String placa) {
         this.operacao = operacao;
 

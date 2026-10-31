@@ -147,4 +147,8 @@ public class NavegacaoManager {
     public void abrirAlertaSucesso(String mensagem) {
     	abrirAlerta("Sucesso", mensagem, AlertType.INFORMATION);
     }
+    
+    public boolean abrirAlertaConfirmacao(String mensagem) {
+    	return abrirAlerta("Confirmação", mensagem, AlertType.CONFIRMATION);
+    }
 }
