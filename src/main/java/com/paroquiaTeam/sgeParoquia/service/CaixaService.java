@@ -24,6 +24,18 @@ public class CaixaService {
 		return dao.getById(id);
 	}
 
+	public boolean ultimoCaixaFechou() {
+		boolean fechou = true;
+		Optional<Caixa> talvezCaixa = dao.getLastWithOperador();
+		if (talvezCaixa.isPresent()) {
+			Caixa caixaAtual = talvezCaixa.get();
+			if (caixaAtual.getDataHoraFechamento() == null) {
+				fechou = false;
+			}
+		}
+		return fechou;
+	}
+	
 	public Caixa obterPorId(long id) {
 		return buscarPorId(id)
 				.orElseThrow(() -> new EntityNotFoundException("Caixa não encontrado para o id "+id));
@@ -35,6 +47,15 @@ public class CaixaService {
 
 	public Caixa obterUltimo() {
 		return buscarUltimo()
+				.orElseThrow(() -> new EntityNotFoundException("Nenhum caixa encontrado"));
+	}
+	
+	public Optional<Caixa> buscarUltimoComOperador() {
+		return dao.getLastWithOperador();
+	}
+
+	public Caixa obterUltimoComOperador() {
+		return buscarUltimoComOperador()
 				.orElseThrow(() -> new EntityNotFoundException("Nenhum caixa encontrado"));
 	}
 
@@ -81,11 +102,13 @@ public class CaixaService {
 
 		validarCaixa(dados);
 
-		Optional<Caixa> talvezCaixa = dao.getLast();
+		Optional<Caixa> talvezCaixa = dao.getLastWithOperador();
 		if (talvezCaixa.isPresent()) {
 			Caixa caixaAtual = talvezCaixa.get();
 			if (caixaAtual.getDataHoraFechamento() == null) {
-				throw new IllegalStateException("Último caixa não foi fechado. Não é possível abrir novo caixa");
+				String loginOp = caixaAtual.getOperador().getLogin();
+				throw new IllegalStateException("Último caixa, aberto por " + loginOp
+						+ ", não foi fechado. Não é possível abrir novo caixa");
 			}
 		}
 	}

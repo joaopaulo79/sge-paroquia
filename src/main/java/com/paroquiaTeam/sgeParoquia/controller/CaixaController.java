@@ -90,9 +90,14 @@ public class CaixaController {
 		long idOperador = SessaoSistema.getInstancia().getUserLogado().getId();
 		double fundoInicial = spinnerFundoInicial.getValue();
 		DadosCaixa dados = new DadosCaixa(LocalDateTime.now(), null, fundoInicial, idOperador);
-		service.abrir(dados);
 		
-		carregarPainel();
+		try {
+			service.abrir(dados);
+			
+			carregarPainel();
+		} catch (Exception e) {
+			NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
+		}
 	}
 
 	public void fecharCaixa() {

@@ -54,8 +54,6 @@ public class Main extends Application {
     				"root", "root", senha, true,  TipoUsuario.ADMINISTRADOR);
     		usuarioDao.save(usuario);
     	}
-
-
     }
 
     public static void main(String[] args) {

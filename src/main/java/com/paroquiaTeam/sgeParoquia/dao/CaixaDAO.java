@@ -48,6 +48,16 @@ public class CaixaDAO {
 
 		}
 	}
+	
+	public Optional<Caixa> getLastWithOperador() {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT DISTINCT c FROM Caixa c LEFT JOIN FETCH c.operador ORDER BY c.id DESC";
+			return sessao.createQuery(query, Caixa.class)
+					.setMaxResults(1)
+					.uniqueResultOptional();
+
+		}
+	}
 
 	public void save(Caixa caixa) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
