@@ -3,9 +3,17 @@ package com.paroquiaTeam.sgeParoquia.service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.dao.EstadiaDAO;
+import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosEstadia;
+import com.paroquiaTeam.sgeParoquia.model.dto.DadosMovimentoCaixa;
+import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
+import com.paroquiaTeam.sgeParoquia.model.entity.MovimentoCaixa;
 import com.paroquiaTeam.sgeParoquia.utils.TempoUtils;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -61,16 +69,55 @@ public class EstadiaService {
 //		dao.update(estadia);
 //	}
 
-	// se Valor não for null, a estadia foi adiantada
-	public void registrarEntrada(LocalDateTime dataHoraEntrada, String placa, Double valor) {
-		// Redundante mas vale a pena
-		if (!ultimaEstadiaTeveSaida(placa)) {
-			throw new IllegalStateException("Veículo informado está no pátio. Não foi possível registrar entrada");
+	// se Valor não for null, a estadia foi adiantada, e movimento é obrigatório
+	// caso contrário, não deve ser registrado nada
+	public void registrarEntrada(DadosEstadia dadosEstadia, DadosMovimentoCaixa dadosMovimento) {
+		validarEstadia(dadosEstadia);
+		
+		boolean entradaAdiantada = dadosEstadia.valor() != null;
+		boolean temDadosMovimento = dadosMovimento != null;
+		
+		if (entradaAdiantada && !temDadosMovimento) {
+	        throw new IllegalStateException("É obrigatório ter um movimento de caixa para entrada com valor adiantado.");
 		}
+		
+		if (dadosMovimento != null) {
+			new MovimentoCaixaService().validarMovimento(dadosMovimento);
+		}
+		
+	    if (!SessaoSistema.getInstancia().temCaixaAberto()) {
+	        throw new IllegalStateException("É obrigatório ter um caixa aberto para registrar a entrada.");
+	    }
 
-		DadosEstadia dados = new DadosEstadia(dataHoraEntrada, null, valor, placa);
-		salvar(dados);
+	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction transaction = null;
+
+	    try {
+	        transaction = session.beginTransaction();
+
+	        Estadia estadia = dadosEstadia.paraEstadia();	        
+	       
+	        session.persist(estadia); // Aqui a estadia ganha ID, mas ainda NÃO foi confirmada definitivamente
+			
+	        if (temDadosMovimento) {
+		        // Cria e Salva o Movimento de Caixa usando o objeto 'estadia'
+		        Caixa caixaAtual = SessaoSistema.getInstancia().getCaixa();
+		        MovimentoCaixa movimento = dadosMovimento.paraMovimentoCaixa(caixaAtual, estadia);
+		        session.persist(movimento);
+	    	}
+	        
+	        // Se TUDO deu certo, efetiva no banco de dados de uma vez só
+	        transaction.commit();
+	    } catch (Exception e) {
+	        // Se houver qualquer falha no passo 2 ou 3, o banco desfaz a estadia instantaneamente
+	        if (transaction != null) {
+	            transaction.rollback();
+	        }
+	        throw new RuntimeException("Erro ao registrar entrada: " + e.getMessage(), e);
+	    }
 	};
+	
+	
 
 	public void registrarSaida(LocalDateTime dataHoraSaida, Double valor, Estadia estadia) {
 		if (ultimaEstadiaTeveSaida(estadia.getPlacaVeiculo())) {
@@ -92,17 +139,19 @@ public class EstadiaService {
 		dao.update(estadia);
 	}
 
-	private void validarEstadia(DadosEstadia dados) {
+	public void validarEstadia(DadosEstadia dados) {
 		// Testa entrada sendo depois da saída
-		if (TempoUtils.calcularDiferencaMinutos(dados.dataHoraEntrada(), dados.dataHoraSaida()) < 0) {
-			throw new IllegalArgumentException("Data de saída é antes da data de entrada");
-		};
+		if (dados.dataHoraSaida() != null) {			
+			if (TempoUtils.calcularDiferencaMinutos(dados.dataHoraEntrada(), dados.dataHoraSaida()) < 0) {
+				throw new IllegalArgumentException("Hora de saída é antes da hora de entrada");
+			};
+		}
 
-		if (dados.valor() < 0) {
+		if (dados.valor() != null && dados.valor() < 0) {
 			throw new IllegalArgumentException("Valor não pode ser negativo");
 		}
 
-		if (dados.placaVeiculo().isBlank() || dados.placaVeiculo().equals(null)) {
+		if (dados.placaVeiculo() == null || dados.placaVeiculo().isBlank()) {
 			throw new IllegalArgumentException("Placa é obrigatória");
 		}
 	}

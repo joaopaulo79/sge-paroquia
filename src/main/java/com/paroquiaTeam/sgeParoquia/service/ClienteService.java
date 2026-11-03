@@ -87,6 +87,8 @@ public class ClienteService {
 				Convenio convenioNovo = new ConvenioService().obterPorId(dadosNovos.idConvenio());
 				cliente.setConvenio(convenioNovo);
 			}
+		} else {
+			cliente.setConvenio(null);
 		}
 		
 		dao.update(cliente);

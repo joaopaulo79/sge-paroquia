@@ -12,6 +12,7 @@ import com.paroquiaTeam.sgeParoquia.controller.popup.EditarConvenioController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.EditarUsuarioController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.EditarVeiculoController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.EntradaVeiculoController;
+import com.paroquiaTeam.sgeParoquia.controller.popup.EscolherFormaPagamentoController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.RegistrarMovimentoCaixaController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.SelecaoClienteController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.SelecaoConvenioController;
@@ -39,6 +40,7 @@ public enum Popup {
 	CADASTRARVEICULO("/popups/cadastrarVeiculo/cadastrarVeiculo.fxml", "Cadastrar Veículo", CadastroVeiculoController.class),
 	EDITARVEICULO("/popups/cadastrarVeiculo/cadastrarVeiculo.fxml", "Editar Veículo", EditarVeiculoController.class),
 
+	ESCOLHERFORMAPAGAMENTO("/popups/registrarMovimento/registrarMovimento.fxml", "Escolher forma de pagamento", EscolherFormaPagamentoController.class),
 	REGISTRARMOVIMENTO("/popups/registrarMovimento/registrarMovimento.fxml", "Registrar Movimento de Caixa", RegistrarMovimentoCaixaController.class);
 
 	private final String pathFxml;

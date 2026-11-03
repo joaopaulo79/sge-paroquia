@@ -50,7 +50,7 @@ public class MovimentoCaixaService {
 		dao.delete(movimento.getId());
 	}
 
-	private void validarMovimento(DadosMovimentoCaixa dados) {
+	public void validarMovimento(DadosMovimentoCaixa dados) {
 		if (dados.formaPagamento() == null) {
 			throw new IllegalArgumentException("Forma de pagamento é obrigatória");
 		}

@@ -27,9 +27,17 @@ public class EditarClienteController {
 
 	Long idCliente;
 	Cliente cliente;
+	Long idConv;
+
 	public EditarClienteController(Long idCliente) {
 		this.idCliente = idCliente;
 		cliente = service.obterPorId(idCliente);
+		
+		if (this.cliente != null && this.cliente.getConvenio() != null) {
+            this.idConv = this.cliente.getConvenio().getId();
+        } else {
+        	idConv = null;
+        }
 	}
 	
 	@FXML VBox campoDadosMensalista;
@@ -47,30 +55,28 @@ public class EditarClienteController {
 	@FXML Button btnCancelar;
 	@FXML Button btnSalvar;
 	
-	Long idConv = null;
-
 	@FXML
 	private void initialize() {
 		textFieldNome.setText(cliente.getNome());
 		textFieldCpf.setText(cliente.getCpf());
 		textFieldTelefone.setText(cliente.getTelefone());
-		choiceTipo.setValue(cliente.getTipo());
 		pickerDataVencimento.setValue(cliente.getDataVencimentoMensalidade());
-		
-		onAlterarTipo();
-		
+				
 		btnCancelar.setOnAction(e -> {
 			Stage stage = (Stage) btnCancelar.getScene().getWindow();
 			stage.close();
 		});
 
 		choiceTipo.getItems().setAll(TipoCliente.values());
+		choiceTipo.setValue(cliente.getTipo());
 		choiceTipo.setOnAction(e -> {
 			onAlterarTipo();
 			
 			Stage stage = (Stage) campoDadosConveniado.getScene().getWindow();
 			Platform.runLater(stage::sizeToScene);
 		});
+		
+		onAlterarTipo();
 		
 		spinnerMensalidade.setValueFactory(
 				new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000000, cliente.getValorMensalidade(), 0.01)
@@ -89,7 +95,7 @@ public class EditarClienteController {
 		
 		btnSalvar.setOnAction(e -> {
 			try {
-				if (idConv == null && choiceTipo.getValue() == TipoCliente.CONVENIADO) {
+				if (choiceTipo.getValue() == TipoCliente.CONVENIADO && idConv == null) {					
 					throw new IllegalStateException("Selecione um convênio");
 				}
 				
@@ -152,19 +158,19 @@ public class EditarClienteController {
 		campoDadosConveniado.setVisible(isConveniado);
 		campoDadosConveniado.setManaged(isConveniado);
 		
-		if (isConveniado && cliente.getConvenio() != null) {
-			Convenio c = cliente.getConvenio();
-			DadosSelecaoConvenio dados = new DadosSelecaoConvenio(
-					c.getId(),
-					c.getCnpj(),
-					c.getNome(),
-					c.getCobrancaIndividual());
-			
-			carregarConvenio(dados);
-		}
-		
-		if (!isConveniado) {
-			idConv = null;
-		}
+		if (isConveniado) {
+            if (cliente.getConvenio() != null && idConv == null) {
+                Convenio c = cliente.getConvenio();
+                DadosSelecaoConvenio dados = new DadosSelecaoConvenio(
+                        c.getId(),
+                        c.getCnpj(),
+                        c.getNome(),
+                        c.getCobrancaIndividual());
+                carregarConvenio(dados);
+            }
+        } else {
+            idConv = null;
+            vBoxDadosConvenio.getChildren().clear();
+        }
 	}
 }

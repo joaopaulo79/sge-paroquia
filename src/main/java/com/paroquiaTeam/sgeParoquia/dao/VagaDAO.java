@@ -45,6 +45,16 @@ public class VagaDAO {
 		}
 	}
 	
+	public Vaga getFirstLivre(TipoVaga tipo, TipoReservaVaga reserva) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2 AND v.status = LIVRE";
+			return sessao.createSelectionQuery(query, Vaga.class)
+						.setParameter(1, tipo)
+						.setParameter(2, reserva)
+						.getSingleResultOrNull();
+		}
+	}
+	
 	public Vaga getFirstLivreByIdConvenio(Long idConvenio, TipoVaga tipo) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT v FROM Vaga v WHERE v.convenio.id = ?1 AND v.tipo = ?2 AND v.status = LIVRE";
@@ -129,16 +139,6 @@ public class VagaDAO {
 						.getSingleResultOrNull();
 			
 			return quantidade != null && quantidade > 0;
-		}
-	}
-	
-	public Vaga getFirstLivre(TipoVaga tipo, TipoReservaVaga reserva) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2 AND v.status = LIVRE";
-			return sessao.createSelectionQuery(query, Vaga.class)
-						.setParameter(1, tipo)
-						.setParameter(2, reserva)
-						.getSingleResultOrNull();
 		}
 	}
 
