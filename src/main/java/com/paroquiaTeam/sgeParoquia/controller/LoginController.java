@@ -8,7 +8,6 @@ import com.paroquiaTeam.sgeParoquia.dao.UsuarioDAO;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 import com.paroquiaTeam.sgeParoquia.service.CaixaService;
-import com.paroquiaTeam.sgeParoquia.service.UsuarioService;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;

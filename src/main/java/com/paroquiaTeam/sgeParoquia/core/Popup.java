@@ -1,6 +1,5 @@
 package com.paroquiaTeam.sgeParoquia.core;
 
-import com.paroquiaTeam.sgeParoquia.controller.EstadiaController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.AlterarSenhaUsuarioController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.AlterarVagasController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroClienteController;
@@ -14,6 +13,7 @@ import com.paroquiaTeam.sgeParoquia.controller.popup.EditarVeiculoController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.EntradaVeiculoController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.EscolherFormaPagamentoController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.RegistrarMovimentoCaixaController;
+import com.paroquiaTeam.sgeParoquia.controller.popup.SaidaVeiculoController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.SelecaoClienteController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.SelecaoConvenioController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.SelecionarTipoVeiculoController;
@@ -22,7 +22,7 @@ public enum Popup {
 	ALTERARVAGAS("/popups/alterarVagas/alterarVagas.fxml","Alterar Vagas", AlterarVagasController.class),
 	
 	ENTRADAVEICULO("/popups/estadia/estadia.fxml", "Registrar Entrada", EntradaVeiculoController.class),
-	SAIDAVEICULO("/popups/estadia/estadia.fxml", "Registrar Saída", EstadiaController.class),
+	SAIDAVEICULO("/popups/estadia/estadia.fxml", "Registrar Saída", SaidaVeiculoController.class),
 	SELECIONARTIPOVEICULO("/popups/selecionarTipoVeiculo/selecionarTipoVeiculo.fxml", "Selecionar tipo de veículo", SelecionarTipoVeiculoController.class),
 	
 	CADASTRARUSUARIO("/popups/cadastrarUsuario/cadastrarUsuario.fxml", "Cadastrar Usuário", CadastroUsuarioController.class),

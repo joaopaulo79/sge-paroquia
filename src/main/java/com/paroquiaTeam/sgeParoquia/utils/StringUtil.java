@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class StringUtil {
-	public String formatarMoeda(double valor) {
+	public static String formatarMoeda(double valor) {
 		Locale ptBr = Locale.of("pt", "BR");
 	    NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance(ptBr);
 

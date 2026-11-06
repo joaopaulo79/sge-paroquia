@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
 import com.paroquiaTeam.sgeParoquia.model.entity.Vaga;
 import com.paroquiaTeam.sgeParoquia.model.enums.StatusVaga;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoReservaVaga;
@@ -168,6 +169,32 @@ public class VagaDAO {
 	                vaga.setTipo(tipo);
 	                vaga.setReserva(reserva);
 	                vaga.setStatus(StatusVaga.LIVRE);
+	                sessao.persist(vaga);
+	            }
+	            t.commit();
+
+	            return quantidade;
+	        } catch (Exception e) {
+	            t.rollback();
+	            throw e;
+	        }
+	    }
+	}
+	
+	public long batchSaveConvenio(TipoVaga tipo, Convenio conv, long quantidade) {
+		if (quantidade <= 0) {
+			return 0;
+		}
+		
+	    try (Session sessao = HibernateUtil.getSessionFactory().openSession()) {
+	        Transaction t = sessao.beginTransaction();
+	        try {
+	            for (long i = 0; i < quantidade; i++) {
+	                Vaga vaga = new Vaga();
+	                vaga.setTipo(tipo);
+	                vaga.setReserva(TipoReservaVaga.CONVENIO);
+	                vaga.setStatus(StatusVaga.LIVRE);
+	                vaga.setConvenio(conv);
 	                sessao.persist(vaga);
 	            }
 	            t.commit();

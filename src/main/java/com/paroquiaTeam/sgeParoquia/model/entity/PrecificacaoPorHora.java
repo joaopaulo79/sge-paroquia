@@ -119,11 +119,24 @@ public class PrecificacaoPorHora implements Calculavel {
 		this.valorDiariaMoto = valorDiariaMoto;
 	}
 
-	public double calcular(long tempoEmMinutos, boolean ehMoto) {
-		if (tempoEmMinutos <= tolerancia) return 0.0;
-
+	public double calcular(long tempoEmMinutos, boolean ehMoto, boolean clienteEhDizimista) {
+		long tempoContabilizado;
+		
+		if (clienteEhDizimista) {
+			if (tempoEmMinutos <= 60) return 0.0;
+			tempoContabilizado = tempoEmMinutos - 60;
+		} 
+		else {
+			if (tempoEmMinutos <= tolerancia) return 0.0;
+			tempoContabilizado = tempoEmMinutos;
+		}
+		
+		return escolherPreco(tempoContabilizado, ehMoto);
+	}
+	
+	public double escolherPreco(long tempoContabilizado, boolean ehMoto) {
 		double valor = (ehMoto) ? valorEntradaMoto : valorEntrada;
-		long horas = Math.floorDiv(tempoEmMinutos, 60);
+		long horas = Math.floorDiv(tempoContabilizado, 60);
 		valor += horas * ((ehMoto) ? valorHoraMoto : valorHora);
 
 		return valor;

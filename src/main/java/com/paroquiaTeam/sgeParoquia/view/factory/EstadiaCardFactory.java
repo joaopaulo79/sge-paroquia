@@ -3,6 +3,7 @@ package com.paroquiaTeam.sgeParoquia.view.factory;
 import java.time.LocalDateTime;
 
 import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
+import com.paroquiaTeam.sgeParoquia.utils.StringUtil;
 import com.paroquiaTeam.sgeParoquia.view.components.CardGenerico;
 import com.paroquiaTeam.sgeParoquia.view.components.CardHeader;
 
@@ -24,7 +25,7 @@ public class EstadiaCardFactory {
 		
 		if (estadia.getValor() != null) {
 			conteudo.getChildren().add(
-					new Label("Valor: R$" + estadia.getValor()));
+					new Label("Valor: " + StringUtil.formatarMoeda(estadia.getValor())));
 		}
 
 		CardGenerico card = new CardGenerico.Builder(header)
@@ -46,7 +47,7 @@ public class EstadiaCardFactory {
 				new Label("Hora de entrada: " + formatarHora(estadia.getDataHoraEntrada())),
 				new Label("Data de saída: " + formatarData(estadia.getDataHoraSaida())),
 				new Label("Hora de saída: " + formatarHora(estadia.getDataHoraSaida())),
-				new Label("Valor: " + String.format("R$ %.2f", estadia.getValor()))
+				new Label("Valor: " + StringUtil.formatarMoeda(estadia.getValor()))
 		);
 
 		CardGenerico card = new CardGenerico.Builder(header)

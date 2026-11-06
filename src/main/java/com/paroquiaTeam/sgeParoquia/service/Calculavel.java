@@ -1,5 +1,5 @@
 package com.paroquiaTeam.sgeParoquia.service;
 
 public interface Calculavel {
-	double calcular(long tempoEmMinutos, boolean ehMoto);
+	double calcular(long tempoEmMinutos, boolean ehMoto, boolean clienteEhDizimista);
 }

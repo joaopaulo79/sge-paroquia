@@ -150,43 +150,5 @@ public class ListaUsuarioController {
 			vBoxCards.getChildren().add(card);
 		}
 	}
-	
-	private VBox criarCard(Usuario u, AcoesUsuario acoes) {
-		VBox card = new VBox();
-		HBox linhaPrincipal = new HBox();
-		HBox linhaSecundaria = new HBox();
 
-		Button btnEditar = new Button("Editar");
-		Button btnExcluir = new Button("Excluir");
-		Button btnAlterarSenha = new Button("Alterar Senha");
-		Button btnAlterarStatus;
-		
-		
-		if (!u.isStatus()) {
-			btnAlterarStatus = new Button("Ativar");
-			btnAlterarStatus.setOnAction(e -> acoes.onAtivar().accept(u.getId()) );
-		} else {
-			btnAlterarStatus = new Button("Desativar");
-			btnAlterarStatus.setOnAction(e -> acoes.onDesativar().accept(u.getId()) );
-		}
-
-		btnEditar.setOnAction(e -> acoes.onEditar().accept(u.getId()));
-		btnExcluir.setOnAction(e -> acoes.onExcluir().accept(u.getId()));
-		btnAlterarSenha.setOnAction(e -> acoes.onAlterarSenha().accept(u.getId()));
-		
-		linhaPrincipal.getChildren().addAll(
-				new Label(u.getNome()),
-				new Label(" "+u.getTipo().toString()),
-				btnEditar,
-				btnAlterarStatus
-				);
-		
-		linhaSecundaria.getChildren().addAll(
-				btnAlterarSenha,
-				btnExcluir
-				);
-		
-		card.getChildren().addAll(linhaPrincipal, linhaSecundaria);
-		return card;
-	}
 }

@@ -1,16 +1,21 @@
 package com.paroquiaTeam.sgeParoquia.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.paroquiaTeam.sgeParoquia.dao.VagaDAO;
+import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
 import com.paroquiaTeam.sgeParoquia.model.entity.Vaga;
 import com.paroquiaTeam.sgeParoquia.model.enums.StatusVaga;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoReservaVaga;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoVaga;
 
+import jakarta.persistence.EntityNotFoundException;
+
 public class VagaService {
     public record AjusteVaga(TipoVaga tipo, TipoReservaVaga reserva, long quantidade) {}
-
+    public record AjusteConvenio(TipoVaga tipo, long idConv, long quantidade) {}
+    
     private VagaDAO dao = new VagaDAO();
 
     public boolean veiculoEstaNoPatio(String placa) {
@@ -29,6 +34,15 @@ public class VagaService {
     	return dao.isThereVagaConvenioLivre(tipo, id);
     }
 
+    public Optional<Vaga> buscarPorPlaca(String placa) {
+    	return dao.getByPlaca(placa);
+    }
+    
+    public Vaga obterPorPlaca(String placa) {
+    	return buscarPorPlaca(placa)
+    			.orElseThrow(() -> new EntityNotFoundException("Vaga não encontrada para a placa "+placa));
+    }
+    
     public List<Vaga> buscarVagas() {
     	return dao.getAll();
     }
@@ -59,8 +73,23 @@ public class VagaService {
     	dao.update(vaga);
     }
     
+    public void registrarSaida(String placa) {
+    	Vaga vaga = obterPorPlaca(placa);
+    	
+    	vaga.setPlaca(null);
+    	vaga.setStatus(StatusVaga.LIVRE);
+    	
+    	dao.update(vaga);
+    }
+    
     public long adicionarVagas(AjusteVaga ajuste) {
     	return dao.batchSave(ajuste.tipo, ajuste.reserva, ajuste.quantidade);
+    }
+    
+    public long adicionarVagas(AjusteConvenio ajuste) {
+    	Convenio c = new ConvenioService().obterPorId(ajuste.idConv);
+    	
+    	return dao.batchSaveConvenio(ajuste.tipo, c, ajuste.quantidade);
     }
 
     public long liberarVagas(AjusteVaga ajuste, StatusVaga statusAntigo) {
