@@ -14,6 +14,7 @@ import com.paroquiaTeam.sgeParoquia.model.dto.DadosMovimentoCaixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoMovimento;
 import com.paroquiaTeam.sgeParoquia.service.ConvenioService;
+import com.paroquiaTeam.sgeParoquia.service.VagaService;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -24,6 +25,7 @@ import javafx.scene.layout.VBox;
 
 public class ListaConvenioController {
 	ConvenioService convenioService = new ConvenioService();
+	VagaService vagaService = new VagaService();
 
 	@FXML Button btnCadastrar;
 	@FXML HBox hBoxLabels;
@@ -155,12 +157,17 @@ public class ListaConvenioController {
 					);
 
 			convenioService.atualizar(dadosNovos, conv);
-
+			if (dataVencimentoNova.isAfter(LocalDate.now())) {
+				convenioService.ativar(conv.getId());
+			}
+			
+			
 			carregarConvenios();
 		} catch (Exception e) {
 			NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
 		}
 	}
+	
 	// MOCK
 	private VBox criarCard(Convenio c, AcoesConvenio acoes) {
 		VBox card = new VBox();

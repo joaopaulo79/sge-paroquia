@@ -108,7 +108,7 @@ public class SaidaVeiculoController {
 		containerCards.getChildren().clear();
 
 		Estadia e = new Estadia(estadia.getDataHoraEntrada(), dataHoraSaida, valor, dados.placa());
-		containerCards.getChildren().add(new EstadiaCardFactory().criarCardSaida(e));
+		containerCards.getChildren().add(new EstadiaCardFactory().criarCardSaida(e, !precisaRealizarPagamento));
 		
 		if (dados.entidades().veiculo() != null) {
 			containerCards.getChildren().add(
@@ -168,7 +168,7 @@ public class SaidaVeiculoController {
 		estadiaService.validarEstadia(dadosEstadia);
 		
 		DadosMovimentoCaixa dadosMovimento = null;
-		if (valor != null) {
+		if (precisaRealizarPagamento) {
 			String mensagem = "Pagamento referente à saída de veículo com placa '"
 					+ dados.placa() + "', ocorrido no dia "
 					+ StringUtil.extrairEFormatarData(dataHoraSaida)

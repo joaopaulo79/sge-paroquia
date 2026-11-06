@@ -86,7 +86,7 @@ public class VagaService {
     	return dao.batchSave(ajuste.tipo, ajuste.reserva, ajuste.quantidade);
     }
     
-    public long adicionarVagas(AjusteConvenio ajuste) {
+    public long adicionarVagasConvenio(AjusteConvenio ajuste) {
     	Convenio c = new ConvenioService().obterPorId(ajuste.idConv);
     	
     	return dao.batchSaveConvenio(ajuste.tipo, c, ajuste.quantidade);
@@ -98,6 +98,31 @@ public class VagaService {
 
     	return dao.batchUpdateStatus(ids, StatusVaga.LIVRE);
     }
+    
+    public long liberarVagasConvenio(AjusteConvenio ajuste) {
+    	List<Long> ids = dao.getAllByIdConvenioWithTipo(ajuste.idConv, ajuste.tipo)
+    			.stream().map(Vaga::getId).toList();
+    	long mudancas = 0;
+    	
+    	if (ids.size() != 0) {
+    		mudancas += dao.batchUpdateStatus(ids, StatusVaga.LIVRE);
+    	}
+    	
+    	// Tinha menos vagas do que a nova quantidade, adicionar novas
+    	if (ids.size() < ajuste.quantidade) {
+    		AjusteConvenio ajusteNovo = new AjusteConvenio(
+    				ajuste.tipo, 
+    				ajuste.idConv, 
+    				ajuste.quantidade-ids.size());
+    		
+    		mudancas += adicionarVagasConvenio(ajusteNovo);
+    	} // Tinha mais vagas do que a nova quantidade, reduzir
+    	else if (ids.size() > ajuste.quantidade) {
+    		mudancas += reduzirVagasConvenio(ajuste.idConv, ids.size()-ajuste.quantidade, ajuste.tipo);
+    	}
+    	
+    	return mudancas;
+    }
 
     public long liberarTodasAsVagas(StatusVaga statusAntigo) {
     	return dao.batchLiberar(statusAntigo);
@@ -108,6 +133,38 @@ public class VagaService {
     	List<Long> ids = dao.getIdsByStatus(ajuste.tipo, ajuste.reserva, StatusVaga.LIVRE, ajuste.quantidade);
 
     	return dao.batchUpdateStatus(ids, novoStatus);
+    }
+    
+    public long reduzirTodasAsVagasConvenio(Long idConvenio) {
+    	List<Long> ids = dao.getAllByIdConvenio(idConvenio).stream().map(Vaga::getId).toList();
+    	
+    	long mudancas = 0;
+    	if (ids.size() != 0) {
+    		mudancas += dao.batchUpdateStatus(ids, StatusVaga.BLOQUEADA);
+    	}
+    	return mudancas;
+    }
+    
+    public long reduzirVagasConvenio(Long idConvenio, long quantidade, TipoVaga tipo) {
+    	List<Long> ids = dao.getAllByIdConvenioWithTipo(idConvenio, tipo)
+    			.stream().map(Vaga::getId).toList();
+    	
+    	ids = ids.subList(0, Math.toIntExact(quantidade));
+    	
+    	long mudancas = 0;
+    	if (ids.size() != 0) {
+    		mudancas += dao.batchUpdateStatus(ids, StatusVaga.BLOQUEADA);
+    	}
+    	return mudancas;
+    }
+    
+    public void excluirVagasDoConvenio(Long idConvenio) {
+    	List<Long> ids = dao.getAllByIdConvenio(idConvenio)
+    			.stream().map(Vaga::getId).toList();
+    	
+    	if (ids.size() != 0) {
+    		dao.batchDelete(ids);
+    	}
     }
 
     private void validarLiberacao(AjusteVaga ajuste, StatusVaga statusAntigo) {

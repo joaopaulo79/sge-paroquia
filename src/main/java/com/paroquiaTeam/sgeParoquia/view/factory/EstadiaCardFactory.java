@@ -36,18 +36,21 @@ public class EstadiaCardFactory {
 		return card;
 	}
 
-	public CardGenerico criarCardSaida(Estadia estadia) {
+	public CardGenerico criarCardSaida(Estadia estadia, boolean pago) {
 		CardHeader header = new CardHeader(null);
 
 		VBox conteudo = new VBox();
 
+		String textoValor = "Valor: " + StringUtil.formatarMoeda(estadia.getValor())
+							+ ((pago) ? " (já pago)" : "");
+		
 		conteudo.getChildren().addAll(
 				new Label("Placa: " + estadia.getPlacaVeiculo()),
 				new Label("Data de entrada: " + formatarData(estadia.getDataHoraEntrada())),
 				new Label("Hora de entrada: " + formatarHora(estadia.getDataHoraEntrada())),
 				new Label("Data de saída: " + formatarData(estadia.getDataHoraSaida())),
 				new Label("Hora de saída: " + formatarHora(estadia.getDataHoraSaida())),
-				new Label("Valor: " + StringUtil.formatarMoeda(estadia.getValor()))
+				new Label(textoValor)
 		);
 
 		CardGenerico card = new CardGenerico.Builder(header)

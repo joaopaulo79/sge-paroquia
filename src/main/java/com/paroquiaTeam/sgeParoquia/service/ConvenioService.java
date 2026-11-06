@@ -8,6 +8,8 @@ import com.paroquiaTeam.sgeParoquia.dao.ConvenioDAO;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosConvenio;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
 import com.paroquiaTeam.sgeParoquia.model.enums.StatusConvenio;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoVaga;
+import com.paroquiaTeam.sgeParoquia.service.VagaService.AjusteConvenio;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -76,8 +78,8 @@ public class ConvenioService {
 		convenio.setDataVencimento(dadosNovos.dataVencimento());
 
 
-
 		dao.update(convenio);
+		atualizarVagas(convenio);
 	}
 
 	public void ativar(Long id) {
@@ -88,6 +90,7 @@ public class ConvenioService {
 
 		convenio.setStatus(StatusConvenio.ATIVO);
 		dao.update(convenio);
+		atualizarVagas(convenio);
 	}
 
 	public void marcarAtraso(Long id) {
@@ -98,14 +101,14 @@ public class ConvenioService {
 
 		convenio.setStatus(StatusConvenio.ATRASO);
 		dao.update(convenio);
-
+		atualizarVagas(convenio);
 	}
 
 	public void desativar(Long id) {
 		Convenio convenio = obterPorId(id);
 		convenio.setStatus(StatusConvenio.DESATIVADO);
 		dao.update(convenio);
-
+		atualizarVagas(convenio);
 	}
 
 	public void excluir(Long id) {
@@ -119,6 +122,7 @@ public class ConvenioService {
 	        throw new IllegalArgumentException("Convenio possuí clientes atrelados, não foi possível excluir.");
 		}
 
+		new VagaService().excluirVagasDoConvenio(id);
 		dao.delete(id);
 	}
 
@@ -127,6 +131,27 @@ public class ConvenioService {
 
 		if (dao.existsByCnpj(dados.cnpj())) {
 			throw new IllegalArgumentException("Convênio com este cnpj já existe");
+		}
+	}
+	
+	private void atualizarVagas(Convenio c) {
+		VagaService vagaService = new VagaService();
+		if (c.isAtivo()) {
+			AjusteConvenio ajusteCarro = new AjusteConvenio(
+					TipoVaga.CARRO,
+					c.getId(),
+					c.getVagasCarro());
+			
+			vagaService.liberarVagasConvenio(ajusteCarro);
+			
+			AjusteConvenio ajusteMoto = new AjusteConvenio(
+					TipoVaga.MOTO,
+					c.getId(),
+					c.getVagasMoto());
+			
+			vagaService.liberarVagasConvenio(ajusteMoto);
+		} else {
+			vagaService.reduzirTodasAsVagasConvenio(c.getId());
 		}
 	}
 

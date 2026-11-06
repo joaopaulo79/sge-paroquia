@@ -58,10 +58,12 @@ public class VagaDAO {
 	
 	public Vaga getFirstLivreByIdConvenio(Long idConvenio, TipoVaga tipo) {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "SELECT DISTINCT v FROM Vaga v WHERE v.convenio.id = ?1 AND v.tipo = ?2 AND v.status = LIVRE";
+			String query = "SELECT DISTINCT v FROM Vaga v WHERE v.convenio.id = ?1 AND v.tipo = ?2 AND v.status = ?3";
 			return sessao.createQuery(query, Vaga.class)
 						.setParameter(1, idConvenio)
 						.setParameter(2, tipo)
+						.setParameter(3, StatusVaga.LIVRE)
+						.setMaxResults(1)
 						.getSingleResultOrNull();
 		}
 	}
@@ -71,6 +73,16 @@ public class VagaDAO {
 			String query = "SELECT v FROM Vaga v WHERE v.convenio.id = ?1";
 			return sessao.createQuery(query, Vaga.class)
 						.setParameter(1, idConvenio)
+						.getResultList();
+		}
+	}
+	
+	public List<Vaga> getAllByIdConvenioWithTipo(Long idConvenio, TipoVaga tipo) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			String query = "SELECT v FROM Vaga v WHERE v.convenio.id = ?1 AND v.tipo = ?2";
+			return sessao.createQuery(query, Vaga.class)
+						.setParameter(1, idConvenio)
+						.setParameter(2, tipo)
 						.getResultList();
 		}
 	}
@@ -276,6 +288,31 @@ public class VagaDAO {
 	            }
 				sessao.remove(vaga);
 				t.commit();
+			} catch (Exception e) {
+				t.rollback();
+				throw e;
+			}
+		}
+	}
+	
+	public long batchDelete(List<Long> ids) {
+		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+			Transaction t = sessao.beginTransaction();
+			try {
+				int linhas = 0;
+				for (Long id : ids) {
+					Vaga vaga = sessao.get(Vaga.class, id);
+					if (vaga == null) {
+						throw new IllegalArgumentException("Vaga com id especificado não encontrada");
+					}
+					if (vaga.getStatus().equals(StatusVaga.OCUPADA)) {
+		                throw new IllegalStateException("Não é possível deletar uma vaga ocupada");
+		            }
+					sessao.remove(vaga);
+					linhas ++;
+				}
+				t.commit();
+				return linhas;
 			} catch (Exception e) {
 				t.rollback();
 				throw e;

@@ -129,7 +129,7 @@ public class EstadiaController {
     	containerCards.getChildren().add(
 	    	switch (operacao) {
 	    		case ENTRADA -> new EstadiaCardFactory().criarCardEntrada(estadia);
-	    		case SAIDA -> new EstadiaCardFactory().criarCardSaida(estadia);
+	    		case SAIDA -> new EstadiaCardFactory().criarCardSaida(estadia, false);
 	    	}
     	);
     }
