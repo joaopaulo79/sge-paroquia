@@ -19,6 +19,10 @@ import javafx.stage.Stage;
 public class RegistrarMovimentoCaixaController {
 	private final DadosMovimentoCaixa dadosImutaveis;
 
+	public RegistrarMovimentoCaixaController() {
+		dadosImutaveis = null;
+	}
+	
 	public RegistrarMovimentoCaixaController(DadosMovimentoCaixa dadosImutaveis) {
 		this.dadosImutaveis = dadosImutaveis;
 	}
@@ -34,9 +38,10 @@ public class RegistrarMovimentoCaixaController {
 
 	@FXML
 	private void initialize() {
+		boolean semDados = dadosImutaveis == null;
 		double valorInicial;
 
-		if (dadosImutaveis.valor() == null) {
+		if (semDados || dadosImutaveis.valor() == null) {
 			valorInicial = 0;
 			spinnerValor.setEditable(true);
 		} else {
@@ -49,7 +54,7 @@ public class RegistrarMovimentoCaixaController {
 
 
 		choiceFormaPagamento.getItems().addAll(TipoPagamento.values());
-		if (dadosImutaveis.formaPagamento() == null) {
+		if (semDados || dadosImutaveis.formaPagamento() == null) {
 			choiceFormaPagamento.setValue(TipoPagamento.CREDITO);
 		} else {
 			choiceFormaPagamento.setValue(dadosImutaveis.formaPagamento());
@@ -58,14 +63,14 @@ public class RegistrarMovimentoCaixaController {
 
 
 		choiceTipoMovimento.getItems().addAll(TipoMovimento.values());
-		if (dadosImutaveis.tipoMovimento() == null) {
+		if (semDados || dadosImutaveis.tipoMovimento() == null) {
 			choiceTipoMovimento.setValue(TipoMovimento.ENTRADA);
 		} else {
 			choiceTipoMovimento.setValue(dadosImutaveis.tipoMovimento());
 			choiceTipoMovimento.setDisable(true);
 		}
 
-		if (dadosImutaveis.descricao() != null && !dadosImutaveis.descricao().isBlank()) {
+		if (!semDados && dadosImutaveis.descricao() != null && !dadosImutaveis.descricao().isBlank()) {
 			textAreaDescricao.setText(dadosImutaveis.descricao());
 			textAreaDescricao.setDisable(true);
 		}

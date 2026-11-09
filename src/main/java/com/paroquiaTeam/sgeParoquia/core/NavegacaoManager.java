@@ -31,10 +31,23 @@ public class NavegacaoManager {
     }
 
     public <T> T navegarPara(Tela tela) {
+    	return navegarPara(tela, null);
+    }
+    
+    public <T, P> T navegarPara(Tela tela, P parametro) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(tela.getPathFxml()));
-
-            Object instanciaController = tela.getClasseController().getDeclaredConstructor().newInstance();
+            
+            Class<?> classeController = tela.getClasseController();
+            Object instanciaController;
+            if (parametro != null) {
+            	// Tenta encontrar o construtor que aceita o tipo exato do parâmetro
+            	instanciaController = classeController.getDeclaredConstructor(parametro.getClass()).newInstance(parametro);
+            } else {
+                // Se parâmetro for nulo, usa o construtor padrão sem argumentos
+                instanciaController = classeController.getDeclaredConstructor().newInstance();
+            }
+            
             loader.setController(instanciaController);
 
             Parent root = loader.load();

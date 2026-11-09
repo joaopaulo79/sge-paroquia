@@ -1,6 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
@@ -57,6 +58,10 @@ public class CaixaService {
 	public Caixa obterUltimoComOperador() {
 		return buscarUltimoComOperador()
 				.orElseThrow(() -> new EntityNotFoundException("Nenhum caixa encontrado"));
+	}
+	
+	public List<Caixa> obterTodos() {
+		return dao.getAll();
 	}
 
 	public void abrir(DadosCaixa dados) {

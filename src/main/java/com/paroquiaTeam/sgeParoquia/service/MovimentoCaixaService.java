@@ -46,8 +46,8 @@ public class MovimentoCaixaService {
 		dao.save(movimento);
 	}
 
-	public void excluir(MovimentoCaixa movimento) {
-		dao.delete(movimento.getId());
+	public void excluir(Long idMovimento) {
+		dao.delete(idMovimento);
 	}
 
 	public void validarMovimento(DadosMovimentoCaixa dados) {

@@ -42,7 +42,6 @@ public enum Popup {
 
 	ESCOLHERFORMAPAGAMENTO("/popups/registrarMovimento/registrarMovimento.fxml", "Escolher forma de pagamento", EscolherFormaPagamentoController.class),
 	REGISTRARMOVIMENTO("/popups/registrarMovimento/registrarMovimento.fxml", "Registrar Movimento de Caixa", RegistrarMovimentoCaixaController.class);
-
 	private final String pathFxml;
     private final String titulo;
     private final Class<?> classeController;

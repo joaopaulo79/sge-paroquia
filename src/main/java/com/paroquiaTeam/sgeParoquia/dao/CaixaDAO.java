@@ -32,7 +32,7 @@ public class CaixaDAO {
 
 	public List<Caixa> getAll() {
 		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
-			String query = "SELECT c FROM caixa c";
+			String query = "SELECT c FROM Caixa c";
 			return sessao.createQuery(query, Caixa.class)
 						.getResultList();
 
