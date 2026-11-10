@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,7 +17,8 @@ import javafx.stage.Stage;
 public class NavegacaoManager {
     private static NavegacaoManager instancia;
     private AnchorPane containerPrincipal;
-
+    private Label labelTitulo;
+    
     private NavegacaoManager() {}
 
     public static NavegacaoManager getInstancia() {
@@ -29,6 +31,10 @@ public class NavegacaoManager {
     public void setContainerPrincipal(AnchorPane container) {
         this.containerPrincipal = container;
     }
+    
+    public void setLabelTitulo(Label labelTitulo) {
+    	this.labelTitulo = labelTitulo;
+    };
 
     public <T> T navegarPara(Tela tela) {
     	return navegarPara(tela, null);
@@ -58,7 +64,9 @@ public class NavegacaoManager {
             AnchorPane.setRightAnchor(root, 0.0);
 
             containerPrincipal.getChildren().setAll(root);
-
+            
+            labelTitulo.setText(tela.getTitulo());
+            
             // Alteração de título que espera que o Scene exista
             Platform.runLater(() -> {
                 if (containerPrincipal.getScene() != null && containerPrincipal.getScene().getWindow() != null) {
