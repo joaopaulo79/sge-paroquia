@@ -4,15 +4,16 @@ import java.util.Optional;
 
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
-import com.paroquiaTeam.sgeParoquia.dao.UsuarioDAO;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 import com.paroquiaTeam.sgeParoquia.service.CaixaService;
+import com.paroquiaTeam.sgeParoquia.service.UsuarioService;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class LoginController {
@@ -23,23 +24,28 @@ public class LoginController {
 	}
 
 	@FXML TextField campoLogin;
-	@FXML TextField campoSenha;
+	@FXML PasswordField campoSenha;
 	@FXML Button botaoLogin;
 	@FXML Label textoStatus;
 
 	@FXML
 	public void onBotaoLoginAction() {
-		UsuarioDAO dao = new UsuarioDAO();
-		if (!dao.autenticar(campoLogin.getText(), campoSenha.getText())) {
+		UsuarioService service = new UsuarioService();
+		if (!service.autenticar(campoLogin.getText().trim(), campoSenha.getText().trim())) {
 			textoStatus.setVisible(true);
 		} else {
-			Usuario usuario = dao.getByLogin(campoLogin.getText()).get();
-			SessaoSistema.getInstancia().setUserLogado(usuario);
+			Usuario usuario = service.obterPorLogin(campoLogin.getText().trim());
+			if (!usuario.isStatus()) {
+				NavegacaoManager.getInstancia().abrirAlertaErro("Usuário não está ativado. Contate um administrador");
+			}
+			else {
+				SessaoSistema.getInstancia().setUserLogado(usuario);
 
-	    	ajustarCaixa(usuario);
-	    	
-			if (onSucessoLogin != null) {
-				onSucessoLogin.run();
+		    	ajustarCaixa(usuario);
+		    	
+				if (onSucessoLogin != null) {
+					onSucessoLogin.run();
+				}
 			}
 		}
 		

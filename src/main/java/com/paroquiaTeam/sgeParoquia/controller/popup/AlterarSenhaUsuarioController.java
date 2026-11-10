@@ -6,7 +6,7 @@ import com.paroquiaTeam.sgeParoquia.service.UsuarioService;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
 public class AlterarSenhaUsuarioController {
@@ -20,9 +20,9 @@ public class AlterarSenhaUsuarioController {
 	
 	UsuarioService service = new UsuarioService();
 	
-	@FXML TextField textFieldSenhaAntiga;
-	@FXML TextField textFieldSenha;
-	@FXML TextField textFieldSenhaRepetida;
+	@FXML PasswordField passwordFieldSenhaAntiga;
+	@FXML PasswordField passwordFieldSenha;
+	@FXML PasswordField passwordFieldSenhaRepetida;
 	
 	@FXML Button btnCancelar;
 	@FXML Button btnSalvar;
@@ -37,15 +37,15 @@ public class AlterarSenhaUsuarioController {
 		
 		btnSalvar.setOnAction(e -> {
 			try {
-				if (!textFieldSenha.getText().trim().equals(textFieldSenhaRepetida.getText().trim())) {
+				if (!passwordFieldSenha.getText().trim().equals(passwordFieldSenhaRepetida.getText().trim())) {
 					throw new IllegalArgumentException("Senha e senha repetida não são iguais");
 				}
 				
-				if (!service.autenticar(usuario.getLogin(), textFieldSenhaAntiga.getText().trim())) {
+				if (!service.autenticar(usuario.getLogin(), passwordFieldSenhaAntiga.getText().trim())) {
 					throw new IllegalArgumentException("Senha antiga inválida");
 				}
 				
-				service.alterarSenha(id, textFieldSenha.getText().trim());
+				service.alterarSenha(id, passwordFieldSenha.getText().trim());
 				
 				NavegacaoManager.getInstancia().abrirAlertaSucesso("Senha atualizada com sucesso!");
 				Stage stage = (Stage) btnSalvar.getScene().getWindow();

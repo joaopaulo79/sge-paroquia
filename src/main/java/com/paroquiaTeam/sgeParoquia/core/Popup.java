@@ -2,8 +2,10 @@ package com.paroquiaTeam.sgeParoquia.core;
 
 import com.paroquiaTeam.sgeParoquia.controller.popup.AlterarSenhaUsuarioController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.AlterarVagasController;
+import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroPrecificacaoInicialController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroClienteController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroConvenioController;
+import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroUsuarioBaseController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroUsuarioController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.CadastroVeiculoController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.EditarClienteController;
@@ -19,12 +21,15 @@ import com.paroquiaTeam.sgeParoquia.controller.popup.SelecaoConvenioController;
 import com.paroquiaTeam.sgeParoquia.controller.popup.SelecionarTipoVeiculoController;
 
 public enum Popup {
+	CADASTRARPRECIFICACAOINICIAL("/popups/cadastrarPrecificacaoInicial/cadastrarPrecificacaoInicial.fxml", "Cadastrar Precificação Inicial", CadastroPrecificacaoInicialController.class),
+	
 	ALTERARVAGAS("/popups/alterarVagas/alterarVagas.fxml","Alterar Vagas", AlterarVagasController.class),
 	
 	ENTRADAVEICULO("/popups/estadia/estadia.fxml", "Registrar Entrada", EntradaVeiculoController.class),
 	SAIDAVEICULO("/popups/estadia/estadia.fxml", "Registrar Saída", SaidaVeiculoController.class),
 	SELECIONARTIPOVEICULO("/popups/selecionarTipoVeiculo/selecionarTipoVeiculo.fxml", "Selecionar tipo de veículo", SelecionarTipoVeiculoController.class),
 	
+	CADASTRARUSUARIOBASE("/popups/cadastrarUsuario/cadastrarUsuario.fxml", "Cadastrar Usuário Base", CadastroUsuarioBaseController.class),
 	CADASTRARUSUARIO("/popups/cadastrarUsuario/cadastrarUsuario.fxml", "Cadastrar Usuário", CadastroUsuarioController.class),
 	EDITARUSUARIO("/popups/cadastrarUsuario/cadastrarUsuario.fxml", "Editar Usuário", EditarUsuarioController.class),
 	ALTERARSENHAUSUARIO("/popups/alterarSenhaUsuario/alterarSenhaUsuario.fxml", "Alteração de Senha", AlterarSenhaUsuarioController.class),
@@ -42,6 +47,7 @@ public enum Popup {
 
 	ESCOLHERFORMAPAGAMENTO("/popups/registrarMovimento/registrarMovimento.fxml", "Escolher forma de pagamento", EscolherFormaPagamentoController.class),
 	REGISTRARMOVIMENTO("/popups/registrarMovimento/registrarMovimento.fxml", "Registrar Movimento de Caixa", RegistrarMovimentoCaixaController.class);
+	
 	private final String pathFxml;
     private final String titulo;
     private final Class<?> classeController;

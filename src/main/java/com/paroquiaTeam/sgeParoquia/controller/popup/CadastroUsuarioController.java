@@ -7,6 +7,7 @@ import com.paroquiaTeam.sgeParoquia.service.UsuarioService;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
@@ -18,8 +19,8 @@ public class CadastroUsuarioController {
 	
 	@FXML TextField textFieldNome;
 	@FXML TextField textFieldLogin;
-	@FXML TextField textFieldSenha;
-	@FXML TextField textFieldSenhaRepetida;
+	@FXML PasswordField passwordFieldSenha;
+	@FXML PasswordField passwordFieldSenhaRepetida;
 	
 	@FXML ToggleGroup grupoTipoUsuario;
 	@FXML RadioButton radioOperador;
@@ -42,14 +43,14 @@ public class CadastroUsuarioController {
 			try {
 				TipoUsuario tipo = obterTipoUsuarioSelecionado();
 				
-				if (!textFieldSenha.getText().trim().equals(textFieldSenhaRepetida.getText().trim())) {
+				if (!passwordFieldSenha.getText().trim().equals(passwordFieldSenhaRepetida.getText().trim())) {
 					throw new IllegalArgumentException("Senha e senha repetida não são iguais");
 				}
 				
 				DadosUsuario dados = new DadosUsuario(
 						textFieldNome.getText().trim(),
 						textFieldLogin.getText().trim(),
-						textFieldSenha.getText().trim(),
+						passwordFieldSenha.getText().trim(),
 						false,
 						tipo
 						);

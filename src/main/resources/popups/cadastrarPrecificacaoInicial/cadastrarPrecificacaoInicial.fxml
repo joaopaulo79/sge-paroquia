@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0">
+         <children>
+            <Label text="Tolerância (minutos)" />
+            <Spinner fx:id="spinnerTolerancia" editable="true" />
+            <Separator prefWidth="200.0" />
+            <Label text="Valores" /> 
+            <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Carro" />
+                        <Separator prefWidth="200.0" />
+                        <Label text="Meia Hora" />
+                        <Spinner fx:id="spinnerMeiaHora" editable="true" />
+                        <Label text="Hora" />
+                        <Spinner fx:id="spinnerHora" editable="true" />
+                        <Label text="Diária" />
+                        <Spinner fx:id="spinnerDiaria" editable="true" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Moto" />
+                        <Separator prefWidth="200.0" />
+                        <Label text="Meia Hora" />
+                        <Spinner fx:id="spinnerMeiaHoraMoto" editable="true" />
+                        <Label text="Hora" />
+                        <Spinner fx:id="spinnerHoraMoto" editable="true" />
+                        <Label text="Diária" />
+                        <Spinner fx:id="spinnerDiariaMoto" editable="true" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Button fx:id="btnSalvar" mnemonicParsing="false" text="Salvar" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
