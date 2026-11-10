@@ -100,18 +100,21 @@ public class ListaClienteController {
 	}
 
 	private void excluir(Long id) {
-		if (NavegacaoManager.getInstancia().abrirAlerta(
-				"Confirmação",
-				"Tem certeza que deseja excluir o cliente?",
-				AlertType.CONFIRMATION)) {
-			try {
-				clienteService.excluir(id);
-			} catch (Exception e2) {
-				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
+			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
+		} else {
+			if (NavegacaoManager.getInstancia().abrirAlerta(
+					"Confirmação",
+					"Tem certeza que deseja excluir o cliente?",
+					AlertType.CONFIRMATION)) {
+				try {
+					clienteService.excluir(id);
+				} catch (Exception e2) {
+					NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+				}
 			}
+			carregarClientes();
 		}
-
-		carregarClientes();
 	}
 
 	private void registrarPagamento(Cliente c) {

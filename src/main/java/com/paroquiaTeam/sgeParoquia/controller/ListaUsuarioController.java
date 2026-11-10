@@ -49,87 +49,99 @@ public class ListaUsuarioController {
 	}
 	
 	private void ativar(Long id) {
-		try {
-			if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
-				throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
+		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
+			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
+		}
+		else {
+			try {
+				if (NavegacaoManager.getInstancia().abrirAlerta(
+						"Confirmação",
+						"Tem certeza que deseja ativar o usuário?",
+						AlertType.CONFIRMATION)) {
+					service.ativar(id);
+				}
+			} catch (Exception e2) {
+				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
 			}
 			
-			if (NavegacaoManager.getInstancia().abrirAlerta(
-					"Confirmação",
-					"Tem certeza que deseja ativar o usuário?",
-					AlertType.CONFIRMATION)) {
-				service.ativar(id);
-			}
-		} catch (Exception e2) {
-			NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+			carregarUsuarios();
 		}
-		
-
-		carregarUsuarios();
 	}
 
 	private void desativar(Long id) {
-		try {
-			if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
-				throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
-			}
-			
-			if (NavegacaoManager.getInstancia().abrirAlerta(
-					"Confirmação",
-					"Tem certeza que deseja desativar o usuário?",
-					AlertType.CONFIRMATION)) {
-				service.desativar(id);
-			} 
-		} catch (Exception e2) {
-			NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
+			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
 		}
-
-		carregarUsuarios();
+		else {
+			try {
+				if (NavegacaoManager.getInstancia().abrirAlerta(
+						"Confirmação",
+						"Tem certeza que deseja desativar o usuário?",
+						AlertType.CONFIRMATION)) {
+					service.desativar(id);
+				} 
+			} catch (Exception e2) {
+				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+			}
+	
+			carregarUsuarios();
+		}
 	}
 	
 	private void editar(Long id) {
-		try {
-			if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
-				throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
-			}
-			
-			NavegacaoManager.getInstancia().abrirModal(Popup.EDITARUSUARIO, id);
-		} catch (Exception e) {
-			NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
+		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
+			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
 		}
-		carregarUsuarios();
+		else {
+			try {
+				NavegacaoManager.getInstancia().abrirModal(Popup.EDITARUSUARIO, id);
+			} catch (Exception e) {
+				NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
+			}
+			carregarUsuarios();
+		}
 	}
 	
 	private void excluir(Long id) {
-		try {
-			if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
-				throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
-			}
-			
-			if (NavegacaoManager.getInstancia().abrirAlerta(
-					"Confirmação",
-					"Tem certeza que deseja excluir o usuário?",
-					AlertType.CONFIRMATION)) {
-					service.excluir(id);
-			}
-		} catch (Exception e2) {
-			NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
+			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
 		}
-		carregarUsuarios();
+		else {
+			try {
+				if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
+					throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
+				}
+				
+				if (NavegacaoManager.getInstancia().abrirAlerta(
+						"Confirmação",
+						"Tem certeza que deseja excluir o usuário?",
+						AlertType.CONFIRMATION)) {
+						service.excluir(id);
+				}
+			} catch (Exception e2) {
+				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+			}
+			carregarUsuarios();
+		}
 	}
 	
 	private void alterarSenha(Long id) {
-		try {
-			if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
-				throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
-			}
-			
-			NavegacaoManager.getInstancia().abrirModal(Popup.ALTERARSENHAUSUARIO, id);
-		} catch (Exception e) {
-			NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
-			e.printStackTrace();
+		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
+			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
 		}
-		carregarUsuarios();
+		else {
+			try {
+				if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
+					throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
+				}
+				
+				NavegacaoManager.getInstancia().abrirModal(Popup.ALTERARSENHAUSUARIO, id);
+			} catch (Exception e) {
+				NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
+				e.printStackTrace();
+			}
+			carregarUsuarios();
+		}
 	}
 	
 	private void carregarUsuarios() {

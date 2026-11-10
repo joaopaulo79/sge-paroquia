@@ -5,11 +5,11 @@ import com.paroquiaTeam.sgeParoquia.controller.DashboardController;
 import com.paroquiaTeam.sgeParoquia.controller.ListaCaixaController;
 import com.paroquiaTeam.sgeParoquia.controller.ListaClienteController;
 import com.paroquiaTeam.sgeParoquia.controller.ListaConvenioController;
+import com.paroquiaTeam.sgeParoquia.controller.ListaMovimentoCaixaController;
 import com.paroquiaTeam.sgeParoquia.controller.ListaUsuarioController;
 import com.paroquiaTeam.sgeParoquia.controller.ListaVagasController;
 import com.paroquiaTeam.sgeParoquia.controller.ListaVeiculoController;
 import com.paroquiaTeam.sgeParoquia.controller.LoginController;
-import com.paroquiaTeam.sgeParoquia.controller.popup.ListaMovimentoCaixaController;
 
 public enum Tela {
 	LOGIN("/screens/login/login.fxml", "Login", LoginController.class),

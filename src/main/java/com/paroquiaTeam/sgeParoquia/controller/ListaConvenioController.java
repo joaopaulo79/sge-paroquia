@@ -101,18 +101,23 @@ public class ListaConvenioController {
 	}
 
 	private void excluir(Long id) {
-		if (NavegacaoManager.getInstancia().abrirAlerta(
-				"Confirmação",
-				"Tem certeza que deseja excluir o convênio?",
-				AlertType.CONFIRMATION)) {
-			try {
-				convenioService.excluir(id);
-			} catch (Exception e2) {
-				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
+			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
+		} 
+		else {
+			if (NavegacaoManager.getInstancia().abrirAlerta(
+					"Confirmação",
+					"Tem certeza que deseja excluir o convênio?",
+					AlertType.CONFIRMATION)) {
+				try {
+					convenioService.excluir(id);
+				} catch (Exception e2) {
+					NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+				}
 			}
+	
+			carregarConvenios();
 		}
-
-		carregarConvenios();
 	}
 
 	private void registrarPagamento(Convenio conv) {

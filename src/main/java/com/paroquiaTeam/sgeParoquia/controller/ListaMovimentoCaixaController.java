@@ -1,4 +1,4 @@
-package com.paroquiaTeam.sgeParoquia.controller.popup;
+package com.paroquiaTeam.sgeParoquia.controller;
 
 import java.util.List;
 
@@ -72,8 +72,9 @@ public class ListaMovimentoCaixaController {
 	
 	private void onExcluir(Long idMovimento) {
 		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
-			NavegacaoManager.getInstancia().abrirAlertaErro("Somente administradores podem realizar esta operação");
-		} else {
+			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
+		} 
+		else {
 			if (NavegacaoManager.getInstancia().abrirAlertaConfirmacao("Tem certeza que deseja excluir este movimento?")) {
 				service.excluir(idMovimento);
 				carregarMovimentos();

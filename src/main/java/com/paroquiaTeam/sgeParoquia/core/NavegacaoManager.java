@@ -164,4 +164,9 @@ public class NavegacaoManager {
     public boolean abrirAlertaConfirmacao(String mensagem) {
     	return abrirAlerta("Confirmação", mensagem, AlertType.CONFIRMATION);
     }
+    
+    public void abrirAlertaSemAutorizacao() {
+    	String mensagem = "Somente administradores podem realizar esta operação";
+    	abrirAlertaErro(mensagem);
+    }
 }

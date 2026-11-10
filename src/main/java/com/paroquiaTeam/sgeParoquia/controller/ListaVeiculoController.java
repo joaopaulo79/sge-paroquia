@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
 import com.paroquiaTeam.sgeParoquia.core.Popup;
+import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.model.entity.Veiculo;
 import com.paroquiaTeam.sgeParoquia.service.VeiculoService;
 
@@ -43,17 +44,21 @@ public class ListaVeiculoController {
 	}
 	
 	private void onExcluir(Long id) {
-		if (NavegacaoManager.getInstancia().abrirAlerta(
-				"Confirmação",
-				"Tem certeza que deseja excluir o Veículo?",
-				AlertType.CONFIRMATION)) {
-			try {
-				service.excluir(id);
-			} catch (Exception e2) {
-				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
+			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
+		} else {
+			if (NavegacaoManager.getInstancia().abrirAlerta(
+					"Confirmação",
+					"Tem certeza que deseja excluir o Veículo?",
+					AlertType.CONFIRMATION)) {
+				try {
+					service.excluir(id);
+				} catch (Exception e2) {
+					NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
+				}
 			}
+			carregarVeiculos();
 		}
-		carregarVeiculos();
 	}
 	
 	private void carregarVeiculos() {

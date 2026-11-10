@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
+import com.paroquiaTeam.sgeParoquia.core.Popup;
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosCaixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
@@ -12,11 +13,9 @@ import com.paroquiaTeam.sgeParoquia.service.CaixaService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory.DoubleSpinnerValueFactory;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 
 public class CaixaController {
@@ -33,10 +32,7 @@ public class CaixaController {
         this.onStatusCaixaAlterado = listener;
     }
 	
-
-	@FXML TextField campoFundoInicial;
 	@FXML Spinner<Double> spinnerFundoInicial;
-	@FXML Button btnAbrirCaixa;
 	@FXML Label labelOperador;
 	@FXML Label labelHora;
 
@@ -106,5 +102,9 @@ public class CaixaController {
 		service.fechar(caixaAtual, LocalDateTime.now());
 
 		carregarPainel();
+	}
+	
+	public void registrarMovimentoCaixa() {
+		NavegacaoManager.getInstancia().abrirModal(Popup.REGISTRARMOVIMENTO);
 	}
 }

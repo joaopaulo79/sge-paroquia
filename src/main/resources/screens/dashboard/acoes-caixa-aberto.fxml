@@ -12,6 +12,7 @@
          <children>
             <Label text="Operador" />
             <Label fx:id="labelOperador" text="?" />
+            <Button fx:id="btnRegistrarMovimento" mnemonicParsing="false" text="Registrar Movimento" onAction="#registrarMovimentoCaixa" />
             <Button fx:id="btnFecharCaixa" mnemonicParsing="false" text="Fechar caixa" onAction="#fecharCaixa" />
          </children>
       </VBox>

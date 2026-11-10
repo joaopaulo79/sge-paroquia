@@ -1,6 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.controller;
 
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
+import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.core.Tela;
 
 import javafx.event.ActionEvent;
@@ -35,8 +36,13 @@ public class BaseController {
 		LoginController loginController = NavegacaoManager.getInstancia().navegarPara(Tela.LOGIN);
 
 		loginController.setOnSucessoLogin(() -> {
-			sideBar.setVisible(true);
-			sideBar.setManaged(true);
+			setSideBar(true);
+			
+			boolean isAdmin = SessaoSistema.getInstancia().isUserLogadoAdministrador();
+			
+			btnNavUsuarios.setManaged(isAdmin);
+			btnNavUsuarios.setVisible(isAdmin);
+			btnNavUsuarios.setDisable(!isAdmin);
 
 			NavegacaoManager.getInstancia().navegarPara(Tela.DASHBOARD);
 		});
@@ -48,8 +54,8 @@ public class BaseController {
 		btnNavVeiculos.setToggleGroup(grupoNav);
 		btnNavConfig.setToggleGroup(grupoNav);
 		btnNavVagas.setToggleGroup(grupoNav);
-		btnNavUsuarios.setToggleGroup(grupoNav);
 		btnNavCaixas.setToggleGroup(grupoNav);
+		btnNavUsuarios.setToggleGroup(grupoNav);
 
 		btnNavDashboard.setOnAction(event -> navegar(event, Tela.DASHBOARD));
 		btnNavConvenios.setOnAction(event -> navegar(event, Tela.CONVENIOS));
@@ -57,8 +63,8 @@ public class BaseController {
 		btnNavVeiculos.setOnAction(event -> navegar(event, Tela.VEICULOS));
 		btnNavConfig.setOnAction(event -> navegar(event, Tela.CONFIGURACAO));
 		btnNavVagas.setOnAction(event -> navegar(event, Tela.VAGAS));
-		btnNavUsuarios.setOnAction(event -> navegar(event, Tela.USUARIOS));
 		btnNavCaixas.setOnAction(event -> navegar(event, Tela.CAIXAS));
+		btnNavUsuarios.setOnAction(event -> navegar(event, Tela.USUARIOS));
 
 		instance = this;
 	}
@@ -78,8 +84,8 @@ public class BaseController {
 		NavegacaoManager.getInstancia().navegarPara(tela);
 	}
 
-	public void habilitarSideBar() {
-		sideBar.setManaged(true);
-		sideBar.setVisible(true);
+	public void setSideBar(boolean status) {
+		sideBar.setManaged(status);
+		sideBar.setVisible(status);
 	}
 }
