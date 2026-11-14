@@ -52,9 +52,9 @@ public class Main extends Application {
     	boolean sucesso = true;
     	
     	UsuarioDAO usuarioDao = new UsuarioDAO();
-    	if (!usuarioDao.existsById(1)) {
+    	if (!usuarioDao.existsAnyAdministrador()) {
     		NavegacaoManager.getInstancia().abrirAlerta("Alerta", 
-    				"Não há nenhum usuário cadastrado.\nIniciando cadastro de usuário base", 
+    				"Não há nenhum administrador cadastrado.\nIniciando cadastro de usuário base", 
     				AlertType.INFORMATION);
     		
     		CadastroUsuarioBaseController cUBC = NavegacaoManager

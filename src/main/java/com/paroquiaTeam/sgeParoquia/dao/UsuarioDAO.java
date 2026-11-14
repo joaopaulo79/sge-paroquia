@@ -8,10 +8,21 @@ import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoUsuario;
 import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
 
 public class UsuarioDAO {
 
+	public boolean existsAnyAdministrador() {
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
+			String query = "SELECT COUNT(u) FROM Usuario u WHERE u.tipo = ?1";
+			Long quantidade = sessao.createQuery(query, Long.class)
+					.setParameter(1, TipoUsuario.ADMINISTRADOR)
+					.uniqueResult();
+			return quantidade != null && quantidade > 0;
+		}
+	}
+	
 	public boolean existsById(long id) {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(u) FROM Usuario u WHERE u.id = ?1";
