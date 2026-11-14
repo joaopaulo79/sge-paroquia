@@ -6,12 +6,12 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
 
 public class CaixaDAO {
 	public boolean exists(long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(c) FROM Caixa c WHERE c.id = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, id)
@@ -21,7 +21,7 @@ public class CaixaDAO {
 	}
 
 	public Optional<Caixa> getById(Long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Caixa c WHERE c.id = :id";
 			return sessao.createQuery(query, Caixa.class)
 						.setParameter("id", id)
@@ -31,7 +31,7 @@ public class CaixaDAO {
 	}
 
 	public List<Caixa> getAll() {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT c FROM Caixa c";
 			return sessao.createQuery(query, Caixa.class)
 						.getResultList();
@@ -40,7 +40,7 @@ public class CaixaDAO {
 	}
 
 	public Optional<Caixa> getLast() {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Caixa c ORDER BY c.id DESC";
 			return sessao.createQuery(query, Caixa.class)
 					.setMaxResults(1)
@@ -50,7 +50,7 @@ public class CaixaDAO {
 	}
 	
 	public Optional<Caixa> getLastWithOperador() {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Caixa c LEFT JOIN FETCH c.operador ORDER BY c.id DESC";
 			return sessao.createQuery(query, Caixa.class)
 					.setMaxResults(1)
@@ -60,7 +60,7 @@ public class CaixaDAO {
 	}
 
 	public void save(Caixa caixa) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.persist(caixa);
@@ -73,7 +73,7 @@ public class CaixaDAO {
 	}
 
 	public void update(Caixa caixa) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.merge(caixa);
@@ -86,7 +86,7 @@ public class CaixaDAO {
 	}
 
 	public void delete(Long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				Caixa caixa = sessao.get(Caixa.class, id);

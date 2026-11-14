@@ -17,7 +17,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoUsuario;
 import com.paroquiaTeam.sgeParoquia.utils.SenhaUtil;
@@ -27,7 +27,7 @@ class UsuarioDAOTest extends BaseDAOTest{
 
 	@AfterEach
 	public void removeUsers() {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session = AppConfig.getSessionFactory().openSession()) {
 	        Transaction tx = session.beginTransaction();
 	        try {
 	            session.createMutationQuery("DELETE FROM Usuario u WHERE u.id != :id")

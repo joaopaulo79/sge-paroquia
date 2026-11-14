@@ -5,14 +5,14 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Estacionamento;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoPrecificacao;
 
 public class EstacionamentoDAO {
 
 	public boolean exists() {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(e) FROM Estacionamento e WHERE e.id = 1";
 			Long quantidade = sessao.createQuery(query, Long.class).uniqueResult();
 			return quantidade != null && quantidade > 0;
@@ -20,7 +20,7 @@ public class EstacionamentoDAO {
 	}
 
 	public Optional<Estacionamento> get() {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "FROM Estacionamento e WHERE e.id = 1";
 			return sessao.createSelectionQuery(query, Estacionamento.class).uniqueResultOptional();
 
@@ -29,7 +29,7 @@ public class EstacionamentoDAO {
 
 	public void saveOrUpdate(Estacionamento estacionamento) {
 		boolean existe = exists();
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				if (existe) {
@@ -47,7 +47,7 @@ public class EstacionamentoDAO {
 
 
 	public void save(Estacionamento estacionamento) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.persist(estacionamento);
@@ -60,7 +60,7 @@ public class EstacionamentoDAO {
 	}
 
 	public void update(Estacionamento estacionamento) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.merge(estacionamento);

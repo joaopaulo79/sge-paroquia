@@ -13,7 +13,7 @@ import org.hibernate.Transaction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Estacionamento;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoPrecificacao;
 
@@ -24,7 +24,7 @@ class EstacionamentoDAOTest extends BaseDAOTest {
     // Estacionamento uses a fixed ID of 1 — reset it after each test
     @AfterEach
     public void removeEstacionamento() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = AppConfig.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             try {
                 session.createMutationQuery("DELETE FROM Estacionamento").executeUpdate();

@@ -8,7 +8,7 @@ import org.hibernate.Transaction;
 
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.dao.EstadiaDAO;
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosEstadia;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosMovimentoCaixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
@@ -94,7 +94,7 @@ public class EstadiaService {
 	        throw new IllegalStateException("É obrigatório ter um caixa aberto para registrar a entrada.");
 	    }
 
-	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    Session session = AppConfig.getSessionFactory().openSession();
 	    Transaction transaction = null;
 
 	    try {
@@ -140,7 +140,7 @@ public class EstadiaService {
 	        throw new IllegalStateException("É obrigatório ter um caixa aberto para registrar a entrada.");
 	    }
 
-	    Session session = HibernateUtil.getSessionFactory().openSession();
+	    Session session = AppConfig.getSessionFactory().openSession();
 	    Transaction transaction = null;
 
 	    try {

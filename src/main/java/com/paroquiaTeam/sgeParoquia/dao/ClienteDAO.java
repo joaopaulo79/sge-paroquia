@@ -6,13 +6,13 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Cliente;
 
 public class ClienteDAO {
 
 	public boolean existsById(long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(c) FROM Cliente c WHERE c.id = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, id)
@@ -22,7 +22,7 @@ public class ClienteDAO {
 	}
 
 	public boolean existsByCpf(String cpf) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(c) FROM Cliente c WHERE c.cpf = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, cpf)
@@ -32,7 +32,7 @@ public class ClienteDAO {
 	}
 
 	public Optional<Cliente> getById(Long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Cliente c WHERE c.id = :id";
 			return sessao.createQuery(query, Cliente.class)
 						.setParameter("id", id)
@@ -42,7 +42,7 @@ public class ClienteDAO {
 	}
 	
 	public Optional<Cliente> getByIdWithVeiculos(Long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Cliente c LEFT JOIN FETCH c.veiculos WHERE c.id = :id";
 			return sessao.createQuery(query, Cliente.class)
 						.setParameter("id", id)
@@ -52,7 +52,7 @@ public class ClienteDAO {
 	}
 
 	public Optional<Cliente> getByCpf(String cpf) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Cliente c WHERE c.cpf = :cpf";
 			return sessao.createQuery(query, Cliente.class)
 						.setParameter("cpf", cpf)
@@ -63,7 +63,7 @@ public class ClienteDAO {
 
 
 	public List<Cliente> getAll() {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT c FROM Cliente c";
 			return sessao.createQuery(query, Cliente.class)
 						.getResultList();
@@ -72,7 +72,7 @@ public class ClienteDAO {
 	}
 
 	public List<Cliente> getAllByIdConvenio(Long idConvenio) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT c FROM Cliente c WHERE c.convenio.id = ?1";
 			return sessao.createQuery(query, Cliente.class)
 						.setParameter(1, idConvenio)
@@ -82,7 +82,7 @@ public class ClienteDAO {
 	}
 
 	public void save(Cliente cliente) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.persist(cliente);
@@ -95,7 +95,7 @@ public class ClienteDAO {
 	}
 
 	public void update(Cliente cliente) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.merge(cliente);
@@ -108,7 +108,7 @@ public class ClienteDAO {
 	}
 
 	public void delete(Long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				Cliente cliente = sessao.get(Cliente.class, id);

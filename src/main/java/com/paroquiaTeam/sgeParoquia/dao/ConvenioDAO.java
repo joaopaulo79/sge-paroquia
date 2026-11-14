@@ -6,13 +6,13 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
 
 public class ConvenioDAO {
 
 	public boolean existsById(long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(c) FROM Convenio c WHERE c.id = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, id)
@@ -22,7 +22,7 @@ public class ConvenioDAO {
 	}
 
 	public boolean existsByCnpj(String cnpj) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(c) FROM Convenio c WHERE c.cnpj = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, cnpj)
@@ -32,7 +32,7 @@ public class ConvenioDAO {
 	}
 
 	public Optional<Convenio> getById(Long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Convenio c WHERE c.id = :id";
 			return sessao.createQuery(query, Convenio.class)
 						.setParameter("id", id)
@@ -42,7 +42,7 @@ public class ConvenioDAO {
 	}
 
 	public Optional<Convenio> getByIdWithClientes(Long id) {
-	    try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+	    try (Session sessao = AppConfig.getSessionFactory().openSession()){
 	        String query = "SELECT DISTINCT c FROM Convenio c LEFT JOIN FETCH c.clientes WHERE c.id = :id";
 	        return sessao.createQuery(query, Convenio.class)
 	                    .setParameter("id", id)
@@ -51,7 +51,7 @@ public class ConvenioDAO {
 	}
 
 	public Optional<Convenio> getByCnpj(String cnpj) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Convenio c WHERE c.cnpj = :cnpj";
 			return sessao.createQuery(query, Convenio.class)
 						.setParameter("cnpj", cnpj)
@@ -61,7 +61,7 @@ public class ConvenioDAO {
 	}
 
 	public Optional<Convenio> getByNome(String nome) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Convenio c WHERE c.nome = :nome";
 			return sessao.createQuery(query, Convenio.class)
 						.setParameter("nome", nome)
@@ -71,7 +71,7 @@ public class ConvenioDAO {
 	}
 
 	public List<Convenio> getAll() {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT c FROM Convenio c";
 			return sessao.createQuery(query, Convenio.class)
 						.getResultList();
@@ -80,7 +80,7 @@ public class ConvenioDAO {
 	}
 
 	public void save(Convenio convenio) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.persist(convenio);
@@ -93,7 +93,7 @@ public class ConvenioDAO {
 	}
 
 	public void update(Convenio convenio) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.merge(convenio);
@@ -106,7 +106,7 @@ public class ConvenioDAO {
 	}
 
 	public void delete(Long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				Convenio convenio = sessao.get(Convenio.class, id);

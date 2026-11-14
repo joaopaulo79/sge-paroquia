@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.MovimentoCaixa;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoPagamento;
 
@@ -14,7 +14,7 @@ import com.paroquiaTeam.sgeParoquia.model.enums.TipoPagamento;
 public class MovimentoCaixaDAO {
 
 	public boolean exists(long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(m) FROM MovimentoCaixa m WHERE m.id = ?1";
 			Long quantidade = sessao.createQuery(query, Long.class)
 					.setParameter(1, id)
@@ -24,7 +24,7 @@ public class MovimentoCaixaDAO {
 	}
 
 	public Optional<MovimentoCaixa> getById(Long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT m FROM MovimentoCaixa m WHERE m.id = :id";
 			return sessao.createQuery(query, MovimentoCaixa.class)
 						.setParameter("id", id)
@@ -34,7 +34,7 @@ public class MovimentoCaixaDAO {
 	}
 
 	public List<MovimentoCaixa> getAll() {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT m FROM MovimentoCaixa m";
 			return sessao.createQuery(query, MovimentoCaixa.class)
 						.getResultList();
@@ -43,7 +43,7 @@ public class MovimentoCaixaDAO {
 	}
 
 	public void save(MovimentoCaixa movimento) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.persist(movimento);
@@ -56,7 +56,7 @@ public class MovimentoCaixaDAO {
 	}
 
 	public List<MovimentoCaixa> getByCaixa(Long idCaixa) {
-	    try (Session sessao = HibernateUtil.getSessionFactory().openSession()) {
+	    try (Session sessao = AppConfig.getSessionFactory().openSession()) {
 	        String query = "SELECT m FROM MovimentoCaixa m WHERE m.caixa.id = :idCaixa";
 	        return sessao.createQuery(query, MovimentoCaixa.class)
 	                    .setParameter("idCaixa", idCaixa)
@@ -65,7 +65,7 @@ public class MovimentoCaixaDAO {
 	}
 
 	public List<MovimentoCaixa> getByEstadia(Long idEstadia) {
-	    try (Session sessao = HibernateUtil.getSessionFactory().openSession()) {
+	    try (Session sessao = AppConfig.getSessionFactory().openSession()) {
 	        String query = "SELECT m FROM MovimentoCaixa m WHERE m.estadia.id = :idEstadia";
 	        return sessao.createQuery(query, MovimentoCaixa.class)
 	                    .setParameter("idEstadia", idEstadia)
@@ -74,7 +74,7 @@ public class MovimentoCaixaDAO {
 	}
 
 	public Double getTotalPorCaixaEPagamento(Long idCaixa, TipoPagamento tipoPagamento) {
-	    try (Session sessao = HibernateUtil.getSessionFactory().openSession()) {
+	    try (Session sessao = AppConfig.getSessionFactory().openSession()) {
 	        String query = "SELECT SUM(m.valor) " +
 	                       "FROM MovimentoCaixa m " +
 	                       "WHERE m.caixa.id = :idCaixa " +
@@ -91,7 +91,7 @@ public class MovimentoCaixaDAO {
 	}
 
 	public void update(MovimentoCaixa movimento) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.merge(movimento);
@@ -104,7 +104,7 @@ public class MovimentoCaixaDAO {
 	}
 
 	public void delete(Long id) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				MovimentoCaixa movimento = sessao.get(MovimentoCaixa.class, id);

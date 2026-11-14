@@ -16,7 +16,7 @@ import org.hibernate.Transaction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
 
 class EstadiaDAOTest extends BaseDAOTest {
@@ -25,7 +25,7 @@ class EstadiaDAOTest extends BaseDAOTest {
 
 	@AfterEach
 	public void removeEstadias() {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session = AppConfig.getSessionFactory().openSession()) {
 	        Transaction tx = session.beginTransaction();
 	        try {
 	            session.createMutationQuery("DELETE FROM Estadia").executeUpdate();

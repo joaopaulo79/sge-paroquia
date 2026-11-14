@@ -5,13 +5,13 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.PrecificacaoFracionada;
 
 public class PrecificacaoFracionadaDAO {
 
 	public boolean exists() {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(p) FROM PrecificacaoFracionada p WHERE p.id = 1";
 			Long quantidade = sessao.createQuery(query, Long.class).uniqueResult();
 			return quantidade != null && quantidade > 0;
@@ -20,7 +20,7 @@ public class PrecificacaoFracionadaDAO {
 	}
 
 	public Optional<PrecificacaoFracionada> get() {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "FROM PrecificacaoFracionada p WHERE p.id = 1";
 			return sessao.createSelectionQuery(query, PrecificacaoFracionada.class)
 						.uniqueResultOptional();
@@ -30,7 +30,7 @@ public class PrecificacaoFracionadaDAO {
 
 	public void saveOrUpdate(PrecificacaoFracionada precificacao) {
 		boolean existe = exists();
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				if (existe) {
@@ -47,7 +47,7 @@ public class PrecificacaoFracionadaDAO {
 	}
 
 	public void save(PrecificacaoFracionada precificacao) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.persist(precificacao);
@@ -60,7 +60,7 @@ public class PrecificacaoFracionadaDAO {
 	}
 
 	public void update(PrecificacaoFracionada precificacao) {
-		try (Session sessao = HibernateUtil.getSessionFactory().openSession()){
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();
 			try {
 				sessao.merge(precificacao);

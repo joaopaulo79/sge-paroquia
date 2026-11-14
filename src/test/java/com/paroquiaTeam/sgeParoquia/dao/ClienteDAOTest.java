@@ -11,7 +11,7 @@ import org.hibernate.Transaction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Cliente;
 import com.paroquiaTeam.sgeParoquia.model.entity.Convenio;
 import com.paroquiaTeam.sgeParoquia.model.enums.StatusCliente;
@@ -23,7 +23,7 @@ class ClienteDAOTest extends BaseDAOTest {
 
 	@AfterEach
 	void removeDados() {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session = AppConfig.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             try {
                 session.createMutationQuery("DELETE FROM Cliente").executeUpdate();

@@ -108,4 +108,8 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+# Ignorar arquivos de configuração sensíveis e locais
+config.properties
+config-test.properties
+
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 
 import com.paroquiaTeam.sgeParoquia.TestSetup;
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.Usuario;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoUsuario;
@@ -44,7 +44,7 @@ public class BaseDAOTest extends TestSetup {
 	        tx.commit();
 	    }
 
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+		try (Session session = AppConfig.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             try {
             	session.createNativeMutationQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
@@ -67,7 +67,7 @@ public class BaseDAOTest extends TestSetup {
                 throw e;
             }
         }
-		HibernateUtil.shutdown();
+		AppConfig.shutdown();
 		sessaoSistema.encerrarSessao();
 	}
 }

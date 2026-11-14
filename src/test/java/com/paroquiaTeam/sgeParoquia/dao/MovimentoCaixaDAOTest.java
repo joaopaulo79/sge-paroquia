@@ -16,7 +16,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.MovimentoCaixa;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoMovimento;
@@ -28,7 +28,7 @@ class MovimentoCaixaDAOTest extends BaseDAOTest {
 
     @AfterEach
     public void removeMovimentos() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = AppConfig.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             try {
                 session.createMutationQuery("DELETE FROM MovimentoCaixa").executeUpdate();

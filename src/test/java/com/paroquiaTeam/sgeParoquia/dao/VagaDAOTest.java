@@ -14,7 +14,7 @@ import org.hibernate.Transaction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import com.paroquiaTeam.sgeParoquia.database.HibernateUtil;
+import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Vaga;
 import com.paroquiaTeam.sgeParoquia.model.enums.StatusVaga;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoReservaVaga;
@@ -26,7 +26,7 @@ class VagaDAOTest extends BaseDAOTest {
 
     @AfterEach
     public void removeVagas() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = AppConfig.getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             try {
                 session.createMutationQuery("DELETE FROM Vaga").executeUpdate();
