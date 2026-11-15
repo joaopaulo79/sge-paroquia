@@ -1,4 +1,4 @@
-package com.paroquiaTeam.sgeParoquia.database;
+package com.paroquiaTeam.sgeParoquia.core;
 
 import java.io.File;
 import java.io.FileInputStream;

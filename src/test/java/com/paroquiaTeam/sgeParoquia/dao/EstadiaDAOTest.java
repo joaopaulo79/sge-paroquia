@@ -16,7 +16,7 @@ import org.hibernate.Transaction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import com.paroquiaTeam.sgeParoquia.database.AppConfig;
+import com.paroquiaTeam.sgeParoquia.core.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
 
 class EstadiaDAOTest extends BaseDAOTest {

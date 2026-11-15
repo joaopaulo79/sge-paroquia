@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.paroquiaTeam.sgeParoquia.core.AppConfig;
 import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.dao.EstadiaDAO;
-import com.paroquiaTeam.sgeParoquia.database.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosEstadia;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosMovimentoCaixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;

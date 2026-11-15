@@ -3,7 +3,7 @@ package com.paroquiaTeam.sgeParoquia;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.BeforeAll;
 
-import com.paroquiaTeam.sgeParoquia.database.AppConfig;
+import com.paroquiaTeam.sgeParoquia.core.AppConfig;
 
 public class TestSetup {
 	protected static SessionFactory testSessionFactory;

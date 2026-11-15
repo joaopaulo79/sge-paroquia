@@ -14,7 +14,7 @@ import org.hibernate.Transaction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import com.paroquiaTeam.sgeParoquia.database.AppConfig;
+import com.paroquiaTeam.sgeParoquia.core.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Vaga;
 import com.paroquiaTeam.sgeParoquia.model.enums.StatusVaga;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoReservaVaga;
