@@ -52,6 +52,7 @@ public class VagaDAO {
 			return sessao.createSelectionQuery(query, Vaga.class)
 						.setParameter(1, tipo)
 						.setParameter(2, reserva)
+						.setMaxResults(1)
 						.getSingleResultOrNull();
 		}
 	}

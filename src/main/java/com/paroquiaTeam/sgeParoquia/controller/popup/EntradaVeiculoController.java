@@ -1,6 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.controller.popup;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.paroquiaTeam.sgeParoquia.controller.EstadiaController.DadosEntrada;
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
@@ -28,6 +29,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -50,7 +52,8 @@ public class EntradaVeiculoController {
 	
 	@FXML Button btnConfirmar;
 	@FXML Button btnCancelar;
-
+	
+	@FXML TextArea areaTicket;
 	
 	@FXML
 	private void initialize() {
@@ -88,7 +91,10 @@ public class EntradaVeiculoController {
 				}
 			}
 			
-			checkAdiantarDiaria.setOnAction(e -> onAcaoCheckAdiantarDiaria(checkAdiantarDiaria.isSelected()));
+			checkAdiantarDiaria.setOnAction(e -> {
+				onAcaoCheckAdiantarDiaria(checkAdiantarDiaria.isSelected());
+				carregarTicket();
+			});
 			
 			btnConfirmar.setOnAction(e -> {
 				try {
@@ -109,6 +115,8 @@ public class EntradaVeiculoController {
 				Stage stage = (Stage) btnCancelar.getScene().getWindow();
 		        stage.close();
 			});
+			
+			carregarTicket();
 		}
 	}
 	
@@ -132,6 +140,30 @@ public class EntradaVeiculoController {
 						new ConvenioCardFactory().criarCardInformacoes(dados.entidades().convenio()));
 			}
 		}
+	}
+	
+	private void carregarTicket() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("      PARÓQUIA NOSSA SENHORA      \n");
+        sb.append("       APARECIDA - MONGAGUÁ       \n");
+        sb.append("          ESTACIONAMENTO          \n\n");
+        sb.append("--------------------------------\n");
+        sb.append("      COMPROVANTE DE ENTRADA    \n");
+        sb.append("--------------------------------\n");
+        sb.append("Entrada: ").append(dataHoraEntrada.format(formatter)).append("\n");
+        sb.append("Placa:   ").append(dados.placa()).append("\n");
+        
+        if (valor != null) {
+            sb.append("Valor pago: ").append(StringUtil.formatarMoeda(valor)).append("\n");
+        }
+        
+        sb.append("--------------------------------\n\n");
+        sb.append("   Guarde este ticket para a    \n");
+        sb.append("             saída.             \n");
+        
+        areaTicket.setText(sb.toString());
 	}
 	
 	private boolean definirReserva() {		

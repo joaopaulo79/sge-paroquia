@@ -1,6 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.controller.popup;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.paroquiaTeam.sgeParoquia.controller.EstadiaController.DadosSaida;
 import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
@@ -28,6 +29,7 @@ import com.paroquiaTeam.sgeParoquia.view.factory.VeiculoCardFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -57,6 +59,8 @@ public class SaidaVeiculoController {
 	@FXML Button btnConfirmar;
 	@FXML Button btnCancelar;
 	
+	@FXML TextArea areaTicket;
+
 	@FXML
 	private void initialize() {
 		checkAdiantarDiaria.setVisible(false);
@@ -102,6 +106,29 @@ public class SaidaVeiculoController {
 		});
 		
 		carregarCards();
+		carregarTicket();
+	}
+	
+	private void carregarTicket() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("      PARÓQUIA NOSSA SENHORA      \n");
+        sb.append("       APARECIDA - MONGAGUÁ       \n");
+        sb.append("          ESTACIONAMENTO          \n\n");
+        sb.append("--------------------------------\n");
+        sb.append("      COMPROVANTE DE SAÍDA      \n");
+        sb.append("--------------------------------\n");
+        sb.append("Entrada: ").append(estadia.getDataHoraEntrada().format(formatter)).append("\n");
+        sb.append("Saída: ").append(dataHoraSaida.format(formatter)).append("\n");
+        sb.append("Placa:   ").append(dados.placa()).append("\n");
+        sb.append("Valor pago: ").append(StringUtil.formatarMoeda(valor)).append("\n");
+        
+        sb.append("--------------------------------\n\n");
+        sb.append("   Guarde este ticket para a    \n");
+        sb.append("             saída.             \n");
+        
+        areaTicket.setText(sb.toString());
 	}
 	
 	private void carregarCards() {

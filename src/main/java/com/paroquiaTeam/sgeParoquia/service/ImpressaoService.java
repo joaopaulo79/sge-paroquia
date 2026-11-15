@@ -90,6 +90,56 @@ public class ImpressaoService {
         }
     }
     
+    public void imprimirTicketSaida(DadosEstadia dados) {
+        PrintService printService = encontrarImpressora();
+        
+        if (printService == null) {
+            throw new RuntimeException("Nenhuma impressora térmica encontrada ou configurada.");
+        }
+
+        try (PrinterOutputStream printerOutputStream = new PrinterOutputStream(printService);
+            EscPos escpos = new EscPos(printerOutputStream)) {
+        	
+        	escpos.setCharacterCodeTable(CharacterCodeTable.CP860_Portuguese);
+        	
+            // Estilos de texto
+            Style tituloStyle = new Style()
+                    .setFontSize(FontSize._2, FontSize._2)
+                    .setJustification(EscPosConst.Justification.Center);
+
+            Style normalStyle = new Style()
+                    .setFontSize(FontSize._1, FontSize._1)
+                    .setJustification(EscPosConst.Justification.Left_Default);
+
+            // Montagem do Ticket
+            escpos.writeLF(tituloStyle, "MONGAGUÁ - PARÓQUIA");
+            escpos.writeLF(tituloStyle, "NOSSA SENHORA APARECIDA");
+            escpos.writeLF(tituloStyle, "ESTACIONAMENTO");
+            escpos.feed(1);
+
+            escpos.writeLF(normalStyle, "--------------------------------");
+            escpos.writeLF(normalStyle, "COMPROVANTE DE SAÍDA");
+            escpos.writeLF(normalStyle, "--------------------------------");
+            
+            escpos.writeLF(normalStyle, "Entrada: " + dados.dataHoraEntrada().format(formatter));
+            escpos.writeLF(normalStyle, "Saída: " + dados.dataHoraSaida().format(formatter));
+            escpos.writeLF(normalStyle, "Placa:   " + dados.placaVeiculo());
+	        escpos.writeLF(normalStyle, "Valor pago: " + StringUtil.formatarMoeda(dados.valor()));
+            escpos.writeLF(normalStyle, "--------------------------------");
+            
+            escpos.feed(1);
+            escpos.writeLF(new Style().setJustification(EscPosConst.Justification.Center), "Guarde este ticket para a saida.");
+            escpos.feed(3); // Espaço para o corte
+            
+            // Comando para cortar o papel automaticamente (se a impressora suportar guilhotina)
+            escpos.cut(EscPos.CutMode.FULL);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao imprimir ticket: " + e.getMessage());
+        }
+    }
+    
     public void imprimirTeste() {
         PrintService ps = encontrarImpressora();
 
