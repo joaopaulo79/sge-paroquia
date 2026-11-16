@@ -15,11 +15,11 @@ import javafx.scene.layout.VBox;
 public class MovimentoCaixaCardFactory {
 	public CardGenerico criarCardExpandivel(MovimentoCaixa m, Consumer<Long> onExcluir, boolean caixaAberto) {
 		CardHeader header = new CardHeader(m.getId());
-		
+
 		HBox linhaPrincipal = new HBox();
 		linhaPrincipal.getChildren().add(new Label(StringUtil.formatarMoeda(m.getValor())));
 		linhaPrincipal.getChildren().add(new Label(m.getTipoMovimento().toString()));
-		
+
 		if (caixaAberto) {
 			if (onExcluir != null) {
 				Button btnExcluir = new Button("Excluir");
@@ -29,17 +29,17 @@ public class MovimentoCaixaCardFactory {
 				throw new IllegalArgumentException("onExcluir é obrigatório quando caixa está aberto");
 			}
 		}
-		
+
 		VBox linhaSecundaria = new VBox();
 		linhaSecundaria.getChildren().addAll(
 				new Label(m.getFormaPagamento().toString()),
 				new Label(m.getDescricao()));
-		
+
 		CardGenerico card = new CardGenerico.Builder(header)
 				.comConteudo(linhaPrincipal)
 				.adicionarLinhaExtra(linhaSecundaria)
 				.build();
-		
+
 		return card;
 	}
 }

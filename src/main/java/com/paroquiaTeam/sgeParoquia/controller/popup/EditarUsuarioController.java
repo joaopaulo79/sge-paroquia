@@ -22,32 +22,32 @@ public class EditarUsuarioController {
 		this.id = id;
 		usuario = service.obterPorId(id);
 	}
-	
+
 	UsuarioService service = new UsuarioService();
-	
+
 	@FXML TextField textFieldNome;
 	@FXML TextField textFieldLogin;
-	
+
 	@FXML VBox vBoxCamposSenha;
-	
+
 	@FXML ToggleGroup grupoTipoUsuario;
 	@FXML RadioButton radioOperador;
 	@FXML RadioButton radioAdministrador;
-	
+
 	@FXML Button btnCancelar;
 	@FXML Button btnSalvar;
-	
+
 	@FXML
 	private void initialize() {
 		btnCancelar.setOnAction(e -> {
 			Stage stage = (Stage) btnCancelar.getScene().getWindow();
 			stage.close();
 		});
-		
+
 		vBoxCamposSenha.setManaged(false);
 		vBoxCamposSenha.setVisible(false);
 		vBoxCamposSenha.setDisable(true);
-		
+
 		radioOperador.setUserData(TipoUsuario.OPERADOR);
 		radioAdministrador.setUserData(TipoUsuario.ADMINISTRADOR);
 
@@ -59,11 +59,11 @@ public class EditarUsuarioController {
 		} else {
 			radioAdministrador.setSelected(true);
 		}
-		
+
 		btnSalvar.setOnAction(e -> {
 			try {
 				TipoUsuario tipo = obterTipoUsuarioSelecionado();
-				
+
 				DadosUsuario dadosNovos = new DadosUsuario(
 						textFieldNome.getText().trim(),
 						textFieldLogin.getText().trim(),
@@ -71,9 +71,9 @@ public class EditarUsuarioController {
 						usuario.isStatus(),
 						tipo
 						);
-				
+
 				service.atualizar(id, dadosNovos);
-				
+
 				NavegacaoManager.getInstancia().abrirAlertaSucesso("Editado com sucesso!");
 				Stage stage = (Stage) btnSalvar.getScene().getWindow();
 				stage.close();
@@ -82,14 +82,14 @@ public class EditarUsuarioController {
 			}
 		});
 	}
-	
+
 	private TipoUsuario obterTipoUsuarioSelecionado() {
 	    Toggle selectedToggle = grupoTipoUsuario.getSelectedToggle();
-	    
+
 	    if (selectedToggle != null && selectedToggle.getUserData() instanceof TipoUsuario) {
 	        return (TipoUsuario) selectedToggle.getUserData();
 	    }
-	    
+
 	    throw new IllegalStateException("Nenhum tipo de usuário foi selecionado.");
 	}
 }

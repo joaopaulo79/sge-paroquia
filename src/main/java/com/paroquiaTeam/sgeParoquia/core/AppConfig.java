@@ -18,7 +18,7 @@ public class AppConfig {
             sessionFactory = buildSessionFactory("hibernate.cfg.xml");
         }
     }
-    
+
     public static void carregarConfiguracoes(String caminhoArquivo) {
         File arquivoConfig = new File(caminhoArquivo);
         if (arquivoConfig.exists()) {
@@ -53,8 +53,8 @@ public class AppConfig {
                 String dbName = props.getProperty("db.name", "sgeParoquia");
                 String user = props.getProperty("db.user");
                 String pass = props.getProperty("db.password");
-                
-                String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName 
+
+                String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName
                            + "?useSSL=false&serverTimezone=America/Sao_Paulo&allowPublicKeyRetrieval=true";
 
                 configuration.setProperty("hibernate.connection.url", url);
@@ -74,7 +74,7 @@ public class AppConfig {
         }
         sessionFactory = sf;
     }
-    
+
     // Método genérico para buscar qualquer propriedade (Banco, Impressora, etc.)
     public static String get(String chave, String valorPadrao) {
         return props.getProperty(chave, valorPadrao);

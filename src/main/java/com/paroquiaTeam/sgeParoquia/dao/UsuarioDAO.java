@@ -22,7 +22,7 @@ public class UsuarioDAO {
 			return quantidade != null && quantidade > 0;
 		}
 	}
-	
+
 	public boolean existsById(long id) {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(u) FROM Usuario u WHERE u.id = ?1";

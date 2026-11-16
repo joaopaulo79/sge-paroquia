@@ -40,7 +40,7 @@ public class ClienteDAO {
 
 		}
 	}
-	
+
 	public Optional<Cliente> getByIdWithVeiculos(Long id) {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Cliente c LEFT JOIN FETCH c.veiculos WHERE c.id = :id";

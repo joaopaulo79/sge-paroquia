@@ -12,41 +12,41 @@ import javafx.stage.Stage;
 public class AlterarSenhaUsuarioController {
 	Long id;
 	Usuario usuario;
-	
+
 	public AlterarSenhaUsuarioController(Long id) {
 		this.id = id;
 		usuario = service.obterPorId(id);
 	}
-	
+
 	UsuarioService service = new UsuarioService();
-	
+
 	@FXML PasswordField passwordFieldSenhaAntiga;
 	@FXML PasswordField passwordFieldSenha;
 	@FXML PasswordField passwordFieldSenhaRepetida;
-	
+
 	@FXML Button btnCancelar;
 	@FXML Button btnSalvar;
-	
+
 	@FXML
 	private void initialize() {
 		btnCancelar.setOnAction(e -> {
 			Stage stage = (Stage) btnCancelar.getScene().getWindow();
 			stage.close();
 		});
-		
-		
+
+
 		btnSalvar.setOnAction(e -> {
 			try {
 				if (!passwordFieldSenha.getText().trim().equals(passwordFieldSenhaRepetida.getText().trim())) {
 					throw new IllegalArgumentException("Senha e senha repetida não são iguais");
 				}
-				
+
 				if (!service.autenticar(usuario.getLogin(), passwordFieldSenhaAntiga.getText().trim())) {
 					throw new IllegalArgumentException("Senha antiga inválida");
 				}
-				
+
 				service.alterarSenha(id, passwordFieldSenha.getText().trim());
-				
+
 				NavegacaoManager.getInstancia().abrirAlertaSucesso("Senha atualizada com sucesso!");
 				Stage stage = (Stage) btnSalvar.getScene().getWindow();
 				stage.close();

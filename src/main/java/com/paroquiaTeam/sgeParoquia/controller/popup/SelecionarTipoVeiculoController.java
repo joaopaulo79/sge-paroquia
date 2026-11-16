@@ -7,8 +7,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class SelecionarTipoVeiculoController {
-	private TipoVaga tipoSelecionado; 
-	
+	private TipoVaga tipoSelecionado;
+
 	@FXML VBox container;
 
     @FXML

@@ -13,7 +13,7 @@ import jakarta.persistence.EntityNotFoundException;
 
 public class UsuarioService {
 	UsuarioDAO dao = new UsuarioDAO();
-	
+
 	public List<Usuario> obterTodos() {
 		return dao.getAll();
 	}
@@ -34,12 +34,12 @@ public class UsuarioService {
 	public Optional<Usuario> buscarPorIdComCaixas(Long id) {
 		return dao.getByIdWithCaixas(id);
 	}
-	
+
 	public Usuario obterPorIdComCaixas(Long id) {
 		return buscarPorIdComCaixas(id)
 				.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado para o id "+id));
 	}
-	
+
 	public Optional<Usuario> buscarPorLogin(String login) {
 		return dao.getByLogin(login);
 	}
@@ -94,10 +94,10 @@ public class UsuarioService {
 		if (SenhaUtil.isSenhaBate(senhaNova, user.getSenha())) {
 			throw new IllegalArgumentException("Senha nova não pode ser igual à senha anterior");
 		}
-		
+
 		String senhaHash = SenhaUtil.hash(senhaNova);
 		user.setSenha(senhaHash);
-		
+
 		dao.update(user);
 	}
 
@@ -137,13 +137,13 @@ public class UsuarioService {
 		}
 		return SenhaUtil.isSenhaBate(senha, talvezUsuario.get().getSenha());
 	}
-		
+
 	private void validarNovoUsuario(DadosUsuario dados) {
 		validarDados(dados);
-		
+
 		validarSenha(dados.senha(), dados.login());
 	}
-	
+
 	private void validarDados(DadosUsuario dados) {
 		if (dados.nome() == null || dados.nome().isBlank()) {
 			throw new IllegalArgumentException("Nome é obrigatório");
@@ -162,7 +162,7 @@ public class UsuarioService {
 		if (senha == null || senha.isBlank()) {
 			throw new IllegalArgumentException("Senha é obrigatória");
 		}
-		
+
 		if (!SenhaUtil.validarRequisitosSenha(senha, login)) {
 			throw new IllegalArgumentException("Senha não atende requisitos.");
 		}

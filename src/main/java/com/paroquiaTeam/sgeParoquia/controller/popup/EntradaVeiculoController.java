@@ -37,51 +37,51 @@ public class EntradaVeiculoController {
 	DadosEntrada dados;
 	private Double valor = null;
 	LocalDateTime dataHoraEntrada = LocalDateTime.now();
-	
+
 	TipoReservaVaga reserva;
-	
+
 	VagaService vagaService = new VagaService();
 	EstadiaService estadiaService = new EstadiaService();
-	
+
 	public EntradaVeiculoController(DadosEntrada dados) {
 		this.dados = dados;
 	}
-	
+
 	@FXML VBox containerCards;
 	@FXML CheckBox checkAdiantarDiaria;
-	
+
 	@FXML Button btnConfirmar;
 	@FXML Button btnCancelar;
-	
+
 	@FXML TextArea areaTicket;
-	
+
 	@FXML
 	private void initialize() {
 		// Validando dados
 		if (dados == null) {
 			throw new IllegalArgumentException("Dados inválidos");
 		}
-	
+
 		// Verificando tipo de cliente, para escolher tipo de reserva
 		boolean sucessoReserva = definirReserva();
-		
+
 		// Se não deu para escolher reserva, fecha a tela
 		if (!sucessoReserva) {
 			Platform.runLater(() -> {
 	            Stage stage = (Stage) containerCards.getScene().getWindow();
 	            stage.close();
 	        });
-		} 
+		}
 		else {
 			// Sucesso na reserva, segue bala
 			carregarCards();
-			
+
 			Cliente cliente = dados.entidades().cliente();
 			if (cliente != null) {
 				if (cliente.getTipo() == TipoCliente.CONVENIADO) {
 					checkAdiantarDiaria.setText("Adiantar pagamento");
 				}
-				
+
 				// Mensalista não tem nada para adiantar
 				if (cliente.getTipo() == TipoCliente.MENSALISTA && !cliente.isAtivo()) {
 					checkAdiantarDiaria.setVisible(false);
@@ -90,19 +90,19 @@ public class EntradaVeiculoController {
 					checkAdiantarDiaria.setSelected(false);
 				}
 			}
-			
+
 			checkAdiantarDiaria.setOnAction(e -> {
 				onAcaoCheckAdiantarDiaria(checkAdiantarDiaria.isSelected());
 				carregarTicket();
 			});
-			
+
 			btnConfirmar.setOnAction(e -> {
 				try {
 					boolean registroTeveSucesso = registrarEntrada(reserva);
-					
+
 					if (registroTeveSucesso) {
 						NavegacaoManager.getInstancia().abrirAlertaSucesso("Entrada registrada");
-						
+
 						Stage stage = (Stage) btnConfirmar.getScene().getWindow();
 				        stage.close();
 					}
@@ -115,36 +115,36 @@ public class EntradaVeiculoController {
 				Stage stage = (Stage) btnCancelar.getScene().getWindow();
 		        stage.close();
 			});
-			
+
 			carregarTicket();
 		}
 	}
-	
+
 	private void carregarCards() {
 		containerCards.getChildren().clear();
 
 		Estadia e = new Estadia(dataHoraEntrada, null, valor, dados.placa());
 		containerCards.getChildren().add(new EstadiaCardFactory().criarCardEntrada(e));
-		
+
 		if (dados.entidades().veiculo() != null) {
 			containerCards.getChildren().add(
 					new VeiculoCardFactory().criarCardInformacoes(dados.entidades().veiculo()));
-			
+
 			if (dados.entidades().cliente() != null) {
 				containerCards.getChildren().add(
 						new ClienteCardFactory().criarCardInformacoes(dados.entidades().cliente()));
 			}
-			
+
 			if (dados.entidades().convenio() != null) {
 				containerCards.getChildren().add(
 						new ConvenioCardFactory().criarCardInformacoes(dados.entidades().convenio()));
 			}
 		}
 	}
-	
+
 	private void carregarTicket() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append("      PARÓQUIA NOSSA SENHORA      \n");
         sb.append("       APARECIDA - MONGAGUÁ       \n");
@@ -154,30 +154,30 @@ public class EntradaVeiculoController {
         sb.append("--------------------------------\n");
         sb.append("Entrada: ").append(dataHoraEntrada.format(formatter)).append("\n");
         sb.append("Placa:   ").append(dados.placa()).append("\n");
-        
+
         if (valor != null) {
             sb.append("Valor pago: ").append(StringUtil.formatarMoeda(valor)).append("\n");
         }
-        
+
         sb.append("--------------------------------\n\n");
         sb.append("   Guarde este ticket para a    \n");
         sb.append("             saída.             \n");
-        
+
         areaTicket.setText(sb.toString());
 	}
-	
-	private boolean definirReserva() {		
+
+	private boolean definirReserva() {
 		Cliente c = dados.entidades().cliente();
-		
+
 		if (c == null || c.getTipo() != TipoCliente.CONVENIADO) {
 			if (!vagaService.temEspaco(dados.tipo(), TipoReservaVaga.COMUM)) {
 				throw new IllegalStateException("Não há vagas livres compativeis no estacionamento");
 			}
-			
+
 			reserva = TipoReservaVaga.COMUM;
 			return true;
 		}
-		
+
 		// Cliente não é nulo, e é conveniado
 		if (c.getConvenio().getStatus() != StatusConvenio.ATIVO) {
 			String mensagem = "Convênio está desativado ou atrasado.\n"
@@ -191,7 +191,7 @@ public class EntradaVeiculoController {
 				return false; // como parar
 			}
 		}
-		
+
 		// Convenio está ativo
 		if (!vagaService.temEspacoConvenio(dados.tipo(), c.getConvenio().getId())) {
 			String mensagem = "Vagas de convênio esgotadas\n"
@@ -204,36 +204,36 @@ public class EntradaVeiculoController {
 				NavegacaoManager.getInstancia().abrirAlertaErro("Operação cancelada");
 				return false;
 			}
-		} 
-		
+		}
+
 		// Convenio esta ativo, e tem espaço
 		reserva = TipoReservaVaga.CONVENIO;
 		return true;
 	}
-	
+
 	private void onAcaoCheckAdiantarDiaria(boolean checkSelecionado) {
 		if (!checkSelecionado) {
 			valor = null;
 			carregarCards();
 			return;
 		}
-		
+
 		Cliente c = dados.entidades().cliente();
-		
+
 		TipoCliente tipoCliente;
 		if (c == null) tipoCliente = TipoCliente.AVULSO;
 		else tipoCliente = c.getTipo();
-		
+
 		// Cliente existe, é conveniado e entra em vaga do convenio
 		if (tipoCliente == TipoCliente.CONVENIADO && reserva == TipoReservaVaga.CONVENIO) {
 			valor = c.getConvenio().getCobrancaIndividual();
 			carregarCards();
 			return;
 		}
-		
+
 		boolean moto = (dados.tipo() == TipoVaga.MOTO);
 		valor = new PrecificacaoService().obterValorDiaria(moto, tipoCliente);
-		
+
 		carregarCards();
 	}
 
@@ -243,9 +243,9 @@ public class EntradaVeiculoController {
 				null,
 				valor,
 				dados.placa());
-		
+
 		estadiaService.validarEstadia(dadosEstadia);
-		
+
 		if (tipo == TipoReservaVaga.CONVENIO) {
 			if (!vagaService.temEspacoConvenio(dados.tipo(), dados.entidades().convenio().getId())) {
 				throw new IllegalStateException("Não há vagas livres compativeis no estacionamento");
@@ -255,14 +255,14 @@ public class EntradaVeiculoController {
 				throw new IllegalStateException("Não há vagas livres compativeis no estacionamento");
 			}
 		}
-		
+
 		DadosMovimentoCaixa dadosMovimento = null;
 		if (valor != null) {
 			String mensagem = "Pagamento referente ao adiantamento de entrada de veículo com placa '"
 					+ dados.placa() + "', ocorrido no dia "
 					+ StringUtil.extrairEFormatarData(dataHoraEntrada)
 					+ ", as " + StringUtil.extrairEFormatarHora(dataHoraEntrada);
-			
+
 			Long idCaixa = SessaoSistema.getInstancia().getCaixa().getId();
 			DadosMovimentoCaixa dTemp = new DadosMovimentoCaixa(
 					valor,
@@ -271,14 +271,14 @@ public class EntradaVeiculoController {
 					mensagem,
 					idCaixa,
 					null);
-			
+
 			EscolherFormaPagamentoController eFPC = NavegacaoManager
 					.getInstancia().abrirModal(Popup.ESCOLHERFORMAPAGAMENTO, dTemp);
-			
+
 			if (eFPC == null || eFPC.getFormaPagamento() == null) {
 			    return false; // Interrompe o método e não prossegue com o salvamento
 			}
-			
+
 			dadosMovimento = new DadosMovimentoCaixa(
 					valor,
 					eFPC.getFormaPagamento(),
@@ -287,15 +287,15 @@ public class EntradaVeiculoController {
 					idCaixa,
 					null);
 		}
-		
-		estadiaService.registrarEntrada(dadosEstadia, dadosMovimento);			
-		
+
+		estadiaService.registrarEntrada(dadosEstadia, dadosMovimento);
+
 		if (tipo == TipoReservaVaga.CONVENIO) {
 			vagaService.registrarEntradaConvenio(dados.tipo(), dados.entidades().convenio().getId(), dados.placa());
 		} else {
 			vagaService.registrarEntradaComum(dados.tipo(), dados.placa());
 		}
-		
+
 		return true;
 	}
 }

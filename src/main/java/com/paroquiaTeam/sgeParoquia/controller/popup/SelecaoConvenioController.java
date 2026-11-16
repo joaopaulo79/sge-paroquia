@@ -24,14 +24,14 @@ public class SelecaoConvenioController {
 	@FXML VBox vBoxCards;
 
 	DadosSelecaoConvenio dadosConvenio = null;
-	
+
 	@FXML
 	private void initialize() {
 		btnCadastrar.setVisible(false);
 		btnCadastrar.setManaged(false);
 		btnCadastrar.setDisable(true);
-		
-        gridPrincipal.getColumnConstraints().remove(2); 
+
+        gridPrincipal.getColumnConstraints().remove(2);
 
 		hBoxLabels.getChildren().addAll(
 				new Label("Nome"),
@@ -53,11 +53,11 @@ public class SelecaoConvenioController {
 
 	private void selecionar(DadosSelecaoConvenio dados) {
 		this.dadosConvenio = dados;
-		
+
 		Stage stage = (Stage) vBoxCards.getScene().getWindow();
 		stage.close();
 	}
-	
+
 	public DadosSelecaoConvenio getDadosConvenio() {
 		return dadosConvenio;
 	}
@@ -76,11 +76,11 @@ public class SelecaoConvenioController {
 					c.getCnpj(),
 					c.getNome(),
 					c.getCobrancaIndividual());
-			
+
 			onSelecionar.accept(dados);
 		});
 
-		
+
 		linhaPrincipal.getChildren().addAll(
 				new Label(c.getNome()),
 				new Label(" "+(c.getVagasCarro()+c.getVagasMoto())),

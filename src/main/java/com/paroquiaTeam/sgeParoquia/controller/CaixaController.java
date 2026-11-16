@@ -21,17 +21,17 @@ import javafx.scene.layout.StackPane;
 public class CaixaController {
 	private final StackPane containerCaixa;
 	private final CaixaService service = new CaixaService();
-	
+
 	private Consumer<Boolean> onStatusCaixaAlterado;
-	
+
 	public CaixaController(StackPane containerCaixa) {
         this.containerCaixa = containerCaixa;
     }
-	
+
 	public void setOnStatusCaixaAlterado(Consumer<Boolean> listener) {
         this.onStatusCaixaAlterado = listener;
     }
-	
+
 	@FXML Spinner<Double> spinnerFundoInicial;
 	@FXML Label labelOperador;
 	@FXML Label labelHora;
@@ -39,25 +39,25 @@ public class CaixaController {
 	public void carregarPainel() {
 		try {
 			boolean caixaAberto = SessaoSistema.getInstancia().temCaixaAberto();
-			
+
 			containerCaixa.getChildren().clear();
-	        
-	        String fxmlPath = caixaAberto ? 
-	            "/screens/dashboard/acoes-caixa-aberto.fxml" : 
+
+	        String fxmlPath = caixaAberto ?
+	            "/screens/dashboard/acoes-caixa-aberto.fxml" :
 	            "/screens/dashboard/acoes-caixa-fechado.fxml";
-	
+
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
 	        loader.setController(this);
-	
+
 	        Node painel = loader.load();
 	        containerCaixa.getChildren().add(painel);
-	
+
 	        if (caixaAberto) {
 	        	configurarTelaCaixaAberto();
 	        } else {
             	configurarTelaCaixaFechado();
 	        }
-		
+
 	        if (onStatusCaixaAlterado != null) onStatusCaixaAlterado.accept(caixaAberto);
 		} catch (Exception e) {
 			NavegacaoManager.getInstancia().abrirAlertaErro("Erro ao inicializar painel de caixa:\n" + e.getMessage());
@@ -68,13 +68,13 @@ public class CaixaController {
         Caixa caixaAtual = SessaoSistema.getInstancia().getCaixa();
         if (caixaAtual != null && labelOperador != null && labelHora != null) {
             labelOperador.setText(caixaAtual.getOperador().getNome());
-            String hora = String.format("%02d:%02d", 
-                caixaAtual.getDataHoraAbertura().getHour(), 
+            String hora = String.format("%02d:%02d",
+                caixaAtual.getDataHoraAbertura().getHour(),
                 caixaAtual.getDataHoraAbertura().getMinute());
             labelHora.setText(hora);
         }
     }
-	
+
 	private void configurarTelaCaixaFechado() {
 		if (spinnerFundoInicial != null) {
 			spinnerFundoInicial.setValueFactory(
@@ -86,10 +86,10 @@ public class CaixaController {
 		long idOperador = SessaoSistema.getInstancia().getUserLogado().getId();
 		double fundoInicial = spinnerFundoInicial.getValue();
 		DadosCaixa dados = new DadosCaixa(LocalDateTime.now(), null, fundoInicial, idOperador);
-		
+
 		try {
 			service.abrir(dados);
-			
+
 			carregarPainel();
 		} catch (Exception e) {
 			NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
@@ -103,7 +103,7 @@ public class CaixaController {
 
 		carregarPainel();
 	}
-	
+
 	public void registrarMovimentoCaixa() {
 		NavegacaoManager.getInstancia().abrirModal(Popup.REGISTRARMOVIMENTO);
 	}

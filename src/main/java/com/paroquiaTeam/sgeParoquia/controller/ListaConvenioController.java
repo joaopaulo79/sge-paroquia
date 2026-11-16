@@ -103,7 +103,7 @@ public class ListaConvenioController {
 	private void excluir(Long id) {
 		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
 			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
-		} 
+		}
 		else {
 			if (NavegacaoManager.getInstancia().abrirAlerta(
 					"Confirmação",
@@ -115,7 +115,7 @@ public class ListaConvenioController {
 					NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
 				}
 			}
-	
+
 			carregarConvenios();
 		}
 	}
@@ -165,14 +165,14 @@ public class ListaConvenioController {
 			if (dataVencimentoNova.isAfter(LocalDate.now())) {
 				convenioService.ativar(conv.getId());
 			}
-			
-			
+
+
 			carregarConvenios();
 		} catch (Exception e) {
 			NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
 		}
 	}
-	
+
 	// MOCK
 	private VBox criarCard(Convenio c, AcoesConvenio acoes) {
 		VBox card = new VBox();

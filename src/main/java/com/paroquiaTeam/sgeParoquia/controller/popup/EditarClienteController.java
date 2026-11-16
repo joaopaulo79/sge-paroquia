@@ -32,14 +32,14 @@ public class EditarClienteController {
 	public EditarClienteController(Long idCliente) {
 		this.idCliente = idCliente;
 		cliente = service.obterPorId(idCliente);
-		
+
 		if (this.cliente != null && this.cliente.getConvenio() != null) {
             this.idConv = this.cliente.getConvenio().getId();
         } else {
         	idConv = null;
         }
 	}
-	
+
 	@FXML VBox campoDadosMensalista;
 	@FXML VBox campoDadosConveniado;
 	@FXML VBox vBoxDadosConvenio;
@@ -51,17 +51,17 @@ public class EditarClienteController {
 	@FXML DatePicker pickerDataVencimento;
 	@FXML Spinner<Double> spinnerMensalidade;
 	@FXML Button btnSelecionarConvenio;
-	
+
 	@FXML Button btnCancelar;
 	@FXML Button btnSalvar;
-	
+
 	@FXML
 	private void initialize() {
 		textFieldNome.setText(cliente.getNome());
 		textFieldCpf.setText(cliente.getCpf());
 		textFieldTelefone.setText(cliente.getTelefone());
 		pickerDataVencimento.setValue(cliente.getDataVencimentoMensalidade());
-				
+
 		btnCancelar.setOnAction(e -> {
 			Stage stage = (Stage) btnCancelar.getScene().getWindow();
 			stage.close();
@@ -71,34 +71,34 @@ public class EditarClienteController {
 		choiceTipo.setValue(cliente.getTipo());
 		choiceTipo.setOnAction(e -> {
 			onAlterarTipo();
-			
+
 			Stage stage = (Stage) campoDadosConveniado.getScene().getWindow();
 			Platform.runLater(stage::sizeToScene);
 		});
-		
+
 		onAlterarTipo();
-		
+
 		spinnerMensalidade.setValueFactory(
 				new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 1000000, cliente.getValorMensalidade(), 0.01)
 			);
 		spinnerMensalidade.setEditable(true);
-		
+
 		btnSelecionarConvenio.setOnAction(e -> {
 			SelecaoConvenioController sCC = NavegacaoManager.getInstancia().abrirModal(Popup.SELECAOCONVENIO);
 			DadosSelecaoConvenio dadosNovos = sCC.getDadosConvenio();
-			
+
 			carregarConvenio(dadosNovos);
-			
+
 			Stage stage = (Stage) vBoxDadosConvenio.getScene().getWindow();
 			Platform.runLater(stage::sizeToScene);
 		});
-		
+
 		btnSalvar.setOnAction(e -> {
 			try {
-				if (choiceTipo.getValue() == TipoCliente.CONVENIADO && idConv == null) {					
+				if (choiceTipo.getValue() == TipoCliente.CONVENIADO && idConv == null) {
 					throw new IllegalStateException("Selecione um convênio");
 				}
-				
+
 				DadosCliente dadosNovos = new DadosCliente(
 						textFieldNome.getText(),
 						textFieldCpf.getText(),
@@ -108,7 +108,7 @@ public class EditarClienteController {
 						pickerDataVencimento.getValue(),
 						spinnerMensalidade.getValue(),
 						idConv);
-				
+
 				service.atualizar(dadosNovos, cliente);
 
 				NavegacaoManager.getInstancia().abrirAlertaSucesso("Editado com sucesso!");
@@ -120,12 +120,12 @@ public class EditarClienteController {
 			}
 		});
 	}
-	
+
 	private void carregarConvenio(DadosSelecaoConvenio dados) {
 		idConv = dados.id();
-		
+
 		vBoxDadosConvenio.getChildren().clear();
-		
+
 		// Temporário
 		// Substituir por card builder
 		vBoxDadosConvenio.getChildren().addAll(
@@ -135,11 +135,11 @@ public class EditarClienteController {
 				new Label("Cobrança individual: R$" + dados.cobrancaIndividual())
 				);
 	}
-	
+
 	private void onAlterarTipo() {
 		boolean isMensalista;
 		boolean isConveniado;
-		
+
 		TipoCliente tipo = choiceTipo.getValue();
 		if (tipo == TipoCliente.MENSALISTA) {
 			isMensalista = true;
@@ -154,10 +154,10 @@ public class EditarClienteController {
 
 		campoDadosMensalista.setVisible(isMensalista);
 		campoDadosMensalista.setManaged(isMensalista);
-		
+
 		campoDadosConveniado.setVisible(isConveniado);
 		campoDadosConveniado.setManaged(isConveniado);
-		
+
 		if (isConveniado) {
             if (cliente.getConvenio() != null && idConv == null) {
                 Convenio c = cliente.getConvenio();

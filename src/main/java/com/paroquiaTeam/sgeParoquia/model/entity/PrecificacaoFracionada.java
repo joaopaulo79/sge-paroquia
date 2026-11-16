@@ -115,20 +115,20 @@ public class PrecificacaoFracionada implements Calculavel {
 	public void setValorDiariaMoto(double valorDiariaMoto) {
 		this.valorDiariaMoto = valorDiariaMoto;
 	}
-	
+
 	public double calcular(long tempoEmMinutos, boolean ehMoto, boolean clienteEhDizimista) {
 		long tempoContabilizado;
-		
+
 		if (clienteEhDizimista) {
 			if (tempoEmMinutos <= 60) return 0.0;
 			tempoContabilizado = tempoEmMinutos - 60;
-			
-		} 
+
+		}
 		else {
 			if (tempoEmMinutos <= tolerancia) return 0.0;
 			tempoContabilizado = tempoEmMinutos;
 		}
-		
+
 		return escolherPreco(tempoContabilizado, ehMoto);
 	}
 

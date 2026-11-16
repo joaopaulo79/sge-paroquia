@@ -21,13 +21,13 @@ public class UsuarioCardFactory {
 		} else {
 			header.getStyleClass().add("card-header-inativo");
 		}
-		
-		
+
+
 
 		// Montando botões da linha principal
 		Button btnEditar = new Button("Editar");
 		Button btnAlterarStatus;
-		
+
 		if (!usuario.isStatus()) {
 			btnAlterarStatus = new Button("Ativar");
 			btnAlterarStatus.setOnAction(e -> acoes.onAtivar().accept(usuario.getId()) );
@@ -46,17 +46,17 @@ public class UsuarioCardFactory {
 		linhaPrincipal.getChildren().add(new Label(usuario.getNome()));
 		linhaPrincipal.getChildren().add(new Label(usuario.getTipo().toString()));
 		linhaPrincipal.getChildren().addAll(btnEditar, btnAlterarStatus);
-		
+
 		// Montando botões da linha secundária
 		Button btnExcluir = new Button("Excluir");
 		Button btnAlterarSenha = new Button("Alterar Senha");
-		
+
 		btnExcluir.setOnAction(e -> acoes.onExcluir().accept(usuario.getId()));
 		btnAlterarSenha.setOnAction(e -> acoes.onAlterarSenha().accept(usuario.getId()));
-		
+
 		VBox linhaSecundaria = new VBox();
 		HBox acoesSecundarias = new HBox();
-		
+
 		acoesSecundarias.getChildren().addAll(btnExcluir, btnAlterarSenha);
 		linhaSecundaria.getChildren().addAll(acoesSecundarias);
 

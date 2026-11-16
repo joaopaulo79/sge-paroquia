@@ -5,7 +5,7 @@ public enum TipoCliente {
 	DIZIMISTA("Dizimista"),
 	MENSALISTA("Mensalista"),
 	CONVENIADO("Conveniado");
-	
+
 	private final String nome;
 
 	private TipoCliente(String nome) {

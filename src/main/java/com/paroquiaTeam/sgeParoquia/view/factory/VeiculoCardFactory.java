@@ -11,14 +11,14 @@ public class VeiculoCardFactory {
 
 	public CardGenerico criarCardInformacoes(Veiculo veiculo) {
 		CardHeader header = new CardHeader(veiculo.getId());
-		
+
 		VBox conteudo = new VBox();
-		
+
 		conteudo.getChildren().addAll(
 				new Label("Marca: "+veiculo.getMarca()),
 				new Label("Modelo: "+veiculo.getModelo()),
 				new Label("Cor: "+veiculo.getCor()));
-		
+
 		CardGenerico card = new CardGenerico.Builder(header)
 				.comConteudo(conteudo)
 				.build();

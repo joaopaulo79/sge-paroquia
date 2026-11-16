@@ -10,15 +10,15 @@ import javafx.scene.layout.VBox;
 public class ClienteCardFactory {
 	public CardGenerico criarCardInformacoes(Cliente cliente) {
 		CardHeader header = new CardHeader(cliente.getId());
-		
+
 		VBox conteudo = new VBox();
-		
+
 		conteudo.getChildren().addAll(
 				new Label("Cpf: "+cliente.getCpf()),
 				new Label("Nome: "+cliente.getNome()),
 				new Label("Tipo: "+cliente.getTipo().toString())
 				);
-		
+
 		CardGenerico card = new CardGenerico.Builder(header)
 				.comConteudo(conteudo)
 				.build();

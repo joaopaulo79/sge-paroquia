@@ -41,10 +41,10 @@ public class Cliente {
 
 	@Column(name = "status_cliente", nullable = false)
 	private StatusCliente status;
-	
+
 	@Column(name = "data_vencimento_mensalidade", nullable = true)
 	private LocalDate dataVencimentoMensalidade;
-	
+
 	@Column(name = "valor_mensalidade", nullable = true)
 	private Double valorMensalidade;
 
@@ -142,7 +142,7 @@ public class Cliente {
 		return status == StatusCliente.DESATIVADO;
 	}
 
-	
+
 
 	public LocalDate getDataVencimentoMensalidade() {
 		return dataVencimentoMensalidade;

@@ -45,7 +45,7 @@ public class VagaDAO {
 
 		}
 	}
-	
+
 	public Vaga getFirstLivre(TipoVaga tipo, TipoReservaVaga reserva) {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "FROM Vaga v WHERE v.tipo = ?1 AND v.reserva = ?2 AND v.status = LIVRE";
@@ -56,7 +56,7 @@ public class VagaDAO {
 						.getSingleResultOrNull();
 		}
 	}
-	
+
 	public Vaga getFirstLivreByIdConvenio(Long idConvenio, TipoVaga tipo) {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT v FROM Vaga v WHERE v.convenio.id = ?1 AND v.tipo = ?2 AND v.status = ?3";
@@ -68,7 +68,7 @@ public class VagaDAO {
 						.getSingleResultOrNull();
 		}
 	}
-	
+
 	public List<Vaga> getAllByIdConvenio(Long idConvenio) {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT v FROM Vaga v WHERE v.convenio.id = ?1";
@@ -77,7 +77,7 @@ public class VagaDAO {
 						.getResultList();
 		}
 	}
-	
+
 	public List<Vaga> getAllByIdConvenioWithTipo(Long idConvenio, TipoVaga tipo) {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT v FROM Vaga v WHERE v.convenio.id = ?1 AND v.tipo = ?2";
@@ -87,7 +87,7 @@ public class VagaDAO {
 						.getResultList();
 		}
 	}
-	
+
 	public Optional<Vaga> getByPlaca(String placa) {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT v FROM Vaga v WHERE v.placa = ?1";
@@ -139,11 +139,11 @@ public class VagaDAO {
 						.setParameter(1, tipo)
 						.setParameter(2, reserva)
 						.getSingleResultOrNull();
-			
+
 			return quantidade != null && quantidade > 0;
 		}
 	}
-	
+
 	public boolean isThereVagaConvenioLivre(TipoVaga tipo, Long id) {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT COUNT(v) FROM Vaga v WHERE v.tipo = ?1 AND v.convenio.id = ?2 AND v.status = LIVRE";
@@ -151,7 +151,7 @@ public class VagaDAO {
 						.setParameter(1, tipo)
 						.setParameter(2, id)
 						.getSingleResultOrNull();
-			
+
 			return quantidade != null && quantidade > 0;
 		}
 	}
@@ -193,12 +193,12 @@ public class VagaDAO {
 	        }
 	    }
 	}
-	
+
 	public long batchSaveConvenio(TipoVaga tipo, Convenio conv, long quantidade) {
 		if (quantidade <= 0) {
 			return 0;
 		}
-		
+
 	    try (Session sessao = AppConfig.getSessionFactory().openSession()) {
 	        Transaction t = sessao.beginTransaction();
 	        try {
@@ -295,7 +295,7 @@ public class VagaDAO {
 			}
 		}
 	}
-	
+
 	public long batchDelete(List<Long> ids) {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			Transaction t = sessao.beginTransaction();

@@ -6,7 +6,7 @@ public enum TipoPagamento {
 	CREDITO("Crédito"),
 	PIX("PIX"),
 	PIXMAQUINA("PIX pela maquininha");
-	
+
 	private final String nome;
 
 	private TipoPagamento(String nome) {

@@ -25,7 +25,7 @@ public class ClienteService {
 		return buscarPorId(id)
 				.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado para o id "+id));
 	}
-	
+
 	public Optional<Cliente> buscarComVeiculosPorId(long id) {
 		return dao.getByIdWithVeiculos(id);
 	}
@@ -43,12 +43,12 @@ public class ClienteService {
 		return buscarPorCpf(cpf)
 				.orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado para o cpf "+cpf));
 	}
-	
+
 	public List<Cliente> obterTodos() {
 		return dao.getAll();
 	}
-	
-	
+
+
 
 	public void salvar(DadosCliente dados) {
 		validarClienteNovo(dados);
@@ -90,48 +90,48 @@ public class ClienteService {
 		} else {
 			cliente.setConvenio(null);
 		}
-		
+
 		dao.update(cliente);
 	}
 
 	public void ativar(Long id) {
 		Cliente cliente = obterComVeiculosPorId(id);
-		if (cliente.getTipo() == TipoCliente.MENSALISTA && 
+		if (cliente.getTipo() == TipoCliente.MENSALISTA &&
 				cliente.getDataVencimentoMensalidade().isBefore(LocalDate.now())) {
 			throw new IllegalStateException("Mensalidade do cliente atrasada. Não foi possível ativar");
 		}
-		
+
 		verificarSeVeiculosDoClienteEstaoNoPatio(cliente);
-		
+
 		cliente.setStatus(StatusCliente.ATIVO);
 		dao.update(cliente);
 	}
-	
+
 	public void marcarAtraso(Long id) {
 		Cliente cliente = obterComVeiculosPorId(id);
 		if (cliente.getTipo() != TipoCliente.MENSALISTA) {
 			throw new IllegalStateException("Cliente não é mensalista. Não foi possível marcar atraso");
 		}
-		
+
 		if (cliente.getDataVencimentoMensalidade().isBefore(LocalDate.now())) {
 			throw new IllegalStateException("Data de vencimento é posterior à data atual. Não foi possível marcar atraso");
 		}
-		
+
 		verificarSeVeiculosDoClienteEstaoNoPatio(cliente);
-		
+
 		cliente.setStatus(StatusCliente.ATRASO);
 		dao.update(cliente);
 	}
-	
+
 	public void desativar(Long id) {
 		Cliente cliente = obterComVeiculosPorId(id);
 		verificarSeVeiculosDoClienteEstaoNoPatio(cliente);
 
-		
+
 		cliente.setStatus(StatusCliente.DESATIVADO);
 		dao.update(cliente);
 	}
-	
+
 	public void excluir(Long id) {
 		Cliente cliente = obterComVeiculosPorId(id);
 		if (!cliente.getVeiculos().isEmpty()) {
@@ -149,7 +149,7 @@ public class ClienteService {
 			}
 		}
 	}
-	
+
 	private void validarAtualizacaoCliente(DadosCliente dados, Cliente cliente) {
 		validarDadosCliente(dados);
 
@@ -185,21 +185,21 @@ public class ClienteService {
 		if (dados.status() == null) {
 	        throw new IllegalArgumentException("O status do cliente é obrigatório.");
 		}
-		
+
 		if (dados.tipo() == TipoCliente.MENSALISTA) {
 			if (dados.telefone() == null || dados.telefone().isBlank()) {
 		        throw new IllegalArgumentException("Telefone é obrigatório para mensalistas e dizimistas.");
 			}
-			
+
 			if (dados.dataVencimentoMensalidade() == null) {
 		        throw new IllegalArgumentException("Data de vencimento de mensalidade é obrigatória para mensalistas.");
 			}
-			
+
 			if (dados.valorMensalidade() == null) {
 		        throw new IllegalArgumentException("Valor de mensalidade é obrigatório para mensalistas.");
 			}
 		}
-		
+
 		if (dados.tipo() == TipoCliente.DIZIMISTA) {
 			if (dados.telefone() == null || dados.telefone().isBlank()) {
 		        throw new IllegalArgumentException("Telefone é obrigatório para mensalistas e dizimistas.");

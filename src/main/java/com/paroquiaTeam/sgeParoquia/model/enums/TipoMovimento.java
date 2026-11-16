@@ -5,7 +5,7 @@ public enum TipoMovimento {
 	REFORCO("Reforço"),
 	DESPESA("Despesa"),
 	ENTRADA("Entrada");
-	
+
 	private final String nome;
 
 	private TipoMovimento(String nome) {

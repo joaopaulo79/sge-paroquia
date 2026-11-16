@@ -22,7 +22,7 @@ public class EstadiaCardFactory {
 				new Label("Data de entrada: " + formatarData(estadia.getDataHoraEntrada())),
 				new Label("Hora de entrada: " + formatarHora(estadia.getDataHoraEntrada()))
 		);
-		
+
 		if (estadia.getValor() != null) {
 			conteudo.getChildren().add(
 					new Label("Valor: " + StringUtil.formatarMoeda(estadia.getValor())));
@@ -43,7 +43,7 @@ public class EstadiaCardFactory {
 
 		String textoValor = "Valor: " + StringUtil.formatarMoeda(estadia.getValor())
 							+ ((pago) ? " (já pago)" : "");
-		
+
 		conteudo.getChildren().addAll(
 				new Label("Placa: " + estadia.getPlacaVeiculo()),
 				new Label("Data de entrada: " + formatarData(estadia.getDataHoraEntrada())),

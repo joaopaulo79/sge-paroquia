@@ -36,7 +36,7 @@ public class CaixaService {
 		}
 		return fechou;
 	}
-	
+
 	public Caixa obterPorId(long id) {
 		return buscarPorId(id)
 				.orElseThrow(() -> new EntityNotFoundException("Caixa não encontrado para o id "+id));
@@ -50,7 +50,7 @@ public class CaixaService {
 		return buscarUltimo()
 				.orElseThrow(() -> new EntityNotFoundException("Nenhum caixa encontrado"));
 	}
-	
+
 	public Optional<Caixa> buscarUltimoComOperador() {
 		return dao.getLastWithOperador();
 	}
@@ -59,7 +59,7 @@ public class CaixaService {
 		return buscarUltimoComOperador()
 				.orElseThrow(() -> new EntityNotFoundException("Nenhum caixa encontrado"));
 	}
-	
+
 	public List<Caixa> obterTodos() {
 		return dao.getAll();
 	}
@@ -84,7 +84,7 @@ public class CaixaService {
 
 		caixa.setDataHoraFechamento(dataHoraFechamento);
 		dao.update(caixa);
-		
+
 		SessaoSistema.getInstancia().setCaixa(null);;
 	}
 

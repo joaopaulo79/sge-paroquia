@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
 
 public class ListaMovimentoCaixaController {
 	MovimentoCaixaService service = new MovimentoCaixaService();
-	
+
 	Long idCaixa;
 	Caixa caixa;
 	boolean isCaixaAberto;
@@ -30,12 +30,12 @@ public class ListaMovimentoCaixaController {
 		caixa = new CaixaService().obterPorId(idCaixa);
 		isCaixaAberto = caixa.getDataHoraFechamento() == null;
 	}
-	
+
 	@FXML GridPane gridPrincipal;
 	@FXML Button btnCadastrar;
 	@FXML HBox hBoxLabels;
 	@FXML VBox vBoxCards;
-	
+
 	@FXML
 	private void initialize() {
 		if (isCaixaAberto) {
@@ -43,37 +43,37 @@ public class ListaMovimentoCaixaController {
 				NavegacaoManager.getInstancia().abrirModal(Popup.REGISTRARMOVIMENTO);
 				carregarMovimentos();
 			});
-		} 
+		}
 		else {
 			btnCadastrar.setVisible(false);
 			btnCadastrar.setManaged(false);
 			btnCadastrar.setDisable(true);
-			
-	        gridPrincipal.getColumnConstraints().remove(2); 
-		} 
-		
+
+	        gridPrincipal.getColumnConstraints().remove(2);
+		}
+
 		hBoxLabels.getChildren().addAll(
 				new Label("Valor"),
 				new Label("Tipo Movimento"),
 				new Label(""));
-		
+
 		carregarMovimentos();
 	}
-	
+
 	private void carregarMovimentos() {
 		vBoxCards.getChildren().clear();
 		List<MovimentoCaixa> movimentos = service.buscarPorCaixa(idCaixa);
-		
+
 		for (MovimentoCaixa m : movimentos) {
 			vBoxCards.getChildren().add(new MovimentoCaixaCardFactory().
 					criarCardExpandivel(m, this::onExcluir, isCaixaAberto));
 		}
 	}
-	
+
 	private void onExcluir(Long idMovimento) {
 		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
 			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
-		} 
+		}
 		else {
 			if (NavegacaoManager.getInstancia().abrirAlertaConfirmacao("Tem certeza que deseja excluir este movimento?")) {
 				service.excluir(idMovimento);

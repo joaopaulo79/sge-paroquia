@@ -12,12 +12,12 @@ public class StringUtil {
 
 	    return formatoMoeda.format(valor);
 	}
-	
+
 	public static String extrairEFormatarData(LocalDateTime dataHora) {
 		DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		return dataHora.format(formatoData);
 	}
-	
+
 	public static String extrairEFormatarHora(LocalDateTime dataHora) {
 		DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
 		return dataHora.format(formatoHora);

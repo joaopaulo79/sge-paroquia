@@ -31,15 +31,15 @@ public class BaseController {
 	@FXML private ToggleButton btnNavVagas;
 	@FXML private ToggleButton btnNavUsuarios;
 	@FXML private ToggleButton btnNavCaixas;
-	
+
 	@FXML private Label labelTitulo;
-	
+
 	@FXML private HBox hBoxUsuario;
 	@FXML private Label labelUsuario;
 	@FXML private Label labelLetraUsuario;
-	
+
 	private ContextMenu menuLogout;
-	
+
 	private static BaseController instance;
 
 	private Tela telaAtual;
@@ -73,7 +73,7 @@ public class BaseController {
 		btnNavUsuarios.setOnAction(event -> navegar(event, Tela.USUARIOS));
 
 		configurarMenuDropdown();
-		
+
 		instance = this;
 	}
 
@@ -96,32 +96,32 @@ public class BaseController {
 		sideBar.setManaged(status);
 		sideBar.setVisible(status);
 	}
-	
+
 	private void onSucessoLogin() {
 		Usuario u = SessaoSistema.getInstancia().getUserLogado();
-		
+
 		labelUsuario.setText(u.getLogin());
 		labelLetraUsuario.setText(u.getLogin().toUpperCase().substring(0, 1));
 		hBoxUsuario.setVisible(true);
-		
+
 		setSideBar(true);
-		
+
 		boolean isAdmin = u.getTipo() == TipoUsuario.ADMINISTRADOR;
-		
+
 		btnNavUsuarios.setManaged(isAdmin);
 		btnNavUsuarios.setVisible(isAdmin);
 		btnNavUsuarios.setDisable(!isAdmin);
-		
+
 		NavegacaoManager.getInstancia().navegarPara(Tela.DASHBOARD);
 	}
-	
+
 	private void configurarMenuDropdown() {
         menuLogout = new ContextMenu();
-        
+
         MenuItem itemSair = new MenuItem("Sair (Realizar Logout)");
         itemSair.setStyle("-fx-cursor: hand;");
         itemSair.setOnAction(event -> executarLogout());
-        
+
         menuLogout.getItems().add(itemSair);
 
         // Ao clicar no HBox do usuário, exibe o dropdown logo abaixo dele
@@ -137,10 +137,10 @@ public class BaseController {
 
     private void executarLogout() {
         SessaoSistema.getInstancia().encerrarSessao();
-        
+
         hBoxUsuario.setVisible(false);
 		setSideBar(false);
-        
+
 		LoginController loginController = NavegacaoManager.getInstancia().navegarPara(Tela.LOGIN);
 		loginController.setOnSucessoLogin(this::onSucessoLogin);
     }

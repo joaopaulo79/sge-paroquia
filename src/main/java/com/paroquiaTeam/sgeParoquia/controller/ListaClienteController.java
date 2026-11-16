@@ -151,7 +151,7 @@ public class ListaClienteController {
 			if (c.getTipo() == TipoCliente.CONVENIADO) {
 				idConv = c.getConvenio().getId();
 			}
-			
+
 			DadosCliente dadosNovos = new DadosCliente(
 					c.getNome(),
 					c.getCpf(),
@@ -170,7 +170,7 @@ public class ListaClienteController {
 			NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
 		}
 	}
-	
+
 	// MOCK
 	private VBox criarCard(Cliente c, AcoesCliente acoes) {
 		VBox card = new VBox();
@@ -194,16 +194,16 @@ public class ListaClienteController {
 		}
 
 		btnExcluir.setOnAction(e -> acoes.onExcluir().accept(c.getId()) );
-		
-		
+
+
 		if (c.getTipo() == TipoCliente.MENSALISTA) {
 			Button btnPagamento = new Button("Registrar Pagamento");
-			
+
 			btnPagamento.setOnAction(e -> acoes.onRegistrarPagamento().accept(c));
-			
+
 			linhaSecundaria.getChildren().add(btnPagamento);
 		}
-		
+
 
 		linhaPrincipal.getChildren().addAll(
 				new Label(c.getNome()),
@@ -211,7 +211,7 @@ public class ListaClienteController {
 				btnEditar,
 				btnAlterarStatus
 				);
-		
+
 		linhaSecundaria.getChildren().addAll(
 				btnExcluir
 				);

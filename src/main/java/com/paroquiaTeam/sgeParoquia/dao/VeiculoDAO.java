@@ -50,7 +50,7 @@ public class VeiculoDAO {
 
 		}
 	}
-	
+
 	public Optional<Veiculo> getByPlacaWithClienteEConvenio(String placa) {
 	    try (Session sessao = AppConfig.getSessionFactory().openSession()){
 	        String query = "SELECT DISTINCT v FROM Veiculo v "
@@ -72,7 +72,7 @@ public class VeiculoDAO {
 
 		}
 	}
-	
+
 	public List<Veiculo> getAllWithClientes() {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT v FROM Veiculo v JOIN FETCH v.cliente";

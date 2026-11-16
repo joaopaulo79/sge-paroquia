@@ -18,7 +18,7 @@ public class NavegacaoManager {
     private static NavegacaoManager instancia;
     private AnchorPane containerPrincipal;
     private Label labelTitulo;
-    
+
     private NavegacaoManager() {}
 
     public static NavegacaoManager getInstancia() {
@@ -31,7 +31,7 @@ public class NavegacaoManager {
     public void setContainerPrincipal(AnchorPane container) {
         this.containerPrincipal = container;
     }
-    
+
     public void setLabelTitulo(Label labelTitulo) {
     	this.labelTitulo = labelTitulo;
     };
@@ -39,11 +39,11 @@ public class NavegacaoManager {
     public <T> T navegarPara(Tela tela) {
     	return navegarPara(tela, null);
     }
-    
+
     public <T, P> T navegarPara(Tela tela, P parametro) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(tela.getPathFxml()));
-            
+
             Class<?> classeController = tela.getClasseController();
             Object instanciaController;
             if (parametro != null) {
@@ -53,7 +53,7 @@ public class NavegacaoManager {
                 // Se parâmetro for nulo, usa o construtor padrão sem argumentos
                 instanciaController = classeController.getDeclaredConstructor().newInstance();
             }
-            
+
             loader.setController(instanciaController);
 
             Parent root = loader.load();
@@ -64,9 +64,9 @@ public class NavegacaoManager {
             AnchorPane.setRightAnchor(root, 0.0);
 
             containerPrincipal.getChildren().setAll(root);
-            
+
             labelTitulo.setText(tela.getTitulo());
-            
+
             // Alteração de título que espera que o Scene exista
             Platform.runLater(() -> {
                 if (containerPrincipal.getScene() != null && containerPrincipal.getScene().getWindow() != null) {
@@ -168,11 +168,11 @@ public class NavegacaoManager {
     public void abrirAlertaSucesso(String mensagem) {
     	abrirAlerta("Sucesso", mensagem, AlertType.INFORMATION);
     }
-    
+
     public boolean abrirAlertaConfirmacao(String mensagem) {
     	return abrirAlerta("Confirmação", mensagem, AlertType.CONFIRMATION);
     }
-    
+
     public void abrirAlertaSemAutorizacao() {
     	String mensagem = "Somente administradores podem realizar esta operação";
     	abrirAlertaErro(mensagem);

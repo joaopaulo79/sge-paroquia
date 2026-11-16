@@ -15,34 +15,34 @@ import javafx.stage.Stage;
 public class CadastroUsuarioBaseController {
 	UsuarioService service = new UsuarioService();
 	boolean cadastrou = false;
-	
+
 	@FXML TextField textFieldNome;
 	@FXML TextField textFieldLogin;
 	@FXML PasswordField passwordFieldSenha;
 	@FXML PasswordField passwordFieldSenhaRepetida;
-	
+
 	@FXML RadioButton radioOperador;
 	@FXML RadioButton radioAdministrador;
-	
+
 	@FXML Button btnCancelar;
 	@FXML Button btnSalvar;
-	
+
 	@FXML
 	private void initialize() {
 		btnCancelar.setVisible(false);
 		btnCancelar.setManaged(false);
 		btnCancelar.setDisable(true);
-		
+
 		radioOperador.setDisable(true);
 		radioAdministrador.setDisable(true);
 		radioAdministrador.setSelected(true);
-		
+
 		btnSalvar.setOnAction(e -> {
-			try {				
+			try {
 				if (!passwordFieldSenha.getText().trim().equals(passwordFieldSenhaRepetida.getText().trim())) {
 					throw new IllegalArgumentException("Senha e senha repetida não são iguais");
 				}
-				
+
 				DadosUsuario dados = new DadosUsuario(
 						textFieldNome.getText().trim(),
 						textFieldLogin.getText().trim(),
@@ -50,9 +50,9 @@ public class CadastroUsuarioBaseController {
 						true,
 						TipoUsuario.ADMINISTRADOR
 						);
-				
+
 				service.salvar(dados);
-				
+
 				NavegacaoManager.getInstancia().abrirAlertaSucesso("Cadastrado com sucesso!");
 				cadastrou = true;
 				Stage stage = (Stage) btnSalvar.getScene().getWindow();
@@ -63,7 +63,7 @@ public class CadastroUsuarioBaseController {
 		});
 	}
 
-	
+
 	public boolean getCadastrou() {
 		return cadastrou;
 	}

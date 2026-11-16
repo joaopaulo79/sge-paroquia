@@ -29,7 +29,7 @@ public class VeiculoService {
 		return buscarPorPlaca(placa)
 				.orElseThrow(() -> new EntityNotFoundException("Veiculo não encontrado para a placa "+placa));
 	}
-	
+
 	public Optional<Veiculo> buscarPorPlacaComClienteEConvenio(String placa) {
 		return dao.getByPlacaWithClienteEConvenio(placa);
 	}
@@ -38,7 +38,7 @@ public class VeiculoService {
 		return buscarPorPlacaComClienteEConvenio(placa)
 				.orElseThrow(() -> new EntityNotFoundException("Veiculo não encontrado para a placa "+placa));
 	}
-	
+
 	public List<Veiculo> obterTodos() {
 		return dao.getAll();
 	}
@@ -74,7 +74,7 @@ public class VeiculoService {
 
 	public void excluir(Long id) {
 		Veiculo veiculo = obterPorId(id);
-		
+
 		VagaService vService = new VagaService();
 		if (vService.veiculoEstaNoPatio(veiculo.getPlaca())) {
 			throw new IllegalStateException("Não foi possível excluir veículo pois está no pátio");

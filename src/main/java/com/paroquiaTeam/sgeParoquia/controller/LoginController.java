@@ -42,29 +42,29 @@ public class LoginController {
 				SessaoSistema.getInstancia().setUserLogado(usuario);
 
 		    	ajustarCaixa(usuario);
-		    	
+
 				if (onSucessoLogin != null) {
 					onSucessoLogin.run();
 				}
 			}
 		}
-		
-		
+
+
 	}
-	
+
 	private void ajustarCaixa(Usuario u) {
 		CaixaService caixaService = new CaixaService();
 		// Só vamos fazer algo se último caixa não fechou
     	if (!caixaService.ultimoCaixaFechou()) {
-    		
+
     		Optional<Caixa> talvezCaixa = caixaService.buscarUltimoComOperador();
-    		
+
     		if (talvezCaixa.isPresent()) {
     			Caixa caixa = talvezCaixa.get();
-    			
+
     			if (caixa.getOperador().getId() == u.getId()) {
     				SessaoSistema.getInstancia().setCaixa(caixa);
-    				
+
     				String mensagem = "Seu último caixa não foi fechado antes de encerrar o sistema. O caixa será restaurado";
     				NavegacaoManager.getInstancia().abrirAlerta("Aviso", mensagem, AlertType.WARNING);
     			}

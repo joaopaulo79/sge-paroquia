@@ -22,7 +22,7 @@ public class RegistrarMovimentoCaixaController {
 	public RegistrarMovimentoCaixaController() {
 		dadosImutaveis = null;
 	}
-	
+
 	public RegistrarMovimentoCaixaController(DadosMovimentoCaixa dadosImutaveis) {
 		this.dadosImutaveis = dadosImutaveis;
 	}

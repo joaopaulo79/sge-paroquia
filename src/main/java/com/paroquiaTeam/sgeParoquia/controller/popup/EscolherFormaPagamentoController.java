@@ -21,9 +21,9 @@ public class EscolherFormaPagamentoController {
 	public EscolherFormaPagamentoController(DadosMovimentoCaixa dadosImutaveis) {
 		this.dadosImutaveis = dadosImutaveis;
 	}
-	
+
 	TipoPagamento formaPagamentoEscolhida = null;
-	
+
 	MovimentoCaixaService service = new MovimentoCaixaService();
 
 	@FXML Spinner<Double> spinnerValor;
@@ -38,7 +38,7 @@ public class EscolherFormaPagamentoController {
 		if (!SessaoSistema.getInstancia().temCaixaAberto()) {
 			throw new IllegalStateException("É necessário ter um caixa aberto para registrar um movimento");
 		}
-		
+
 		double valorInicial;
 
 		if (dadosImutaveis.valor() == null) {
@@ -78,7 +78,7 @@ public class EscolherFormaPagamentoController {
 		btnSalvar.setOnAction(e -> {
 			try {
 				formaPagamentoEscolhida = choiceFormaPagamento.getValue();
-				
+
 				Stage stage = (Stage) btnSalvar.getScene().getWindow();
 				stage.close();
 
@@ -87,7 +87,7 @@ public class EscolherFormaPagamentoController {
 			}
 		});
 	}
-	
+
 	public TipoPagamento getFormaPagamento() {
 		return formaPagamentoEscolhida;
 	}

@@ -24,7 +24,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         System.out.println("JavaFX iniciou");
-        
+
         if (houveErroNaImpressora()) {
         	NavegacaoManager.getInstancia().abrirAlertaErro("Impressora térmica não funcional");
         	System.out.println("Falha ao inicializar impressora térmica");
@@ -32,7 +32,7 @@ public class Main extends Application {
         else if (!initialize()) {
         	NavegacaoManager.getInstancia().abrirAlertaErro("Valores iniciais não foram inicializados. Encerrando...");
         	System.out.println("Falha ao inicializar valores cruciais");
-        } 
+        }
         else {
         	System.out.println("Sucesso!");
 
@@ -53,40 +53,40 @@ public class Main extends Application {
     }
 
 
-    private boolean initialize() {    	
+    private boolean initialize() {
         System.out.println("\nInicializando valores cruciais...");
     	boolean sucesso = true;
-    	
+
     	UsuarioDAO usuarioDao = new UsuarioDAO();
     	if (!usuarioDao.existsAnyAdministrador()) {
-    		NavegacaoManager.getInstancia().abrirAlerta("Alerta", 
-    				"Não há nenhum administrador cadastrado.\nIniciando cadastro de usuário base", 
+    		NavegacaoManager.getInstancia().abrirAlerta("Alerta",
+    				"Não há nenhum administrador cadastrado.\nIniciando cadastro de usuário base",
     				AlertType.INFORMATION);
-    		
+
     		CadastroUsuarioBaseController cUBC = NavegacaoManager
     				.getInstancia().abrirModal(Popup.CADASTRARUSUARIOBASE);
-    		
+
     		if (!cUBC.getCadastrou()) sucesso = false;
     	}
-    	
+
     	EstacionamentoDAO estacionamentoDao = new EstacionamentoDAO();
     	if (!estacionamentoDao.exists()) {
     		Estacionamento estacionamento = new Estacionamento(0, TipoPrecificacao.FRACIONADA);
     		estacionamentoDao.save(estacionamento);
     	}
-    	
+
     	PrecificacaoService precServ = new PrecificacaoService();
     	if (precServ.buscarPrecificacaoFracionada().isEmpty()) {
-    		NavegacaoManager.getInstancia().abrirAlerta("Alerta", 
-    				"Não há nenhuma precificação cadastrada.\nIniciando cadastro de precificação inicial", 
+    		NavegacaoManager.getInstancia().abrirAlerta("Alerta",
+    				"Não há nenhuma precificação cadastrada.\nIniciando cadastro de precificação inicial",
     				AlertType.INFORMATION);
-    		
+
     		CadastroPrecificacaoInicialController cPIC = NavegacaoManager
     				.getInstancia().abrirModal(Popup.CADASTRARPRECIFICACAOINICIAL);
-    		
+
     		if (!cPIC.getCadastrou()) sucesso = false;
     	}
-    	
+
     	return sucesso;
     }
 
@@ -95,7 +95,7 @@ public class Main extends Application {
     	if (!NavegacaoManager.getInstancia().abrirAlertaConfirmacao("Testar impressora térmica?")) {
     		return false;
     	}
-    	
+
     	try {
             String nome = AppConfig.get("impressora.nome", "").trim();
             new ImpressaoService(nome).imprimirTeste();
@@ -104,12 +104,12 @@ public class Main extends Application {
                 "Falha ao enviar para a impressora:\n" + e.getMessage());
             return true;
         }
-    	
+
     	NavegacaoManager.getInstancia().abrirAlerta("AVISO", "Verifique se os caracteres do ticket estão corretos", AlertType.INFORMATION);
-    	
+
     	return !NavegacaoManager.getInstancia().abrirAlertaConfirmacao("O ticket foi impresso corretamente?");
     }
-    
+
     public static void main(String[] args) {
     	launch(args);
     }

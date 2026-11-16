@@ -12,27 +12,27 @@ import com.paroquiaTeam.sgeParoquia.view.components.CardGenerico;
 import com.paroquiaTeam.sgeParoquia.view.factory.UsuarioCardFactory;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ListaUsuarioController {
 	UsuarioService service = new UsuarioService();
-	
+
 	@FXML Button btnCadastrar;
 	@FXML HBox hBoxLabels;
 	@FXML VBox vBoxCards;
-	
-	@FXML 
+
+	@FXML
 	private void initialize() {
 		btnCadastrar.setOnAction(e -> {
 			try {
 				if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
 					throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
 				}
-				
+
 				NavegacaoManager.getInstancia().abrirModal(Popup.CADASTRARUSUARIO);
 			} catch (Exception e2) {
 				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
@@ -44,10 +44,10 @@ public class ListaUsuarioController {
 				new Label("Nome"),
 				new Label("Tipo"),
 				new Label("Ações"));
-		
+
 		carregarUsuarios();
 	}
-	
+
 	private void ativar(Long id) {
 		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
 			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
@@ -63,7 +63,7 @@ public class ListaUsuarioController {
 			} catch (Exception e2) {
 				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
 			}
-			
+
 			carregarUsuarios();
 		}
 	}
@@ -79,15 +79,15 @@ public class ListaUsuarioController {
 						"Tem certeza que deseja desativar o usuário?",
 						AlertType.CONFIRMATION)) {
 					service.desativar(id);
-				} 
+				}
 			} catch (Exception e2) {
 				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getMessage());
 			}
-	
+
 			carregarUsuarios();
 		}
 	}
-	
+
 	private void editar(Long id) {
 		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
 			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
@@ -101,7 +101,7 @@ public class ListaUsuarioController {
 			carregarUsuarios();
 		}
 	}
-	
+
 	private void excluir(Long id) {
 		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
 			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
@@ -111,7 +111,7 @@ public class ListaUsuarioController {
 				if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
 					throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
 				}
-				
+
 				if (NavegacaoManager.getInstancia().abrirAlerta(
 						"Confirmação",
 						"Tem certeza que deseja excluir o usuário?",
@@ -124,7 +124,7 @@ public class ListaUsuarioController {
 			carregarUsuarios();
 		}
 	}
-	
+
 	private void alterarSenha(Long id) {
 		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
 			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
@@ -134,7 +134,7 @@ public class ListaUsuarioController {
 				if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
 					throw new IllegalStateException("Usuário logado não possuí permissão para realizar esta ação");
 				}
-				
+
 				NavegacaoManager.getInstancia().abrirModal(Popup.ALTERARSENHAUSUARIO, id);
 			} catch (Exception e) {
 				NavegacaoManager.getInstancia().abrirAlertaErro(e.getMessage());
@@ -143,11 +143,11 @@ public class ListaUsuarioController {
 			carregarUsuarios();
 		}
 	}
-	
+
 	private void carregarUsuarios() {
 		vBoxCards.getChildren().clear();
 		List<Usuario> usuarios = service.obterTodos();
-		
+
 		AcoesUsuario acoes = new AcoesUsuario(
 				this::editar,
 				this::excluir,
@@ -155,7 +155,7 @@ public class ListaUsuarioController {
 				this::desativar,
 				this::alterarSenha
 				);
-		
+
 		UsuarioCardFactory cardFactory = new UsuarioCardFactory();
 		for (Usuario u : usuarios) {
 			CardGenerico card = cardFactory.criarCardExpandivel(u, acoes);

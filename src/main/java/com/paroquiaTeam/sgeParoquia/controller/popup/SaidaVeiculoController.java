@@ -38,27 +38,27 @@ public class SaidaVeiculoController {
 	boolean precisaRealizarPagamento = true;
 	Double valor = null;
 	LocalDateTime dataHoraSaida = LocalDateTime.now();;
-	
+
 	// Vaga que o veículo ocupa, e estadia relacionada
 	Vaga vaga;
 	Estadia estadia;
-	
+
 	VagaService vagaService = new VagaService();
 	EstadiaService estadiaService = new EstadiaService();
-	
+
 	public SaidaVeiculoController(DadosSaida dados) {
 		this.dados = dados;
-		
+
 		vaga = vagaService.obterPorPlaca(dados.placa());
 		estadia = estadiaService.obterPorPlaca(dados.placa());
 	}
-	
+
 	@FXML VBox containerCards;
 	@FXML CheckBox checkAdiantarDiaria;
-	
+
 	@FXML Button btnConfirmar;
 	@FXML Button btnCancelar;
-	
+
 	@FXML TextArea areaTicket;
 
 	@FXML
@@ -67,30 +67,30 @@ public class SaidaVeiculoController {
 		checkAdiantarDiaria.setManaged(false);
 		checkAdiantarDiaria.setDisable(true);
 		checkAdiantarDiaria.setSelected(false);
-		
+
 		if (!vagaService.veiculoEstaNoPatio(dados.placa())) {
 			throw new IllegalStateException("Veículo não está no pátio, não foi possível registrar saída");
 		}
-		
+
 		// Validando dados
 		if (dados == null) {
 			throw new IllegalArgumentException("Dados inválidos");
 		}
-		
+
 		if (estadia.getDataHoraSaida() != null) {
 			throw new IllegalStateException("Última estadia deste veículo, teve saída");
 		}
-		
+
 		calcularValor();
-		
-		
+
+
 		btnConfirmar.setOnAction(e -> {
 			try {
 				boolean registroTeveSucesso = registrarSaida();
 
 				if (registroTeveSucesso) {
 					NavegacaoManager.getInstancia().abrirAlertaSucesso("Saída registrada");
-					
+
 					Stage stage = (Stage) btnConfirmar.getScene().getWindow();
 			        stage.close();
 				}
@@ -99,19 +99,19 @@ public class SaidaVeiculoController {
 				e2.printStackTrace();
 			}
 		});
-		
+
 		btnCancelar.setOnAction(e -> {
 			Stage stage = (Stage) btnCancelar.getScene().getWindow();
 	        stage.close();
 		});
-		
+
 		carregarCards();
 		carregarTicket();
 	}
-	
+
 	private void carregarTicket() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append("      PARÓQUIA NOSSA SENHORA      \n");
         sb.append("       APARECIDA - MONGAGUÁ       \n");
@@ -123,84 +123,84 @@ public class SaidaVeiculoController {
         sb.append("Saída: ").append(dataHoraSaida.format(formatter)).append("\n");
         sb.append("Placa:   ").append(dados.placa()).append("\n");
         sb.append("Valor pago: ").append(StringUtil.formatarMoeda(valor)).append("\n");
-        
+
         sb.append("--------------------------------\n\n");
         sb.append("   Guarde este ticket para a    \n");
         sb.append("             saída.             \n");
-        
+
         areaTicket.setText(sb.toString());
 	}
-	
+
 	private void carregarCards() {
 		containerCards.getChildren().clear();
 
 		Estadia e = new Estadia(estadia.getDataHoraEntrada(), dataHoraSaida, valor, dados.placa());
 		containerCards.getChildren().add(new EstadiaCardFactory().criarCardSaida(e, !precisaRealizarPagamento));
-		
+
 		if (dados.entidades().veiculo() != null) {
 			containerCards.getChildren().add(
 					new VeiculoCardFactory().criarCardInformacoes(dados.entidades().veiculo()));
-			
+
 			if (dados.entidades().cliente() != null) {
 				containerCards.getChildren().add(
 						new ClienteCardFactory().criarCardInformacoes(dados.entidades().cliente()));
 			}
-			
+
 			if (dados.entidades().convenio() != null) {
 				containerCards.getChildren().add(
 						new ConvenioCardFactory().criarCardInformacoes(dados.entidades().convenio()));
 			}
 		}
 	}
-	
+
 	private void calcularValor() {
 		if (estadia.getValor() != null) {
 			// houve pagamento, não tem que pagar
 			precisaRealizarPagamento = false;
 			valor = estadia.getValor();
-		} 
+		}
 		else {
 			// Não houve pagamento, decidir o que cobrar
 			Cliente c = dados.entidades().cliente();
-			
+
 			TipoCliente tipoCliente;
 			if (c == null) tipoCliente = TipoCliente.AVULSO;
 			else tipoCliente = c.getTipo();
-			
+
 			// Cliente existe, é conveniado e entrou em vaga do convenio
 			if (tipoCliente == TipoCliente.CONVENIADO && vaga.getReserva() == TipoReservaVaga.CONVENIO) {
 				valor = c.getConvenio().getCobrancaIndividual();
 				carregarCards();
 				return;
 			}
-			
+
 			boolean moto = (vaga.getTipo() == TipoVaga.MOTO);
 			long tempo = TempoUtils.calcularDiferencaMinutos(estadia.getDataHoraEntrada(), dataHoraSaida);
 			valor = new PrecificacaoService().calcular(
 					tempo,
 					moto,
 					tipoCliente);
-			
+
 			carregarCards();
 		}
 	}
-	
+
 	private boolean registrarSaida() {
 		DadosEstadia dadosEstadia = new DadosEstadia(
 				estadia.getDataHoraEntrada(),
 				dataHoraSaida,
 				valor,
 				dados.placa());
-		
+
 		estadiaService.validarEstadia(dadosEstadia);
-		
+
 		DadosMovimentoCaixa dadosMovimento = null;
 		if (precisaRealizarPagamento) {
 			String mensagem = "Pagamento referente à saída de veículo com placa '"
 					+ dados.placa() + "', ocorrido no dia "
 					+ StringUtil.extrairEFormatarData(dataHoraSaida)
 					+ ", às " + StringUtil.extrairEFormatarHora(dataHoraSaida);
-			
+
 			Long idCaixa = SessaoSistema.getInstancia().getCaixa().getId();
 			DadosMovimentoCaixa dTemp = new DadosMovimentoCaixa(
 					valor,
@@ -209,14 +209,14 @@ public class SaidaVeiculoController {
 					mensagem,
 					idCaixa,
 					null);
-			
+
 			EscolherFormaPagamentoController eFPC = NavegacaoManager
 					.getInstancia().abrirModal(Popup.ESCOLHERFORMAPAGAMENTO, dTemp);
-			
+
 			if (eFPC == null || eFPC.getFormaPagamento() == null) {
 			    return false; // Interrompe o método e não prossegue com o salvamento
 			}
-			
+
 			dadosMovimento = new DadosMovimentoCaixa(
 					valor,
 					eFPC.getFormaPagamento(),
@@ -225,7 +225,7 @@ public class SaidaVeiculoController {
 					idCaixa,
 					null);
 		}
-		
+
 		estadiaService.registrarSaida(dadosEstadia, estadia, dadosMovimento);
 		vagaService.registrarSaida(dados.placa());
 		return true;

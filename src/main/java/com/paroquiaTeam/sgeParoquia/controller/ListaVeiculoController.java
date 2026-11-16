@@ -10,20 +10,20 @@ import com.paroquiaTeam.sgeParoquia.model.entity.Veiculo;
 import com.paroquiaTeam.sgeParoquia.service.VeiculoService;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ListaVeiculoController {
 	VeiculoService service = new VeiculoService();
-	
+
 	@FXML Button btnCadastrar;
 	@FXML HBox hBoxLabels;
 	@FXML VBox vBoxCards;
-	
-	@FXML 
+
+	@FXML
 	private void initialize() {
 		btnCadastrar.setOnAction(e -> {
 			NavegacaoManager.getInstancia().abrirModal(Popup.CADASTRARVEICULO);
@@ -34,15 +34,15 @@ public class ListaVeiculoController {
 				new Label("Placa"),
 				new Label("Marca/Modelo"),
 				new Label("Ações"));
-		
+
 		carregarVeiculos();
 	}
-	
+
 	private void onEditar(Long id) {
 		NavegacaoManager.getInstancia().abrirModal(Popup.EDITARVEICULO, id);
 		carregarVeiculos();
 	}
-	
+
 	private void onExcluir(Long id) {
 		if (!SessaoSistema.getInstancia().isUserLogadoAdministrador()) {
 			NavegacaoManager.getInstancia().abrirAlertaSemAutorizacao();
@@ -60,16 +60,16 @@ public class ListaVeiculoController {
 			carregarVeiculos();
 		}
 	}
-	
+
 	private void carregarVeiculos() {
 		vBoxCards.getChildren().clear();
 		List<Veiculo> veiculos = service.obterTodos();
-		
+
 		for (Veiculo v : veiculos) {
 			vBoxCards.getChildren().add(criarCard(v, this::onEditar, this::onExcluir));
 		}
 	}
-	
+
 	private VBox criarCard(Veiculo v, Consumer<Long> onEditar, Consumer<Long> onExcluir) {
 		VBox card = new VBox();
 		HBox linhaPrincipal = new HBox();
@@ -86,7 +86,7 @@ public class ListaVeiculoController {
 				btnEditar,
 				btnExcluir
 				);
-		
+
 		card.getChildren().add(linhaPrincipal);
 		return card;
 	}

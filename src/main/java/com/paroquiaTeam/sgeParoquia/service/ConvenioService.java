@@ -38,7 +38,7 @@ public class ConvenioService {
 		return buscarPorId(id)
 				.orElseThrow(() -> new EntityNotFoundException("Convênio não encontrado para o id "+id));
 	}
-	
+
 	// use no caso normal
 	public Optional<Convenio> buscarComClientesPorId(Long id) {
 		return dao.getByIdWithClientes(id);
@@ -133,7 +133,7 @@ public class ConvenioService {
 			throw new IllegalArgumentException("Convênio com este cnpj já existe");
 		}
 	}
-	
+
 	private void atualizarVagas(Convenio c) {
 		VagaService vagaService = new VagaService();
 		if (c.isAtivo()) {
@@ -141,14 +141,14 @@ public class ConvenioService {
 					TipoVaga.CARRO,
 					c.getId(),
 					c.getVagasCarro());
-			
+
 			vagaService.liberarVagasConvenio(ajusteCarro);
-			
+
 			AjusteConvenio ajusteMoto = new AjusteConvenio(
 					TipoVaga.MOTO,
 					c.getId(),
 					c.getVagasMoto());
-			
+
 			vagaService.liberarVagasConvenio(ajusteMoto);
 		} else {
 			vagaService.reduzirTodasAsVagasConvenio(c.getId());

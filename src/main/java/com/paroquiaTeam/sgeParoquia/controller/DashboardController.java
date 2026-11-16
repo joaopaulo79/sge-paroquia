@@ -16,14 +16,14 @@ public class DashboardController {
 	@FXML Button btnMovimentoVeiculo;
 	@FXML Button btnEntradaVeiculo;
 	@FXML Button btnSaidaVeiculo;
-	
+
 	@FXML
 	private void initialize() {
 		CaixaController caixaController = new CaixaController(containerCaixa);
-		
+
 		caixaController.setOnStatusCaixaAlterado(this::toggleControlesEstadia);
 		caixaController.carregarPainel();
-		
+
 		btnEntradaVeiculo.setOnAction(e -> {
 			NavegacaoManager.getInstancia().abrirAlertaErro("Botao sendo cortado");
 		});
@@ -37,11 +37,11 @@ public class DashboardController {
 		btnMovimentoVeiculo.setOnAction(e -> {
 			try {
 				String placa = campoPlaca.getText();
-				
+
 				if (placa == null || placa.isBlank()) {
 					throw new IllegalArgumentException("Insira uma placa");
 				}
-				
+
 				new EstadiaController().handleEstadia(placa);
 			} catch (Exception e2) {
 				NavegacaoManager.getInstancia().abrirAlertaErro(e2.getLocalizedMessage());
@@ -49,7 +49,7 @@ public class DashboardController {
 			}
 		});
 	}
-	
+
 /*
 	private void handleEstadia(EstadiaController.TipoOperacao operacao) {
 		String placa = campoPlaca.getText();
@@ -80,7 +80,7 @@ public class DashboardController {
 
 	}
 	*/
-	
+
 	public void toggleControlesEstadia(boolean caixaAberto) {
 		try {
 	        labelPlaca.setDisable(!caixaAberto);
@@ -92,5 +92,5 @@ public class DashboardController {
 	        e.printStackTrace();
 	    }
 	}
-	
+
 }

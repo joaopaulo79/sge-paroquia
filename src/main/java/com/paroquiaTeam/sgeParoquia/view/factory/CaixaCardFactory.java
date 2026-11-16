@@ -13,23 +13,23 @@ import javafx.scene.layout.HBox;
 public class CaixaCardFactory {
 	public CardGenerico criarCard(Caixa c, Consumer<Long> onVerMovimentos) {
 		CardHeader header = new CardHeader(c.getId());
-		
+
 		Button btnVerMovimentos = new Button("Movimentos");
 		btnVerMovimentos.setOnAction(e -> onVerMovimentos.accept(c.getId()));
-		
-		String labelFechamento = (c.getDataHoraFechamento() == null) 
-				? "Ainda aberto" 
+
+		String labelFechamento = (c.getDataHoraFechamento() == null)
+				? "Ainda aberto"
 				: c.getDataHoraFechamento().toString();
-		
+
 		HBox linhaPrincipal = new HBox();
 		linhaPrincipal.getChildren().add(new Label(c.getDataHoraAbertura().toString()));
 		linhaPrincipal.getChildren().add(new Label(labelFechamento));
 		linhaPrincipal.getChildren().add(btnVerMovimentos);
-		
+
 		CardGenerico card = new CardGenerico.Builder(header)
 				.comConteudo(linhaPrincipal)
 				.build();
-		
+
 		return card;
 	}
 }

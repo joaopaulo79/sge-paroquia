@@ -48,7 +48,7 @@ public class CaixaDAO {
 
 		}
 	}
-	
+
 	public Optional<Caixa> getLastWithOperador() {
 		try (Session sessao = AppConfig.getSessionFactory().openSession()){
 			String query = "SELECT DISTINCT c FROM Caixa c LEFT JOIN FETCH c.operador ORDER BY c.id DESC";

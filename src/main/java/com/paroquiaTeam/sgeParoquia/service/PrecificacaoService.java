@@ -25,17 +25,17 @@ public class PrecificacaoService {
 	public Optional<PrecificacaoPorHora> buscarPrecificacaoPorHora() {
 		return daoHora.get();
 	}
-	
+
 	public double calcular(long tempoMinutos, boolean ehMoto, TipoCliente tipoCliente) {
 		if (tipoCliente == TipoCliente.CONVENIADO) {
 			throw new WrongArgumentException("Método calcular() não deve ser usado para clientes conveniados.");
 		}
-		
+
 		if (tipoCliente == TipoCliente.MENSALISTA) {
 			return 0.0;
 		}
-		
-		try {			
+
+		try {
 			TipoPrecificacao prec = new EstacionamentoDAO().get().get().getPrecificacao();
 
 			Calculavel estrategia;
@@ -45,24 +45,24 @@ public class PrecificacaoService {
 				case POR_HORA -> estrategia = new PrecificacaoPorHoraDAO().get().get();
 				default -> throw new IllegalStateException("Erro: precificação ativa inválida ou não implementada");
 			}
-			
+
 			boolean dizimista = tipoCliente == TipoCliente.DIZIMISTA;
 
 			return estrategia.calcular(tempoMinutos, ehMoto, dizimista);
 		} catch (Exception e) {
 			throw e;
 		}
-	}	
-	
+	}
+
 	public double obterValorDiaria(boolean ehMoto, TipoCliente tipoCliente) {
 		if (tipoCliente == TipoCliente.CONVENIADO) {
 			throw new WrongArgumentException("Método obterValorDiaria() não deve ser usado para clientes conveniados.");
 		}
-		
+
 		if (tipoCliente == TipoCliente.MENSALISTA) {
 			return 0.0;
 		}
-		
+
 		TipoPrecificacao prec = new EstacionamentoDAO().get().get().getPrecificacao();
 
 		switch (prec) {
