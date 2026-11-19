@@ -31,7 +31,10 @@ public class BaseController {
 	@FXML private ToggleButton btnNavVagas;
 	@FXML private ToggleButton btnNavUsuarios;
 	@FXML private ToggleButton btnNavCaixas;
+	@FXML private ToggleButton btnNavRelatorios;
 
+	
+	
 	@FXML private Label labelTitulo;
 
 	@FXML private HBox hBoxUsuario;
@@ -62,6 +65,7 @@ public class BaseController {
 		btnNavVagas.setToggleGroup(grupoNav);
 		btnNavCaixas.setToggleGroup(grupoNav);
 		btnNavUsuarios.setToggleGroup(grupoNav);
+		btnNavRelatorios.setToggleGroup(grupoNav);
 
 		btnNavDashboard.setOnAction(event -> navegar(event, Tela.DASHBOARD));
 		btnNavConvenios.setOnAction(event -> navegar(event, Tela.CONVENIOS));
@@ -71,6 +75,7 @@ public class BaseController {
 		btnNavVagas.setOnAction(event -> navegar(event, Tela.VAGAS));
 		btnNavCaixas.setOnAction(event -> navegar(event, Tela.CAIXAS));
 		btnNavUsuarios.setOnAction(event -> navegar(event, Tela.USUARIOS));
+		btnNavRelatorios.setOnAction(event -> navegar(event, Tela.RELATORIOS));
 
 		configurarMenuDropdown();
 

@@ -55,7 +55,7 @@ public class RegistrarMovimentoCaixaController {
 
 		choiceFormaPagamento.getItems().addAll(TipoPagamento.values());
 		if (semDados || dadosImutaveis.formaPagamento() == null) {
-			choiceFormaPagamento.setValue(TipoPagamento.CREDITO);
+			choiceFormaPagamento.setValue(TipoPagamento.DINHEIROFISICO);
 		} else {
 			choiceFormaPagamento.setValue(dadosImutaveis.formaPagamento());
 			choiceFormaPagamento.setDisable(true);
@@ -69,6 +69,16 @@ public class RegistrarMovimentoCaixaController {
 			choiceTipoMovimento.setValue(dadosImutaveis.tipoMovimento());
 			choiceTipoMovimento.setDisable(true);
 		}
+		
+		choiceTipoMovimento.setOnAction(e -> {
+			TipoMovimento tipoEscolhido = choiceTipoMovimento.getValue();
+			if (tipoEscolhido == TipoMovimento.REFORCO || tipoEscolhido == TipoMovimento.SANGRIA) {
+				choiceFormaPagamento.setValue(TipoPagamento.DINHEIROFISICO);
+				choiceFormaPagamento.setDisable(true);
+			} else {
+				choiceFormaPagamento.setDisable(false);
+			}
+		});
 
 		if (!semDados && dadosImutaveis.descricao() != null && !dadosImutaveis.descricao().isBlank()) {
 			textAreaDescricao.setText(dadosImutaveis.descricao());

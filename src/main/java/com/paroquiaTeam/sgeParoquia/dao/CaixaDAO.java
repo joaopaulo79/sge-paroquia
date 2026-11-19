@@ -1,5 +1,6 @@
 package com.paroquiaTeam.sgeParoquia.dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,33 @@ public class CaixaDAO {
 						.uniqueResultOptional();
 
 		}
+	}
+	
+	public Optional<Caixa> getByIdWithMovimentosAndOperador(Long id) {
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
+			String query = "SELECT DISTINCT c FROM Caixa c "
+					+ "LEFT JOIN FETCH c.movimentos "
+					+ "LEFT JOIN FETCH c.operador "
+					+ "WHERE c.id = :id";
+			return sessao.createQuery(query, Caixa.class)
+						.setParameter("id", id)
+						.uniqueResultOptional();
+
+		}
+	}
+	
+	public List<Caixa> getByPeriodWithMovimentosAndOperador(LocalDateTime inicio, LocalDateTime fim) {
+	    try (Session session = AppConfig.getSessionFactory().openSession()) {
+	        String hql = "SELECT DISTINCT c FROM Caixa c " +
+	                     "LEFT JOIN FETCH c.movimentos " +
+	                     "LEFT JOIN FETCH c.operador " +
+	                     "WHERE c.dataHoraAbertura BETWEEN :inicio AND :fim";
+	                     
+	        return session.createQuery(hql, Caixa.class)
+	                      .setParameter("inicio", inicio)
+	                      .setParameter("fim", fim)
+	                      .list();
+	    }
 	}
 
 	public List<Caixa> getAll() {

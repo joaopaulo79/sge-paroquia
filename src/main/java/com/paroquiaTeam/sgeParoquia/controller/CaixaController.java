@@ -9,6 +9,7 @@ import com.paroquiaTeam.sgeParoquia.core.SessaoSistema;
 import com.paroquiaTeam.sgeParoquia.model.dto.DadosCaixa;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
 import com.paroquiaTeam.sgeParoquia.service.CaixaService;
+import com.paroquiaTeam.sgeParoquia.service.RelatoriosService;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -100,6 +101,8 @@ public class CaixaController {
 		Caixa caixaAtual = SessaoSistema.getInstancia().getCaixa();
 
 		service.fechar(caixaAtual, LocalDateTime.now());
+		
+		new RelatoriosService().gerarRelatorioFechamento(caixaAtual.getId());
 
 		carregarPainel();
 	}

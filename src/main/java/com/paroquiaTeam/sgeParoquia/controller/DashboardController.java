@@ -14,8 +14,6 @@ public class DashboardController {
 	@FXML Label labelPlaca;
 	@FXML TextField campoPlaca;
 	@FXML Button btnMovimentoVeiculo;
-	@FXML Button btnEntradaVeiculo;
-	@FXML Button btnSaidaVeiculo;
 
 	@FXML
 	private void initialize() {
@@ -23,16 +21,6 @@ public class DashboardController {
 
 		caixaController.setOnStatusCaixaAlterado(this::toggleControlesEstadia);
 		caixaController.carregarPainel();
-
-		btnEntradaVeiculo.setOnAction(e -> {
-			NavegacaoManager.getInstancia().abrirAlertaErro("Botao sendo cortado");
-		});
-
-		btnSaidaVeiculo.setOnAction(e -> {
-			NavegacaoManager.getInstancia().abrirAlertaErro("Botao sendo cortado");
-		});
-
-
 
 		btnMovimentoVeiculo.setOnAction(e -> {
 			try {
@@ -86,8 +74,6 @@ public class DashboardController {
 	        labelPlaca.setDisable(!caixaAberto);
 	        campoPlaca.setDisable(!caixaAberto);
 	        btnMovimentoVeiculo.setDisable(!caixaAberto);
-	        btnEntradaVeiculo.setDisable(!caixaAberto);
-	        btnSaidaVeiculo.setDisable(!caixaAberto);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }

@@ -6,6 +6,7 @@ import com.paroquiaTeam.sgeParoquia.core.NavegacaoManager;
 import com.paroquiaTeam.sgeParoquia.core.Tela;
 import com.paroquiaTeam.sgeParoquia.model.entity.Caixa;
 import com.paroquiaTeam.sgeParoquia.service.CaixaService;
+import com.paroquiaTeam.sgeParoquia.service.RelatoriosService;
 import com.paroquiaTeam.sgeParoquia.view.factory.CaixaCardFactory;
 
 import javafx.fxml.FXML;
@@ -40,15 +41,17 @@ public class ListaCaixaController {
 	}
 
 	private void carregarCaixas() {
+		RelatoriosService relatorioService = new RelatoriosService();
 		vBoxCards.getChildren().clear();
 		List<Caixa> caixas = service.obterTodos();
-
+		
 		for (Caixa c : caixas) {
-			vBoxCards.getChildren().add(new CaixaCardFactory().criarCard(c, this::exibirTelaMovimentos));
+			vBoxCards.getChildren().add(new CaixaCardFactory().criarCard(c, this::exibirTelaMovimentos, relatorioService::gerarRelatorioFechamento));
 		}
 	}
 
 	private void exibirTelaMovimentos(Long idCaixa) {
 		NavegacaoManager.getInstancia().navegarPara(Tela.MOVIMENTOS, idCaixa);
 	}
+	
 }

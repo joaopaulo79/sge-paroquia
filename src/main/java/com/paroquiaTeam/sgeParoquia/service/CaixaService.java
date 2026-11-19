@@ -21,10 +21,6 @@ public class CaixaService {
 		return dao.exists(id);
 	}
 
-	public Optional<Caixa> buscarPorId(long id) {
-		return dao.getById(id);
-	}
-
 	public boolean ultimoCaixaFechou() {
 		boolean fechou = true;
 		Optional<Caixa> talvezCaixa = dao.getLastWithOperador();
@@ -36,12 +32,25 @@ public class CaixaService {
 		}
 		return fechou;
 	}
+	
+	public Optional<Caixa> buscarPorId(long id) {
+		return dao.getById(id);
+	}
 
 	public Caixa obterPorId(long id) {
 		return buscarPorId(id)
 				.orElseThrow(() -> new EntityNotFoundException("Caixa não encontrado para o id "+id));
 	}
+	
+	public Optional<Caixa> buscarPorIdComMovimentosEOperador(long id) {
+		return dao.getByIdWithMovimentosAndOperador(id);
+	}
 
+	public Caixa obterPorIdComMovimentosEOperador(long id) {
+		return buscarPorIdComMovimentosEOperador(id)
+				.orElseThrow(() -> new EntityNotFoundException("Caixa não encontrado para o id "+id));
+	}
+	
 	public Optional<Caixa> buscarUltimo() {
 		return dao.getLast();
 	}
@@ -63,6 +72,11 @@ public class CaixaService {
 	public List<Caixa> obterTodos() {
 		return dao.getAll();
 	}
+	
+	public List<Caixa> obterPorPeriodoComMovimentosEOperador(LocalDateTime inicio, LocalDateTime fim) {
+		return dao.getByPeriodWithMovimentosAndOperador(inicio, fim);
+	}
+
 
 	public void abrir(DadosCaixa dados) {
 		validarAbertura(dados);

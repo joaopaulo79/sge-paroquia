@@ -58,6 +58,14 @@
 		    <version>4.1.0</version>
 		    <scope>compile</scope>
 		</dependency>
+		
+		<!-- Geração de relatórios PDF -->
+		<!-- Source: https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
+		<dependency>
+		  <groupId>com.github.librepdf</groupId>
+		  <artifactId>openpdf</artifactId>
+		  <version>3.0.5</version>
+		</dependency>
    </dependencies>
 
     <build>

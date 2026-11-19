@@ -10,12 +10,14 @@ import com.paroquiaTeam.sgeParoquia.controller.ListaUsuarioController;
 import com.paroquiaTeam.sgeParoquia.controller.ListaVagasController;
 import com.paroquiaTeam.sgeParoquia.controller.ListaVeiculoController;
 import com.paroquiaTeam.sgeParoquia.controller.LoginController;
+import com.paroquiaTeam.sgeParoquia.controller.RelatoriosController;
 
 public enum Tela {
 	LOGIN("/screens/login/login.fxml", "Login", LoginController.class),
     DASHBOARD("/screens/dashboard/dashboard.fxml", "Painel Principal", DashboardController.class),
     CONFIGURACAO("/screens/configuracaoSistema/configuracaoSistema.fxml", "Configurações do Sistema", ConfiguracaoSistemaController.class),
     VAGAS("/screens/listaVagas/listaVagas.fxml", "Vagas", ListaVagasController.class),
+    RELATORIOS("/screens/relatorios/relatorios.fxml", "Relatórios", RelatoriosController.class),
 
     // Telas que usam listaBase
 	USUARIOS("/shared/listaBase/listaBase.fxml", "Usuários", ListaUsuarioController.class),
