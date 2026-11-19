@@ -1,6 +1,7 @@
 package com.paroquiaTeam.sgeParoquia.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.Session;
@@ -54,6 +55,10 @@ public class EstadiaService {
 	public Estadia obterPorId(Long id) {
 		return buscarPorId(id)
 				.orElseThrow(() -> new EntityNotFoundException("Estadia não encontrada para o id "+id));
+	}
+	
+	public List<Estadia> obterPorPeriodoComMovimentosEOperador(LocalDateTime inicio, LocalDateTime fim) {
+		return dao.getByPeriod(inicio, fim);
 	}
 
 	public void salvar(DadosEstadia dados) {
@@ -201,6 +206,10 @@ public class EstadiaService {
 
 		if (dados.placaVeiculo() == null || dados.placaVeiculo().isBlank()) {
 			throw new IllegalArgumentException("Placa é obrigatória");
+		}
+		
+		if (dados.tipoVeiculo() == null) {
+			throw new IllegalArgumentException("Tipo de veículo é obrigatório");
 		}
 	}
 }

@@ -3,8 +3,12 @@ package com.paroquiaTeam.sgeParoquia.model.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoVeiculo;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,6 +34,10 @@ public class Estadia {
 
 	@Column(name = "placa_veiculo", nullable = false)
 	private String placaVeiculo;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="tipo_veiculo", nullable = false)
+	private TipoVeiculo tipoVeiculo;
 
 	@OneToMany(mappedBy = "estadia")
 	private List<MovimentoCaixa> movimentos;
@@ -39,11 +47,12 @@ public class Estadia {
 	public Estadia() {}
 
 	public Estadia(LocalDateTime dataHoraEntrada, LocalDateTime dataHoraSaida,
-				   Double valor, String placaVeiculo) {
+				   Double valor, String placaVeiculo, TipoVeiculo tipoVeiculo) {
 		this.dataHoraEntrada = dataHoraEntrada;
 		this.dataHoraSaida = dataHoraSaida;
 		this.valor = valor;
 		this.placaVeiculo = placaVeiculo;
+		this.tipoVeiculo = tipoVeiculo;
 	}
 
 
@@ -92,7 +101,14 @@ public class Estadia {
 	}
 
 
-
+	
+	public TipoVeiculo getTipoVeiculo() {
+		return tipoVeiculo;
+	}
+	public void setTipoVeiculo(TipoVeiculo tipoVeiculo) {
+		this.tipoVeiculo = tipoVeiculo;
+	}
+	
 	public List<MovimentoCaixa> getMovimentos() {
 		return movimentos;
 	}

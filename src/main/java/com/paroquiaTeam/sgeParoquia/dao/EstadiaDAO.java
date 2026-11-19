@@ -1,5 +1,6 @@
 package com.paroquiaTeam.sgeParoquia.dao;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,17 @@ public class EstadiaDAO {
 			String query = "SELECT e FROM Estadia e";
 			return sessao.createQuery(query, Estadia.class)
 						.getResultList();
+
+		}
+	}
+	
+	public List<Estadia> getByPeriod(LocalDateTime inicio, LocalDateTime fim) {
+		try (Session sessao = AppConfig.getSessionFactory().openSession()){
+			String query = "SELECT e FROM Estadia e WHERE e.dataHoraEntrada BETWEEN :inicio AND :fim";
+			return sessao.createQuery(query, Estadia.class)
+					.setParameter("inicio", inicio)
+                    .setParameter("fim", fim)
+					.getResultList();
 
 		}
 	}

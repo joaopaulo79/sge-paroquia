@@ -134,7 +134,7 @@ public class SaidaVeiculoController {
 	private void carregarCards() {
 		containerCards.getChildren().clear();
 
-		Estadia e = new Estadia(estadia.getDataHoraEntrada(), dataHoraSaida, valor, dados.placa());
+		Estadia e = new Estadia(estadia.getDataHoraEntrada(), dataHoraSaida, valor, dados.placa(), null);
 		containerCards.getChildren().add(new EstadiaCardFactory().criarCardSaida(e, !precisaRealizarPagamento));
 
 		if (dados.entidades().veiculo() != null) {
@@ -190,7 +190,8 @@ public class SaidaVeiculoController {
 				estadia.getDataHoraEntrada(),
 				dataHoraSaida,
 				valor,
-				dados.placa());
+				dados.placa(),
+				estadia.getTipoVeiculo());
 
 		estadiaService.validarEstadia(dadosEstadia);
 

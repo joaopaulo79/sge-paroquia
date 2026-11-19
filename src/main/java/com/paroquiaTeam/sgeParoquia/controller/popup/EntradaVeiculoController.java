@@ -16,6 +16,7 @@ import com.paroquiaTeam.sgeParoquia.model.enums.TipoCliente;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoMovimento;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoReservaVaga;
 import com.paroquiaTeam.sgeParoquia.model.enums.TipoVaga;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoVeiculo;
 import com.paroquiaTeam.sgeParoquia.service.EstadiaService;
 import com.paroquiaTeam.sgeParoquia.service.PrecificacaoService;
 import com.paroquiaTeam.sgeParoquia.service.VagaService;
@@ -123,7 +124,7 @@ public class EntradaVeiculoController {
 	private void carregarCards() {
 		containerCards.getChildren().clear();
 
-		Estadia e = new Estadia(dataHoraEntrada, null, valor, dados.placa());
+		Estadia e = new Estadia(dataHoraEntrada, null, valor, dados.placa(), null);
 		containerCards.getChildren().add(new EstadiaCardFactory().criarCardEntrada(e));
 
 		if (dados.entidades().veiculo() != null) {
@@ -238,11 +239,19 @@ public class EntradaVeiculoController {
 	}
 
 	private boolean registrarEntrada(TipoReservaVaga tipo) {
+		TipoVeiculo tipoVeiculo;
+		if (dados.tipo() == TipoVaga.CARRO) {
+			tipoVeiculo = TipoVeiculo.CARRO;
+		} else {
+			tipoVeiculo = TipoVeiculo.MOTO;
+		}
+		
 		DadosEstadia dadosEstadia = new DadosEstadia(
 				dataHoraEntrada,
 				null,
 				valor,
-				dados.placa());
+				dados.placa(),
+				tipoVeiculo);
 
 		estadiaService.validarEstadia(dadosEstadia);
 

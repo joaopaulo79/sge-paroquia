@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import com.paroquiaTeam.sgeParoquia.core.AppConfig;
 import com.paroquiaTeam.sgeParoquia.model.entity.Estadia;
+import com.paroquiaTeam.sgeParoquia.model.enums.TipoVeiculo;
 
 class EstadiaDAOTest extends BaseDAOTest {
 
@@ -39,7 +40,7 @@ class EstadiaDAOTest extends BaseDAOTest {
 
 	@Test
 	public void exists_retornaTrueComIdExistente() {
-		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234");
+		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234", TipoVeiculo.CARRO);
 		dao.save(estadia);
 
 		assertTrue(dao.exists(estadia.getId()));
@@ -58,7 +59,7 @@ class EstadiaDAOTest extends BaseDAOTest {
 
 	@Test
 	public void getById_retornaAlgoComIdValido() {
-		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234");
+		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234", TipoVeiculo.CARRO);
 		dao.save(estadia);
 
 		Optional<Estadia> talvezEstadia = dao.getById(estadia.getId());
@@ -73,10 +74,10 @@ class EstadiaDAOTest extends BaseDAOTest {
 
 	@Test
 	public void getLastByPlaca_retornaUltimaEstadiaComPlacaValida() {
-		Estadia estadia1 = new Estadia(LocalDateTime.now().minusHours(2), null, 0.0, "ABC-1234");
+		Estadia estadia1 = new Estadia(LocalDateTime.now().minusHours(2), null, 0.0, "ABC-1234", TipoVeiculo.CARRO);
 		dao.save(estadia1);
 
-		Estadia estadia2 = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234");
+		Estadia estadia2 = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234", TipoVeiculo.CARRO);
 		dao.save(estadia2); // Esta terá o ID maior
 
 		Optional<Estadia> talvezEstadia = dao.getLastByPlaca("ABC-1234");
@@ -86,10 +87,10 @@ class EstadiaDAOTest extends BaseDAOTest {
 
 	@Test
 	public void getAll_retornaMaisDeUmValorDoBanco() {
-		Estadia estadia1 = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234");
+		Estadia estadia1 = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234", TipoVeiculo.CARRO);
 		dao.save(estadia1);
 
-		Estadia estadia2 = new Estadia(LocalDateTime.now(), null, 0.0, "XYZ-9999");
+		Estadia estadia2 = new Estadia(LocalDateTime.now(), null, 0.0, "XYZ-9999", TipoVeiculo.CARRO);
 		dao.save(estadia2);
 
 		List<Estadia> estadias = dao.getAll();
@@ -104,7 +105,7 @@ class EstadiaDAOTest extends BaseDAOTest {
 
 	@Test
 	public void save_persisteEstadiaValida() {
-		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234");
+		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234", TipoVeiculo.CARRO);
 		dao.save(estadia);
 
 		Optional<Estadia> talvezEstadia = dao.getById(estadia.getId());
@@ -113,19 +114,19 @@ class EstadiaDAOTest extends BaseDAOTest {
 
 	@Test
 	public void save_placaNulaThrowsPropertyValueException() {
-		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, null);
+		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, null, TipoVeiculo.CARRO);
 		assertThrows(PropertyValueException.class, () -> dao.save(estadia));
 	}
 
 	@Test
 	public void save_dataHoraEntradaNulaThrowsPropertyValueException() {
-		Estadia estadia = new Estadia(null, null, 0.0, "ABC-1234");
+		Estadia estadia = new Estadia(null, null, 0.0, "ABC-1234", TipoVeiculo.CARRO);
 		assertThrows(PropertyValueException.class, () -> dao.save(estadia));
 	}
 
 	@Test
 	public void update_atualizaEstadiaValida() {
-		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234");
+		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234", TipoVeiculo.CARRO);
 		dao.save(estadia);
 
 		estadia.setPlacaVeiculo("DEF-5678");
@@ -138,7 +139,7 @@ class EstadiaDAOTest extends BaseDAOTest {
 
 	@Test
 	public void update_placaNulaThrowsPropertyValueException() {
-		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234");
+		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234", TipoVeiculo.CARRO);
 		dao.save(estadia);
 
 		estadia.setPlacaVeiculo(null);
@@ -147,7 +148,7 @@ class EstadiaDAOTest extends BaseDAOTest {
 
 	@Test
 	public void update_dataHoraEntradaNulaThrowsPropertyValueException() {
-		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234");
+		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234", TipoVeiculo.CARRO);
 		dao.save(estadia);
 
 		estadia.setDataHoraEntrada(null);
@@ -156,7 +157,7 @@ class EstadiaDAOTest extends BaseDAOTest {
 
 	@Test
 	public void delete_excluiEstadiaValida() {
-		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234");
+		Estadia estadia = new Estadia(LocalDateTime.now(), null, 0.0, "ABC-1234", TipoVeiculo.CARRO);
 		dao.save(estadia);
 
 		assertDoesNotThrow(() -> dao.delete(estadia.getId()));
